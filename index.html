@@ -138,8 +138,12 @@
     /* 拖拽排序样式 */
     .sortable-item {
       transition: all 0.2s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
-    .sortable-item:hover {
+    .sortable-item:hover, .sortable-item:active {
       background-color: #f3f4f6;
       transform: translateY(-1px);
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -147,6 +151,18 @@
     .sortable-item.dragging {
       opacity: 0.5;
       transform: rotate(2deg);
+      z-index: 1000;
+    }
+    
+    /* 移动端优化 */
+    @media (max-width: 768px) {
+      .sortable-item {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .drag-handle {
+        font-size: 1.2rem;
+      }
     }
     
     /* 响应式 */
@@ -1091,7 +1107,7 @@
         <!-- E4 排序题 -->
         <div>
           <label class="font-medium">E4 以下哪个 AI 发展方向对您最有吸引力（拖拽排序，1最重要）<span class="required-star">*</span></label>
-          <p class="text-sm text-gray-600 mt-1">请拖拽下方选项进行排序，排在最上方的为最重要</p>
+          <p class="text-sm text-gray-600 mt-1">请拖拽下方选项进行排序，排在最上方的为最重要（移动端：长按拖拽）</p>
           <ul id="E4_sortable" class="mt-3 space-y-2">
             <li class="sortable-item bg-gray-50 border rounded p-3 cursor-move flex items-center" data-value="A">
               <span class="drag-handle mr-3 text-gray-400">⋮⋮</span>
@@ -1184,7 +1200,7 @@
     </div>
   </div>
 
-<script>
+  <script>
     // Firebase配置
     const firebaseConfig = {
       apiKey: "{{API_KEY}}",
@@ -1279,10 +1295,13 @@
         });
       });
       
-      // E4 拖拽排序功能
+      // E4 拖拽排序功能（支持桌面和移动端）
       const sortableList = document.getElementById('E4_sortable');
       let draggedElement = null;
+      let touchStartY = 0;
+      let touchElement = null;
       
+      // 桌面端拖拽
       sortableList.addEventListener('dragstart', function(e) {
         draggedElement = e.target.closest('.sortable-item');
         draggedElement.classList.add('dragging');
@@ -1307,9 +1326,41 @@
         updateRankNumbers();
       });
       
+      // 移动端触摸支持
+      sortableList.addEventListener('touchstart', function(e) {
+        touchElement = e.target.closest('.sortable-item');
+        if (touchElement) {
+          touchStartY = e.touches[0].clientY;
+          touchElement.classList.add('dragging');
+        }
+      });
+      
+      sortableList.addEventListener('touchmove', function(e) {
+        if (!touchElement) return;
+        e.preventDefault();
+        
+        const touch = e.touches[0];
+        const afterElement = getDragAfterElement(sortableList, touch.clientY);
+        
+        if (afterElement == null) {
+          sortableList.appendChild(touchElement);
+        } else {
+          sortableList.insertBefore(touchElement, afterElement);
+        }
+        updateRankNumbers();
+      });
+      
+      sortableList.addEventListener('touchend', function(e) {
+        if (touchElement) {
+          touchElement.classList.remove('dragging');
+          touchElement = null;
+        }
+      });
+      
       // 使所有排序项可拖拽
       document.querySelectorAll('.sortable-item').forEach(item => {
         item.draggable = true;
+        item.style.touchAction = 'none'; // 防止移动端滚动干扰
       });
       
       function getDragAfterElement(container, y) {
