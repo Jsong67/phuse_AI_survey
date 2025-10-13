@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>中国药物研发统计编程行业 AI 使用与态度（2025）</title>
+  <title>中国药物研发统计编程行业 AI 应用演变与展望调研（2023-2025）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -175,35 +175,82 @@
       .matrix {
         font-size: 0.75rem;
       }
+      
+      footer {
+        border-radius: 0 0 16px 16px;
+      }
     }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
   <div class="max-w-5xl main-container">
     <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
-      <h1 class="text-3xl font-bold mb-4">中国药物研发统计编程行业 AI 使用与态度（2025）</h1>
-      <p class="text-indigo-100 mb-6">本问卷不收集任何可识别个人信息（PII）。请勿填写姓名、电话、邮箱、公司名、项目名、身份证号、精确地址等。</p>
+      <h1 class="text-3xl font-bold mb-4">中国药物研发统计编程行业 AI 应用演变与展望调研（2023-2025）</h1>
+
 
     </header>
     
     <div class="p-6">
 
     <section class="mb-6">
-      <details class="bg-white p-4 rounded border">
-        <summary class="cursor-pointer font-medium">填写说明</summary>
-        <div class="text-sm text-gray-700 mt-2 space-y-2">
-          <p>AI 定义：本问卷中的"AI"指生成式 AI/大语言模型及其衍生工具（ChatGPT/Claude/Gemini/DeepSeek、Copilot、代码/文档/图表生成、RAG、自动化工作流等），不包含仅规则驱动的传统宏/脚本。</p>
-          <p>年份口径：2023 年（2023.01–12）、2024 年（2024.01–12）、2025 年（2025.01–填写当月）。</p>
-          <p>隐私：不收集任何可识别个人信息（PII）。</p>
+      <div class="bg-white p-6 rounded-lg border shadow-sm">
+        <h3 class="font-semibold text-lg mb-4">填写说明</h3>
+        <div class="text-sm text-gray-700 space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="text-lg">⏱️</span>
+            <div>
+              <strong>预计填写时间：5-10分钟</strong>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-lg">📢</span>
+            <div>
+              <strong>调研结果将于2025年11月7日在 PHUSE SDE 活动中线下和线上同时公布</strong>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-lg">🔒</span>
+            <div>
+              <strong>完全匿名调研</strong><br>
+              本问卷不收集任何个人身份信息或公司信息，所有数据仅用于行业趋势分析。
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-lg">🤖</span>
+            <div>
+              <strong>AI 定义</strong><br>
+              本问卷中的"AI"特指生成式 AI/大语言模型及其衍生工具（如ChatGPT、Claude、Copilot、代码生成工具等），不包含传统宏/脚本工具。
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-lg">📅</span>
+            <div>
+              <strong>年份口径与背景</strong><br>
+              • 2023年（2023.01–12）：生成式AI"元年"，ChatGPT等工具开始普及<br>
+              • 2024年（2024.01–12）：AI技术"高速发展"期，各类工具百花齐放<br>
+              • 2025年（2025.01–填写当月）：行业"逐步落地"阶段，实际项目应用增多
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-lg">🎯</span>
+            <div>
+              <strong>调研目的</strong><br>
+              追踪中国药物研发统计编程行业在AI应用方面的演进轨迹，为行业发展提供数据支撑和趋势洞察。
+            </div>
+          </div>
         </div>
-      </details>
+      </div>
     </section>
 
-    <form id="surveyForm" class="space-y-10">
+    <!-- <form id="surveyForm" class="space-y-10">-->
       <!-- A. 筛选与分支 S -->
-      <div id="blockA" class="section-card mb-8">
-        <h2 class="section-title">🎯 A. 筛选与分支（S）</h2>
-        <div class="p-6 space-y-6">
+      <div id="blockA" class="bg-white rounded border p-5 space-y-6">
+        <h2 class="text-xl font-semibold">👤 基本信息</h2>
 
 
         <!-- 必填验证提示 -->
@@ -214,135 +261,129 @@
 
         <!-- S1 -->
         <div>
-          <label class="font-medium">S1 您目前的主要工作地点在中国大陆吗？ <span class="required-star">*</span></label>
+          <label class="font-bold">您目前的主要工作地点在中国大陆吗？ <span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="S1" value="A" required> <span>A. 是</span></label>
-            <label class="flex items-center gap-2"><input type="radio" name="S1" value="B"> <span>B. 否（将结束问卷）</span></label>
+            <label class="flex items-center gap-2"><input type="radio" name="S1" value="A" required> <span>是</span></label>
+            <label class="flex items-center gap-2"><input type="radio" name="S1" value="B"> <span>否（将结束问卷）</span></label>
           </div>
           <p id="endMsgS1" class="mt-2 text-sm text-red-600 hidden">您选择了"否"，问卷将在此结束。非常感谢您的时间！</p>
         </div>
 
         <!-- S2 单选 -->
         <div>
-          <label class="font-medium">S2 您所在的组织类型（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您所在的组织类型（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="S2" value="A" required> A. 跨国药企（MNC）在华机构</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S2" value="B"> B. 本土药企（Local）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S2" value="C"> C. CRO/服务外包公司</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S2" value="D"> D. 其他医药相关机构</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S2" value="E"> E. 不方便透露</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S2" value="A" required> 跨国药企（MNC）在华机构</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S2" value="B"> 本土药企（Local）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S2" value="C"> CRO/服务外包公司</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S2" value="D"> 其他医药相关机构</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S2" value="E"> 不方便透露</label>
           </div>
         </div>
 
         <!-- S3 多选 -->
         <div>
-          <label class="font-medium">S3 您近一年在统计编程相关的主要工作内容（多选）<span class="required-star">*</span></label>
+          <label class="font-bold">您近一年在统计编程相关的主要工作内容（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="A"> A. 生成/映射 SDTM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="B"> B. 生成 ADaM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="C"> C. 生成/校对 TLF（表/图/列表）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="D"> D. 编程 QC/Validation（含双编、审计追踪）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="E"> E. Define.xml/ADRGS/数据集说明文档的编程支持</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="F"> F. 将 SAP/统计方法转化为可运行代码</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="G"> G. 工具与宏/包开发与维护（SAS/R/Python）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="H"> H. 自动化流水线/作业编排（如 CI/CD）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="I"> I. 带人经理（已不参与编程）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="J"> J. 项目管理（PM/交付协调）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="K"> <span>K. 其他：</span> <input type="text" name="S3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="A"> 生成/映射 SDTM</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="B"> 生成 ADaM</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="C"> 生成/校对 TLF（表/图/列表）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="D"> 编程 QC/Validation（含双编、审计追踪）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="E"> Define.xml/ADRGS/数据集说明文档的编程支持</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="F"> 将 SAP/统计方法转化为可运行代码</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="G"> 工具与宏/包开发与维护（SAS/R/Python）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="H"> 自动化流水线/作业编排（如 CI/CD）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="I"> 带人经理（已不参与编程）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="J"> 项目管理（PM/交付协调）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="K"> <span>其他：</span> <input type="text" name="S3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- S5 -->
         <div>
-          <label class="font-medium">S5 您在 2025 年工作中使用 AI 的频率（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您在 2025 年工作中使用 AI 的频率（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="S5" value="A" required> A. 从不</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S5" value="B"> B. 很少（每季度或更少）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S5" value="C"> C. 偶尔（每月）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S5" value="D"> D. 经常（每周）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="S5" value="E"> E. 频繁（几乎每天）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S5" value="A" required> 从不</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S5" value="B"> 很少（每季度或更少）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S5" value="C"> 偶尔（每月）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S5" value="D"> 经常（每周）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S5" value="E"> 频繁（几乎每天）</label>
           </div>
         </div>
 
         <!-- S6 多选，每行一个 -->
         <div>
-          <label class="font-medium">S6 您在工作中用 AI 做过哪些类型的任务（多选）<span class="required-star">*</span></label>
+          <label class="font-bold">您在工作中用 AI 做过哪些类型的任务（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="A"> A. 代码片段/脚本建议（SAS/R/Python）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="B"> B. 数据清洗/转换/映射（如 SDTM/ADaM 辅助）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="C"> C. 生成统计分析思路/表图（TLF）草案</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="D"> D. 文档生成/润色（SAP、程序注释、审计说明）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="E"> E. 自动化工作流/工具集成（API、LangChain、自建 Agent）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="F"> F. 内部知识库/RAG（如 SOP/模板/最佳实践检索）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="G"> G. 模型微调/本地化部署/私有化</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="H"> H. 风险与合规评估/代码校验辅助</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="I"> <span>I. 其他：</span> <input type="text" name="S6-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="A"> 代码片段/脚本建议（SAS/R/Python）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="B"> 数据清洗/转换/映射（如 SDTM/ADaM 辅助）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="C"> 生成统计分析思路/表图（TLF）草案</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="D"> 文档生成/润色（SAP、程序注释、审计说明）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="E"> 自动化工作流/工具集成（API、LangChain、自建 Agent）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="F"> 内部知识库/RAG（如 SOP/模板/最佳实践检索）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="G"> 模型微调/本地化部署/私有化</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="H"> 风险与合规评估/代码校验辅助</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="I"> <span>其他：</span> <input type="text" name="S6-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
-        </div>
-      </div>
-
-      <!-- B. 基本信息 -->
-      <div id="blockB" class="section-card mb-8">
-        <h2 class="section-title">👤 B. 基本信息（B）</h2>
-        <div class="p-6 space-y-6">
 
         <div>
-          <label class="font-medium">B2 您的主要岗位级别（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您的主要岗位级别（单选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-1">
-            <label><input type="radio" name="B2" value="A" required> A. 初级/助理</label>
-            <label><input type="radio" name="B2" value="B"> B. 中级/资深</label>
-            <label><input type="radio" name="B2" value="C"> C. 主管/组长</label>
-            <label><input type="radio" name="B2" value="D"> D. 经理/负责人</label>
-            <label><input type="radio" name="B2" value="E"> E. 总监及以上</label>
+            <label><input type="radio" name="B2" value="A" required> 初级/助理</label>
+            <label><input type="radio" name="B2" value="B"> 中级/资深</label>
+            <label><input type="radio" name="B2" value="C"> 主管/组长</label>
+            <label><input type="radio" name="B2" value="D"> 经理/负责人</label>
+            <label><input type="radio" name="B2" value="E"> 总监及以上</label>
           </div>
         </div>
 
         <div>
-          <label class="font-medium">B3 您的行业从业年限（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您的行业从业年限（单选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="radio" name="B3" value="A" required> A. 0–2 年</label>
-            <label><input type="radio" name="B3" value="B"> B. 3–5 年</label>
-            <label><input type="radio" name="B3" value="C"> C. 6–9 年</label>
-            <label><input type="radio" name="B3" value="D"> D. 10–14 年</label>
-            <label><input type="radio" name="B3" value="E"> E. 15 年及以上</label>
+            <label><input type="radio" name="B3" value="A" required> 0–2 年</label>
+            <label><input type="radio" name="B3" value="B"> 3–5 年</label>
+            <label><input type="radio" name="B3" value="C"> 6–9 年</label>
+            <label><input type="radio" name="B3" value="D"> 10–14 年</label>
+            <label><input type="radio" name="B3" value="E"> 15 年及以上</label>
           </div>
         </div>
 
         <div>
-          <label class="font-medium">B4 您常用的编程语言/工具（多选）<span class="required-star">*</span></label>
+          <label class="font-bold">您常用的编程语言/工具（多选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="checkbox" name="B4" value="A" required> A. SAS</label>
-            <label><input type="checkbox" name="B4" value="B"> B. R</label>
-            <label><input type="checkbox" name="B4" value="C"> C. Python</label>
-            <label><input type="checkbox" name="B4" value="D"> D. SQL</label>
-            <label><input type="checkbox" name="B4" value="E"> E. Julia</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="B4" value="F"> <span>F. 其他：</span><input type="text" name="B4-OTHER" class="border rounded px-2 py-1 text-sm flex-1" placeholder="请填写" disabled></label>
+            <label><input type="checkbox" name="B4" value="A" required> SAS</label>
+            <label><input type="checkbox" name="B4" value="B"> R</label>
+            <label><input type="checkbox" name="B4" value="C"> Python</label>
+            <label><input type="checkbox" name="B4" value="D"> SQL</label>
+            <label><input type="checkbox" name="B4" value="E"> Julia</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="B4" value="F"> <span>其他：</span><input type="text" name="B4-OTHER" class="border rounded px-2 py-1 text-sm flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <div>
-          <label class="font-medium">B5 您当前主要涉及的治疗领域（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您当前主要涉及的治疗领域（单选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="radio" name="B5" value="A" required> A. 肿瘤</label>
-            <label><input type="radio" name="B5" value="B"> B. 免疫</label>
-            <label><input type="radio" name="B5" value="C"> C. 代谢</label>
-            <label><input type="radio" name="B5" value="D"> D. 心血管</label>
-            <label><input type="radio" name="B5" value="E"> E. 神经</label>
-            <label><input type="radio" name="B5" value="F"> F. 感染</label>
-            <label><input type="radio" name="B5" value="G"> G. 罕见病</label>
-            <label><input type="radio" name="B5" value="H"> H. 其他/不固定</label>
+            <label><input type="radio" name="B5" value="A" required> 肿瘤</label>
+            <label><input type="radio" name="B5" value="B"> 免疫</label>
+            <label><input type="radio" name="B5" value="C"> 代谢</label>
+            <label><input type="radio" name="B5" value="D"> 心血管</label>
+            <label><input type="radio" name="B5" value="E"> 神经</label>
+            <label><input type="radio" name="B5" value="F"> 感染</label>
+            <label><input type="radio" name="B5" value="G"> 罕见病</label>
+            <label><input type="radio" name="B5" value="H"> 其他/不固定</label>
           </div>
-        </div>
       </div>
+        </div>
+      <!--</div>-->
 
       <!-- C. AI 使用情况 -->
       <div id="blockC" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">C. AI 使用情况（2023–2025 年对比）</h2>
+        <h2 class="text-xl font-semibold">AI 使用情况（2023–2025 年对比）</h2>
 
         <!-- C1 矩阵单选 -->
         <div>
-          <label class="font-medium">C1 您在工作中使用 AI 的频率（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您在工作中使用 AI 的频率（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -385,7 +426,7 @@
 
         <!-- C2 矩阵多选 -->
         <div>
-          <label class="font-medium">C2 您在各年份主要使用 AI 的场景（矩阵多选）<span class="required-star">*</span></label>
+          <label class="font-bold">您在各年份主要使用 AI 的场景（矩阵多选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -460,7 +501,7 @@
 
         <!-- C3 矩阵单选 -->
         <div>
-          <label class="font-medium">C3 您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">C3 您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -507,7 +548,7 @@
 
         <!-- C4 矩阵单选 -->
         <div>
-          <label class="font-medium">C4 您的团队/组织是否有 AI 使用政策（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">C4 您的团队/组织是否有 AI 使用政策（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -550,31 +591,31 @@
 
         <!-- C5 多选，每行一个 -->
         <div>
-          <label class="font-medium">C5 您在 2025 年常用的 AI/模型或平台（多选）<span class="required-star">*</span></label>
+          <label class="font-bold">C5 您在 2025 年常用的 AI/模型或平台（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> A. ChatGPT 系列</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> B. Claude</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> C. Gemini</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="D"> D. DeepSeek</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> E. Copilot（SAS/R/Python/VS Code 等）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> F. 国产大模型（阿里/百度/字节/华为等）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="G"> G. 私有化/本地 LLM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="H"> H. 公司自研工具</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="I"> I. 不了解/未关注</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="J"> J. 不方便透露</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="K"> <span>K. 其他：</span><input type="text" name="C5-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> Claude</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> Gemini</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="D"> DeepSeek</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> Copilot（SAS/R/Python/VS Code 等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> 国产大模型（阿里/百度/字节/华为等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="G"> 私有化/本地 LLM</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="H"> 公司自研工具</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="I"> 不了解/未关注</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="J"> 不方便透露</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="K"> <span>其他：</span><input type="text" name="C5-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- C6 单选，每行一个 -->
         <div>
-          <label class="font-medium">C6 您在 2025 年用于处理含敏感数据的做法（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">C6 您在 2025 年用于处理含敏感数据的做法（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="C6" value="A"> A. 从不在 AI 工具中输入敏感数据</label>
-            <label class="flex items-center gap-2"><input type="radio" name="C6" value="B"> B. 仅在公司批准的安全环境中使用（如私有化、脱敏）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="C6" value="C"> C. 公司 AI 工具会自动屏蔽/脱敏敏感信息，我不作额外处理直接上传</label>
-            <label class="flex items-center gap-2"><input type="radio" name="C6" value="D"> D. 在公开云工具中谨慎使用（删除标识/片段化）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="C6" value="E"> E. 不清楚/未关注</label>
+            <label class="flex items-center gap-2"><input type="radio" name="C6" value="A"> 从不在 AI 工具中输入敏感数据</label>
+            <label class="flex items-center gap-2"><input type="radio" name="C6" value="B"> 仅在公司批准的安全环境中使用（如私有化、脱敏）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="C6" value="C"> 公司 AI 工具会自动屏蔽/脱敏敏感信息，我不作额外处理直接上传</label>
+            <label class="flex items-center gap-2"><input type="radio" name="C6" value="D"> 在公开云工具中谨慎使用（删除标识/片段化）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="C6" value="E"> 不清楚/未关注</label>
           </div>
         </div>
 
@@ -585,71 +626,71 @@
 
       <!-- C-DEEP. 深度用户专项 (条件显示) -->
       <div id="blockC-DEEP" class="bg-blue-50 border border-blue-200 rounded p-5 space-y-6 hidden">
-        <h2 class="text-xl font-semibold text-blue-800">C-DEEP. 深度用户专项（针对经常使用AI的用户）</h2>
+        <h2 class="text-xl font-semibold text-blue-800">深度用户专项（针对经常使用AI的用户）</h2>
         <p class="text-sm text-blue-600">此部分仅对在2025年"经常"或"频繁"使用AI的用户显示</p>
 
         <!-- CD1 多选题 -->
         <div>
-          <label class="font-medium">CD1 您在使用AI进行统计编程时，主要采用哪些prompt策略？（可多选）</label>
+          <label class="font-bold">您在使用AI进行统计编程时，主要采用哪些prompt策略？（可多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="A"> A. 直接描述需求，让AI生成完整代码</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="B"> B. 提供代码框架，让AI填充具体实现</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="C"> C. 分步骤引导，逐步构建复杂逻辑</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="D"> D. 提供示例代码，要求AI模仿风格</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="E"> E. 角色扮演（如"你是SAS专家"）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="F"> F. 提供上下文（数据结构、业务背景）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="G"> G. 要求解释代码逻辑与思路</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="H"> <span>H. 其他策略：</span><input type="text" name="CD1-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="A"> 直接描述需求，让AI生成完整代码</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="B"> 提供代码框架，让AI填充具体实现</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="C"> 分步骤引导，逐步构建复杂逻辑</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="D"> 提供示例代码，要求AI模仿风格</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="E"> 角色扮演（如"你是SAS专家"）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="F"> 提供上下文（数据结构、业务背景）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="G"> 要求解释代码逻辑与思路</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="H"> <span>其他策略：</span><input type="text" name="CD1-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- CD2 单选题 -->
         <div>
-          <label class="font-medium">CD2 您认为目前AI在以下哪个统计编程任务上表现最佳？（单选）</label>
+          <label class="font-bold">您认为目前AI在以下哪个统计编程任务上表现最佳？（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="A"> A. 基础数据操作（筛选、排序、合并）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="B"> B. 标准统计分析（描述性统计、t检验等）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="C"> C. 复杂数据清洗与转换逻辑</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="D"> D. 图表制作与美化</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="E"> E. 代码注释与文档生成</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="F"> F. 错误调试与代码优化</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="G"> G. 都表现一般</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="A"> 基础数据操作（筛选、排序、合并）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="B"> 标准统计分析（描述性统计、t检验等）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="C"> 复杂数据清洗与转换逻辑</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="D"> 图表制作与美化</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="E"> 代码注释与文档生成</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="F"> 错误调试与代码优化</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="G"> 都表现一般</label>
           </div>
         </div>
 
         <!-- CD3 多选题 -->
         <div>
-          <label class="font-medium">CD3 您在深度使用AI的过程中，遇到过哪些典型问题？（可多选）</label>
+          <label class="font-bold">您在深度使用AI的过程中，遇到过哪些典型问题？（可多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="A"> A. 生成的代码语法错误或无法运行</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="B"> B. 逻辑错误，结果看似合理但实际有误</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="C"> C. 不理解特定领域术语（如CDISC标准）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="D"> D. 代码效率低下，运行速度慢</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="E"> E. 风格不一致，难以维护</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="F"> F. 过度复杂化简单问题</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="G"> G. 无法处理边界情况或异常数据</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="H"> H. 版本间不一致（同样问题不同回答）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="I"> <span>I. 其他问题：</span><input type="text" name="CD3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="A"> 生成的代码语法错误或无法运行</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="B"> 逻辑错误，结果看似合理但实际有误</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="C"> 不理解特定领域术语（如CDISC标准）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="D"> 代码效率低下，运行速度慢</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="E"> 风格不一致，难以维护</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="F"> 过度复杂化简单问题</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="G"> 无法处理边界情况或异常数据</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="H"> 版本间不一致（同样问题不同回答）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="I"> <span>其他问题：</span><input type="text" name="CD3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- CD4 单选题 -->
         <div>
-          <label class="font-medium">CD4 您通常如何验证AI生成代码的正确性？（单选最主要的方法）</label>
+          <label class="font-bold">您通常如何验证AI生成代码的正确性？（单选最主要的方法）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="A"> A. 逐行检查代码逻辑</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="B"> B. 用已知结果的测试数据验证</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="C"> C. 与传统方法的结果对比</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="D"> D. 同事peer review</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="E"> E. 分步运行，检查中间结果</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="F"> F. 直接使用，出问题再修正</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="G"> G. 多个AI工具交叉验证</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="A"> 逐行检查代码逻辑</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="B"> 用已知结果的测试数据验证</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="C"> 与传统方法的结果对比</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="D"> 同事peer review</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="E"> 分步运行，检查中间结果</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="F"> 直接使用，出问题再修正</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="G"> 多个AI工具交叉验证</label>
           </div>
         </div>
 
         <!-- CD5 矩阵单选题 -->
         <div>
-          <label class="font-medium">CD5 您对AI在不同复杂度任务上的信任程度</label>
+          <label class="font-bold">您对AI在不同复杂度任务上的信任程度<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -692,54 +733,54 @@
 
         <!-- CD6 开放题 -->
         <div>
-          <label class="font-medium">CD6 请分享一个AI显著帮助您解决的具体技术难题：</label>
+          <label class="font-bold">CD6 请分享一个AI显著帮助您解决的具体技术难题：</label>
           <textarea name="CD6" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="如：AI帮我解决了某个复杂的数据清洗逻辑，原本需要...，AI建议...，最终节省了...时间"></textarea>
         </div>
 
         <!-- CD7 多选题 -->
         <div>
-          <label class="font-medium">CD7 您希望AI工具在哪些方面得到改进？（可多选，最多5项）</label>
+          <label class="font-bold">您希望AI工具在哪些方面得到改进？（可多选，最多5项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="A"> A. 更好的领域知识（CDISC/ICH等标准）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="B"> B. 更强的代码调试与错误定位能力</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="C"> C. 更好的代码风格一致性</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="D"> D. 支持更复杂的多步骤任务</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="E"> E. 更准确的性能优化建议</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="F"> F. 更好的文档与注释生成</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="G"> G. 支持团队协作与代码标准化</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="H"> H. 更强的数据安全与隐私保护</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="I"> I. 更便宜的使用成本</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="J"> J. 更快的响应速度</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="K"> <span>K. 其他改进：</span><input type="text" name="CD7-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="A"> 更好的领域知识（CDISC/ICH等标准）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="B"> 更强的代码调试与错误定位能力</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="C"> 更好的代码风格一致性</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="D"> 支持更复杂的多步骤任务</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="E"> 更准确的性能优化建议</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="F"> 更好的文档与注释生成</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="G"> 支持团队协作与代码标准化</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="H"> 更强的数据安全与隐私保护</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="I"> 更便宜的使用成本</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="J"> 更快的响应速度</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="K"> <span>其他改进：</span><input type="text" name="CD7-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- CD8 单选题 -->
         <div>
-          <label class="font-medium">CD8 如果AI持续改进，您预计多久后能在关键项目中放心使用AI生成的核心代码？</label>
+          <label class="font-bold">如果AI持续改进，您预计多久后能在关键项目中放心使用AI生成的核心代码？<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="A"> A. 现在就可以（已经在用）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="B"> B. 6个月内</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="C"> C. 1-2年内</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="D"> D. 3-5年内</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="E"> E. 5年以上</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="F"> F. 永远不会完全放心</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="A"> 现在就可以（已经在用）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="B"> 6个月内</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="C"> 1-2年内</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="D"> 3-5年内</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="E"> 5年以上</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD8" value="F"> 永远不会完全放心</label>
           </div>
         </div>
 
         <!-- CD9 开放题 -->
         <div>
-          <label class="font-medium">CD9 作为AI深度用户，您对同行有什么使用建议？</label>
+          <label class="font-bold">CD9 作为AI深度用户，您对同行有什么使用建议？</label>
           <textarea name="CD9" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="如：推荐从...开始，注意...，避免..."></textarea>
         </div>
       </div>
 
       <!-- D. 态度 -->
       <div id="blockD" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">D. 对 AI 的态度（2023–2025 年对比）</h2>
+        <h2 class="text-xl font-semibold">您对 AI 的态度（2023–2025 年对比）</h2>
 
         <div>
-          <label class="font-medium">D1 您对以下陈述在各年份的看法（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">D1 您对以下陈述在各年份的看法（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -1027,86 +1068,86 @@
 
         <!-- D2 单选题 -->
         <div>
-          <label class="font-medium">D2 您预计未来 1 年 AI 在统计编程行业的影响（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">D2 您预计未来 1 年 AI 在统计编程行业的影响（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="A"> A. 进一步增强生产力，形成行业刚需</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="B"> B. 有助提升，但影响有限</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="C"> C. 与现有工具类似，不会显著改变行业</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="D"> D. 可能带来负面影响（如技能退化、过度依赖）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="E"> E. 不确定/难以预测</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="A"> 进一步增强生产力，形成行业刚需</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="B"> 有助提升，但影响有限</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="C"> 与现有工具类似，不会显著改变行业</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="D"> 可能带来负面影响（如技能退化、过度依赖）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="E"> 不确定/难以预测</label>
           </div>
         </div>
 
         <!-- D3 多选题 -->
         <div>
-          <label class="font-medium">D3 您认为哪些因素最制约 AI 在统计编程中的应用（多选，最多3项）<span class="required-star">*</span></label>
+          <label class="font-bold">D3 您认为哪些因素最制约 AI 在统计编程中的应用（多选，最多3项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="A"> A. 数据安全与隐私合规风险</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="B"> B. AI输出的准确性与可信度不足</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="C"> C. 缺乏针对性的AI工具与平台</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="D"> D. 公司政策限制或缺乏明确指导</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="E"> E. 团队技能与培训不足</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="F"> F. 成本考虑（license、计算资源等）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="G"> G. 审计追踪与可重现性要求</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="H"> H. 监管部门对AI使用的不确定态度</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="I"> <span>I. 其他：</span><input type="text" name="D3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="A"> 数据安全与隐私合规风险</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="B"> AI输出的准确性与可信度不足</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="C"> 缺乏针对性的AI工具与平台</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="D"> 公司政策限制或缺乏明确指导</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="E"> 团队技能与培训不足</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="F"> 成本考虑（license、计算资源等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="G"> 审计追踪与可重现性要求</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="H"> 监管部门对AI使用的不确定态度</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="I"> <span>其他：</span><input type="text" name="D3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- D4 单选题 -->
         <div>
-          <label class="font-medium">D4 您倾向于在哪些情境下更信任 AI 的建议（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">D4 您倾向于在哪些情境下更信任 AI 的建议（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="A"> A. 重复性高、标准化的编程任务</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="B"> B. 有明确业务逻辑、可校验的分析</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="C"> C. 初期探索、获取灵感的阶段</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="D"> D. 有充足时间进行验证的项目</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="E"> E. 都不信任，仅作参考</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D4" value="A"> 重复性高、标准化的编程任务</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D4" value="B"> 有明确业务逻辑、可校验的分析</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D4" value="C"> 初期探索、获取灵感的阶段</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D4" value="D"> 有充足时间进行验证的项目</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D4" value="E"> 都不信任，仅作参考</label>
           </div>
         </div>
       </div>
 
       <!-- E. 展望与建议 -->
       <div id="blockE" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">E. 展望与建议（E）</h2>
+        <h2 class="text-xl font-semibold">展望与建议</h2>
 
         <!-- E1 多选题 -->
         <div>
-          <label class="font-medium">E1 您认为最需要 AI 改进的统计编程环节（多选，最多3项）<span class="required-star">*</span></label>
+          <label class="font-bold">E1 您认为最需要 AI 改进的统计编程环节（多选，最多3项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="A"> A. 代码生成与优化（提高代码质量与效率）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="B"> B. 数据清洗与转换的自动化</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="C"> C. 质量控制与校验（QC自动化）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="D"> D. 技术文档生成与维护</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="E"> E. 知识管理与最佳实践检索</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="F"> F. 合规性检查与风险评估</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="G"> G. 培训与技能提升辅助</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="H"> <span>H. 其他：</span><input type="text" name="E1-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="A"> 代码生成与优化（提高代码质量与效率）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="B"> 数据清洗与转换的自动化</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="C"> 质量控制与校验（QC自动化）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="D"> 技术文档生成与维护</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="E"> 知识管理与最佳实践检索</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="F"> 合规性检查与风险评估</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="G"> 培训与技能提升辅助</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="H"> <span>其他：</span><input type="text" name="E1-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
         <!-- E2 单选题 -->
         <div>
-          <label class="font-medium">E2 您对公司 AI 政策的建议（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">E2 您对公司 AI 政策的建议（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="A"> A. 制定更明确的使用指南与边界</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="B"> B. 加大 AI 工具与基础设施投入</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="C"> C. 增加相关培训与能力建设</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="D"> D. 建立最佳实践分享与交流机制</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="E"> E. 保持现状，观望发展</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="F"> F. 更谨慎使用，加强风险控制</label>
+            <label class="flex items-center gap-2"><input type="radio" name="E2" value="A"> 制定更明确的使用指南与边界</label>
+            <label class="flex items-center gap-2"><input type="radio" name="E2" value="B"> 加大 AI 工具与基础设施投入</label>
+            <label class="flex items-center gap-2"><input type="radio" name="E2" value="C"> 增加相关培训与能力建设</label>
+            <label class="flex items-center gap-2"><input type="radio" name="E2" value="D"> 建立最佳实践分享与交流机制</label>
+            <label class="flex items-center gap-2"><input type="radio" name="E2" value="E"> 保持现状，观望发展</label>
+            <label class="flex items-center gap-2"><input type="radio" name="E2" value="F"> 更谨慎使用，加强风险控制</label>
           </div>
         </div>
 
         <!-- E3 开放题 -->
         <div>
-          <label class="font-medium">E3 如果让您向同行推荐，您会如何描述 AI 在统计编程中的价值？</label>
+          <label class="font-bold">E3 如果让您向同行推荐，您会如何描述 AI 在统计编程中的价值？</label>
           <textarea name="E3" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写，如'AI帮我提升了...，但需要注意...'"></textarea>
         </div>
 
         <!-- E4 排序题 -->
         <div>
-          <label class="font-medium">E4 以下哪个 AI 发展方向对您最有吸引力（拖拽排序，1最重要）<span class="required-star">*</span></label>
+          <label class="font-bold">E4 以下哪个 AI 发展方向对您最有吸引力（拖拽排序，1最重要）<span class="required-star">*</span></label>
           <p class="text-sm text-gray-600 mt-1">请拖拽下方选项进行排序，排在最上方的为最重要（移动端：长按拖拽）</p>
           <ul id="E4_sortable" class="mt-3 space-y-2">
             <li class="sortable-item bg-gray-50 border rounded p-3 cursor-move flex items-center" data-value="A">
@@ -1145,25 +1186,14 @@
 
       <!-- F. 开放反馈 -->
       <div id="blockF" class="bg-white rounded border p-5 space-y-4">
-        <h2 class="text-xl font-semibold">F. 开放反馈（F）</h2>
+        <h2 class="text-xl font-semibold">开放反馈</h2>
         
         <div>
-          <label class="font-medium">F1 您对本次调研或 AI 在统计编程领域的其他建议：</label>
+          <label class="font-bold">F1 您对本次调研或 AI 在统计编程领域的其他建议：</label>
           <textarea name="F1" rows="4" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写您的任何建议、意见或补充..."></textarea>
         </div>
 
-        <div>
-          <label class="font-medium">F2 如果有机会，您是否愿意参与后续的深度访谈或案例分享（单选）<span class="required-star">*</span></label>
-          <div class="mt-2 space-y-1">
-            <label><input type="radio" name="F2" value="A"> A. 愿意，可提供联系方式</label>
-            <label><input type="radio" name="F2" value="B"> B. 有兴趣，但需要了解更多详情</label>
-            <label><input type="radio" name="F2" value="C"> C. 暂时不考虑</label>
-          </div>
-          <div id="F2_contact" class="mt-2 hidden">
-            <input type="email" name="F2_CONTACT" class="border rounded px-2 py-1 text-sm w-full" placeholder="如愿意参与，可选择填写邮箱（不会用于其他目的）">
-            <p class="text-xs text-gray-500 mt-1">仅用于后续学术交流，不会用于营销或其他商业目的</p>
-          </div>
-        </div>
+
       </div>
 
       <!-- 提交区域 -->
@@ -1177,7 +1207,7 @@
         
         <div class="mt-4 text-xs text-gray-500">
           <p>* 问卷数据将用于学术研究，不会泄露个人隐私信息</p>
-          <p>* 如有疑问，可通过问卷末尾的联系方式反馈</p>
+          <p>* 如有疑问，请<a href="mailto:jsong67@its.jnj.com;CTian17@ITS.JNJ.com;hao1.chen@beigene.com?subject=中国药物研发统计编程行业AI使用与态度问卷咨询" class="text-blue-600 hover:text-blue-800 underline">联系我们</a></p>
         </div>
       </div>
     </form>
@@ -1198,6 +1228,10 @@
 
     
     </div>
+    
+    <!-- Contact Us -->
+    <footer class="bg-gray-100 border-t p-6">
+    </footer>
   </div>
 
   <script>
@@ -1220,15 +1254,23 @@
       const form = document.getElementById('surveyForm');
       const submitSuccess = document.getElementById('submitSuccess');
       
-      // S1 逻辑 - 选择"否"时显示结束消息
+      // S1 逻辑 - 选择"否"时显示结束消息并隐藏后续问题
       const s1Inputs = document.querySelectorAll('input[name="S1"]');
+      const subsequentSections = document.querySelectorAll('#blockA > div:not(:first-child) > div:not([id="endMsgS1"]):not([id="sSectionValidation"]), #blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border');
+      
       s1Inputs.forEach(input => {
         input.addEventListener('change', function() {
           const endMsg = document.getElementById('endMsgS1');
           if (this.value === 'B' && this.checked) {
             endMsg.classList.remove('hidden');
+            // 隐藏所有后续问题
+            document.querySelectorAll('#blockA .p-6 > div:not(:first-child):not(:nth-child(2))').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('#blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border').forEach(el => el.classList.add('hidden'));
           } else {
             endMsg.classList.add('hidden');
+            // 显示所有后续问题
+            document.querySelectorAll('#blockA .p-6 > div:not(:first-child):not(:nth-child(2))').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('#blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border').forEach(el => el.classList.remove('hidden'));
           }
         });
       });
@@ -1258,18 +1300,7 @@
         }
       });
       
-      // F2 联系方式显示逻辑
-      const f2Inputs = document.querySelectorAll('input[name="F2"]');
-      const f2Contact = document.getElementById('F2_contact');
-      f2Inputs.forEach(input => {
-        input.addEventListener('change', function() {
-          if (this.value === 'A' && this.checked) {
-            f2Contact.classList.remove('hidden');
-          } else {
-            f2Contact.classList.add('hidden');
-          }
-        });
-      });
+
       
       // D3 多选限制（最多3项）
       const d3Checkboxes = document.querySelectorAll('input[name="D3"]');
