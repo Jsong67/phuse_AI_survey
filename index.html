@@ -173,7 +173,46 @@
       }
       
       .matrix {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
+        width: 100%;
+        table-layout: fixed;
+      }
+      
+      .matrix th, .matrix td {
+        padding: 4px 1px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+      }
+      
+      .matrix th:first-child, .matrix td:first-child {
+        width: 35%;
+      }
+      
+      .matrix th:not(:first-child), .matrix td:not(:first-child) {
+        width: 13%;
+      }
+      
+      /* C1表格特殊处理（6列） */
+      .matrix-6col th:first-child,
+      .matrix-6col td:first-child {
+        width: 25%;
+      }
+      
+      .matrix-6col th:not(:first-child),
+      .matrix-6col td:not(:first-child) {
+        width: 15%;
+      }
+      
+      /* C3表格特殊处理（7列） */
+      .matrix-7col th:first-child,
+      .matrix-7col td:first-child {
+        width: 20%;
+      }
+      
+      .matrix-7col th:not(:first-child),
+      .matrix-7col td:not(:first-child) {
+        width: 13.3%;
       }
       
       footer {
@@ -384,7 +423,7 @@
         <!-- C1 矩阵单选 -->
         <div>
           <label class="font-bold">您在工作中使用 AI 的频率（矩阵单选）<span class="required-star">*</span></label>
-          <table class="matrix w-full mt-2 text-sm">
+          <table class="matrix matrix-6col w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
                 <th class="text-left">年份</th>
@@ -498,7 +537,7 @@
         <!-- C3 矩阵单选 -->
         <div>
           <label class="font-bold">您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
-          <table class="matrix w-full mt-2 text-sm">
+          <table class="matrix matrix-7col w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
                 <th class="text-left">年份</th>
