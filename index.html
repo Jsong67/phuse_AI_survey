@@ -165,12 +165,6 @@
       }
     }
     
-    /* 矩阵表格容器 */
-    .matrix-container {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    
     /* 响应式 */
     @media (max-width: 768px) {
       .main-container {
@@ -182,23 +176,21 @@
         font-size: 0.65rem;
         width: 100%;
         table-layout: fixed;
-        min-width: 600px;
       }
       
       .matrix th, .matrix td {
-        padding: 6px 2px;
+        padding: 4px 1px;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        hyphens: auto;
       }
       
       .matrix th:first-child, .matrix td:first-child {
-        width: 25%;
-        min-width: 80px;
+        width: 35%;
       }
       
       .matrix th:not(:first-child), .matrix td:not(:first-child) {
-        width: 15%;
-        min-width: 50px;
+        width: 13%;
       }
       
       footer {
@@ -452,7 +444,6 @@
         <!-- C2 矩阵多选 -->
         <div>
           <label class="font-bold">您在各年份主要使用 AI 的场景（矩阵多选）<span class="required-star">*</span></label>
-          <div class="matrix-container">
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -519,7 +510,6 @@
               </tr>
             </tbody>
           </table>
-          </div>
         </div>
 
         <!-- C3 矩阵单选 -->
@@ -572,7 +562,6 @@
         <!-- C4 矩阵单选 -->
         <div>
           <label class="font-bold">您的团队/组织是否有 AI 使用政策（矩阵单选）<span class="required-star">*</span></label>
-          <div class="matrix-container">
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -611,7 +600,6 @@
               </tr>
             </tbody>
           </table>
-          </div>
         </div>
 
         <!-- C5 多选，每行一个 -->
@@ -716,7 +704,6 @@
         <!-- CD5 矩阵单选题 -->
         <div>
           <label class="font-bold">您对AI在不同复杂度任务上的信任程度<span class="required-star">*</span></label>
-          <div class="matrix-container">
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -755,7 +742,6 @@
               </tr>
             </tbody>
           </table>
-          </div>
         </div>
 
         <!-- CD6 开放题 -->
@@ -808,7 +794,6 @@
 
         <div>
           <label class="font-bold">您对以下陈述在各年份的看法（矩阵单选）<span class="required-star">*</span></label>
-          <div class="matrix-container">
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -1092,7 +1077,6 @@
               </tr>
             </tbody>
           </table>
-          </div>
         </div>
 
         <!-- D2 单选题 -->
