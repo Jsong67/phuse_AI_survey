@@ -165,6 +165,12 @@
       }
     }
     
+    /* 矩阵表格容器 */
+    .matrix-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
     /* 响应式 */
     @media (max-width: 768px) {
       .main-container {
@@ -173,7 +179,26 @@
       }
       
       .matrix {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
+        width: 100%;
+        table-layout: fixed;
+        min-width: 600px;
+      }
+      
+      .matrix th, .matrix td {
+        padding: 6px 2px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      .matrix th:first-child, .matrix td:first-child {
+        width: 25%;
+        min-width: 80px;
+      }
+      
+      .matrix th:not(:first-child), .matrix td:not(:first-child) {
+        width: 15%;
+        min-width: 50px;
       }
       
       footer {
@@ -352,7 +377,7 @@
         <div>
           <label class="font-bold">您常用的编程语言/工具（多选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="checkbox" name="B4" value="A" required> SAS</label>
+            <label><input type="checkbox" name="B4" value="A"> SAS</label>
             <label><input type="checkbox" name="B4" value="B"> R</label>
             <label><input type="checkbox" name="B4" value="C"> Python</label>
             <label><input type="checkbox" name="B4" value="D"> SQL</label>
@@ -384,6 +409,7 @@
         <!-- C1 矩阵单选 -->
         <div>
           <label class="font-bold">您在工作中使用 AI 的频率（矩阵单选）<span class="required-star">*</span></label>
+          <div class="matrix-container">
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -422,6 +448,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <!-- C2 矩阵多选 -->
@@ -493,15 +520,12 @@
               </tr>
             </tbody>
           </table>
-          <div class="mt-2">
-            <label class="text-sm">C2-OTHER 如选择"其他"，请填写具体场景：</label>
-            <input type="text" name="C2-OTHER" class="border rounded px-2 py-1 text-sm w-full mt-1" placeholder="请填写'其他'的具体场景">
-          </div>
         </div>
 
         <!-- C3 矩阵单选 -->
         <div>
-          <label class="font-bold">C3 您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
+          <div class="matrix-container">
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -544,11 +568,12 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <!-- C4 矩阵单选 -->
         <div>
-          <label class="font-bold">C4 您的团队/组织是否有 AI 使用政策（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您的团队/组织是否有 AI 使用政策（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -591,7 +616,7 @@
 
         <!-- C5 多选，每行一个 -->
         <div>
-          <label class="font-bold">C5 您在 2025 年常用的 AI/模型或平台（多选）<span class="required-star">*</span></label>
+          <label class="font-bold">您在 2025 年常用的 AI/模型或平台（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> Claude</label>
@@ -609,7 +634,7 @@
 
         <!-- C6 单选，每行一个 -->
         <div>
-          <label class="font-bold">C6 您在 2025 年用于处理含敏感数据的做法（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您在 2025 年用于处理含敏感数据的做法（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="C6" value="A"> 从不在 AI 工具中输入敏感数据</label>
             <label class="flex items-center gap-2"><input type="radio" name="C6" value="B"> 仅在公司批准的安全环境中使用（如私有化、脱敏）</label>
@@ -733,7 +758,7 @@
 
         <!-- CD6 开放题 -->
         <div>
-          <label class="font-bold">CD6 请分享一个AI显著帮助您解决的具体技术难题：</label>
+          <label class="font-bold">请分享一个AI显著帮助您解决的具体技术难题：</label>
           <textarea name="CD6" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="如：AI帮我解决了某个复杂的数据清洗逻辑，原本需要...，AI建议...，最终节省了...时间"></textarea>
         </div>
 
@@ -770,7 +795,7 @@
 
         <!-- CD9 开放题 -->
         <div>
-          <label class="font-bold">CD9 作为AI深度用户，您对同行有什么使用建议？</label>
+          <label class="font-bold">作为AI深度用户，您对同行有什么使用建议？</label>
           <textarea name="CD9" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="如：推荐从...开始，注意...，避免..."></textarea>
         </div>
       </div>
@@ -780,7 +805,7 @@
         <h2 class="text-xl font-semibold">您对 AI 的态度（2023–2025 年对比）</h2>
 
         <div>
-          <label class="font-bold">D1 您对以下陈述在各年份的看法（矩阵单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您对以下陈述在各年份的看法（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
               <tr class="bg-gray-50">
@@ -1068,7 +1093,7 @@
 
         <!-- D2 单选题 -->
         <div>
-          <label class="font-bold">D2 您预计未来 1 年 AI 在统计编程行业的影响（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您预计未来 1 年 AI 在统计编程行业的影响（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="D2" value="A"> 进一步增强生产力，形成行业刚需</label>
             <label class="flex items-center gap-2"><input type="radio" name="D2" value="B"> 有助提升，但影响有限</label>
@@ -1080,7 +1105,7 @@
 
         <!-- D3 多选题 -->
         <div>
-          <label class="font-bold">D3 您认为哪些因素最制约 AI 在统计编程中的应用（多选，最多3项）<span class="required-star">*</span></label>
+          <label class="font-bold">您认为哪些因素最制约 AI 在统计编程中的应用（多选，最多3项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="A"> 数据安全与隐私合规风险</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="D3" value="B"> AI输出的准确性与可信度不足</label>
@@ -1096,7 +1121,7 @@
 
         <!-- D4 单选题 -->
         <div>
-          <label class="font-bold">D4 您倾向于在哪些情境下更信任 AI 的建议（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您倾向于在哪些情境下更信任 AI 的建议（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="D4" value="A"> 重复性高、标准化的编程任务</label>
             <label class="flex items-center gap-2"><input type="radio" name="D4" value="B"> 有明确业务逻辑、可校验的分析</label>
@@ -1113,7 +1138,7 @@
 
         <!-- E1 多选题 -->
         <div>
-          <label class="font-bold">E1 您认为最需要 AI 改进的统计编程环节（多选，最多3项）<span class="required-star">*</span></label>
+          <label class="font-bold">您认为最需要 AI 改进的统计编程环节（多选，最多3项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="A"> 代码生成与优化（提高代码质量与效率）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="B"> 数据清洗与转换的自动化</label>
@@ -1128,7 +1153,7 @@
 
         <!-- E2 单选题 -->
         <div>
-          <label class="font-bold">E2 您对公司 AI 政策的建议（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您对公司 AI 政策的建议（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="E2" value="A"> 制定更明确的使用指南与边界</label>
             <label class="flex items-center gap-2"><input type="radio" name="E2" value="B"> 加大 AI 工具与基础设施投入</label>
@@ -1141,13 +1166,13 @@
 
         <!-- E3 开放题 -->
         <div>
-          <label class="font-bold">E3 如果让您向同行推荐，您会如何描述 AI 在统计编程中的价值？</label>
+          <label class="font-bold">如果让您向同行推荐，您会如何描述 AI 在统计编程中的价值？</label>
           <textarea name="E3" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写，如'AI帮我提升了...，但需要注意...'"></textarea>
         </div>
 
         <!-- E4 排序题 -->
         <div>
-          <label class="font-bold">E4 以下哪个 AI 发展方向对您最有吸引力（拖拽排序，1最重要）<span class="required-star">*</span></label>
+          <label class="font-bold">以下哪个 AI 发展方向对您最有吸引力（拖拽排序，1最重要）<span class="required-star">*</span></label>
           <p class="text-sm text-gray-600 mt-1">请拖拽下方选项进行排序，排在最上方的为最重要（移动端：长按拖拽）</p>
           <ul id="E4_sortable" class="mt-3 space-y-2">
             <li class="sortable-item bg-gray-50 border rounded p-3 cursor-move flex items-center" data-value="A">
@@ -1189,7 +1214,7 @@
         <h2 class="text-xl font-semibold">开放反馈</h2>
         
         <div>
-          <label class="font-bold">F1 您对本次调研或 AI 在统计编程领域的其他建议：</label>
+          <label class="font-bold">您对本次调研或 AI 在统计编程领域的其他建议：</label>
           <textarea name="F1" rows="4" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写您的任何建议、意见或补充..."></textarea>
         </div>
 
@@ -1263,14 +1288,14 @@
           const endMsg = document.getElementById('endMsgS1');
           if (this.value === 'B' && this.checked) {
             endMsg.classList.remove('hidden');
-            // 隐藏所有后续问题
-            document.querySelectorAll('#blockA .p-6 > div:not(:first-child):not(:nth-child(2))').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('#blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border').forEach(el => el.classList.add('hidden'));
+            // 隐藏除第一题以外的所有题目
+            document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.add('hidden'));
           } else {
             endMsg.classList.add('hidden');
-            // 显示所有后续问题
-            document.querySelectorAll('#blockA .p-6 > div:not(:first-child):not(:nth-child(2))').forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('#blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border').forEach(el => el.classList.remove('hidden'));
+            // 显示所有题目
+            document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.remove('hidden'));
           }
         });
       });
@@ -1451,6 +1476,13 @@
           }
         });
         
+        // B4问题的自定义验证
+        const b4Checkboxes = form.querySelectorAll('input[name="B4"]:checked');
+        if (b4Checkboxes.length === 0) {
+          valid = false;
+          missingFields.push('B4');
+        }
+        
         if (!valid) {
           alert('请完成以下必填项：' + missingFields.join(', '));
           const firstMissing = form.querySelector(`[name="${missingFields[0]}"]`);
@@ -1493,8 +1525,8 @@
         
         database.ref('surveys').push(data)
           .then(() => {
-            // 弹窗提示
-            alert('问卷已完成！\n\n感谢您的参与！\n\n调查结果将于2025年11月7日于PHUSE SDE及线上同时发布。');
+            // 隐藏填写说明
+            document.querySelector('section.mb-6').style.display = 'none';
             
             submitSuccess.classList.remove('hidden');
             form.style.display = 'none';
