@@ -186,11 +186,11 @@
       }
       
       .matrix th:first-child, .matrix td:first-child {
-        width: 30%;
+        width: 35%;
       }
       
       .matrix th:not(:first-child), .matrix td:not(:first-child) {
-        width: 14%;
+        width: 13%;
       }
       
       footer {
@@ -1269,14 +1269,13 @@
       
       // S1 逻辑 - 选择"否"时显示结束消息并隐藏后续问题
       const s1Inputs = document.querySelectorAll('input[name="S1"]');
-      const subsequentSections = document.querySelectorAll('#blockA > div:not(:first-child) > div:not([id="endMsgS1"]):not([id="sSectionValidation"]), #blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border');
       
       s1Inputs.forEach(input => {
         input.addEventListener('change', function() {
           const endMsg = document.getElementById('endMsgS1');
           if (this.value === 'B' && this.checked) {
             endMsg.classList.remove('hidden');
-            // 隐藏除第一题以外的所有题目
+            // 隐藏除第一题以外的其他题目
             document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.add('hidden'));
           } else {
