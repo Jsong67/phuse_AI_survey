@@ -83,7 +83,7 @@
     
     /* 矩阵表格 */
     .matrix {
-      border-collapse: separate;
+      border-collapse: collapse;
       border-spacing: 0;
       border-radius: 12px;
       overflow: hidden;
@@ -101,6 +101,8 @@
       font-weight: 600;
       color: #334155;
     }
+    
+
     
     .matrix td { text-align: center; }
     .matrix th:first-child, .matrix td:first-child { text-align: left !important; }
@@ -337,7 +339,7 @@
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="A"> 代码片段/脚本建议（SAS/R/Python）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="B"> 数据清洗/转换/映射（如 SDTM/ADaM 辅助）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="C"> 生成统计分析思路/表图（TLF）草案</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="D"> 文档生成/润色（SAP、程序注释、审计说明）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="D"> 文档生成/润色（邮件、SAP、程序注释、审计说明）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="E"> 自动化工作流/工具集成（API、LangChain、自建 Agent）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="F"> 内部知识库/RAG（如 SOP/模板/最佳实践检索）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="G"> 模型微调/本地化部署/私有化</label>
@@ -663,7 +665,7 @@
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="A"> 逐行检查代码逻辑</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="B"> 用已知结果的测试数据验证</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="C"> 与传统方法的结果对比</label>
-            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="D"> 同事peer review</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD4" value="D"> 同事进行代码审查</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="E"> 分步运行，检查中间结果</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="F"> 直接使用，出问题再修正</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="G"> 多个AI工具交叉验证</label>
@@ -856,6 +858,16 @@
                 <td><input type="radio" name="D1_2025年_3" value="非常同意"></td>
               </tr>
 
+              <!-- 表头重复 -->
+              <tr class="bg-gray-50">
+                <th class="text-left">陈述/年份</th>
+                <th>非常不同意</th>
+                <th>不同意</th>
+                <th>中立</th>
+                <th>同意</th>
+                <th>非常同意</th>
+              </tr>
+              
               <!-- AI 对初级岗位替代风险高（反向） -->
               <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 对初级岗位替代风险高（反向）</td></tr>
               <tr>
@@ -937,6 +949,16 @@
                 <td><input type="radio" name="D1_2025年_6" value="非常同意"></td>
               </tr>
 
+              <!-- 表头重复 -->
+              <tr class="bg-gray-50">
+                <th class="text-left">陈述/年份</th>
+                <th>非常不同意</th>
+                <th>不同意</th>
+                <th>中立</th>
+                <th>同意</th>
+                <th>非常同意</th>
+              </tr>
+              
               <!-- AI 的输出需要严格的人审/双编 -->
               <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 的输出需要严格的人审/双编</td></tr>
               <tr>
@@ -1018,6 +1040,16 @@
                 <td><input type="radio" name="D1_2025年_9" value="非常同意"></td>
               </tr>
 
+              <!-- 表头重复 -->
+              <tr class="bg-gray-50">
+                <th class="text-left">陈述/年份</th>
+                <th>非常不同意</th>
+                <th>不同意</th>
+                <th>中立</th>
+                <th>同意</th>
+                <th>非常同意</th>
+              </tr>
+              
               <!-- 公司应加大 AI 培训与投入 -->
               <tr><td colspan="6" class="bg-gray-50 font-semibold">公司应加大 AI 培训与投入</td></tr>
               <tr>
@@ -1325,10 +1357,10 @@
         });
       });
       
-      // 多选框"其他"选项的文本框联动
-      const otherCheckboxes = document.querySelectorAll('input[type="checkbox"][value*="其他"], input[type="checkbox"][value="K"], input[type="checkbox"][value="I"], input[type="checkbox"][value="H"]');
-      otherCheckboxes.forEach(checkbox => {
-        const textInput = checkbox.parentElement.querySelector('input[type="text"]');
+      // 多选框"其他"选项的文本框联动 - 通用处理所有带文本框的checkbox
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const label = checkbox.parentElement;
+        const textInput = label.querySelector('input[type="text"]');
         if (textInput) {
           checkbox.addEventListener('change', function() {
             textInput.disabled = !this.checked;
@@ -1470,6 +1502,7 @@
       
 
       
+
       // 表单提交处理
       form.addEventListener('submit', function(e) {
         e.preventDefault();
