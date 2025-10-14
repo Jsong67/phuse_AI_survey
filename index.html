@@ -284,7 +284,7 @@
         <div>
           <label class="font-bold">您目前的主要工作地点在中国大陆吗？ <span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="S1" value="A" required> <span>是</span></label>
+            <label class="flex items-center gap-2"><input type="radio" name="S1" value="A"> <span>是</span></label>
             <label class="flex items-center gap-2"><input type="radio" name="S1" value="B"> <span>否（将结束问卷）</span></label>
           </div>
           <p id="endMsgS1" class="mt-2 text-sm text-red-600 hidden">您选择了"否"，问卷将在此结束。非常感谢您的时间！</p>
@@ -294,7 +294,7 @@
         <div>
           <label class="font-bold">您所在的组织类型（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="S2" value="A" required> 跨国药企（MNC）在华机构</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S2" value="A"> 跨国药企（MNC）在华机构</label>
             <label class="flex items-center gap-2"><input type="radio" name="S2" value="B"> 本土药企（Local）</label>
             <label class="flex items-center gap-2"><input type="radio" name="S2" value="C"> CRO/服务外包公司</label>
             <label class="flex items-center gap-2"><input type="radio" name="S2" value="D"> 其他医药相关机构</label>
@@ -324,7 +324,7 @@
         <div>
           <label class="font-bold">您在 2025 年工作中使用 AI 的频率（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="S5" value="A" required> 从不</label>
+            <label class="flex items-center gap-2"><input type="radio" name="S5" value="A"> 从不</label>
             <label class="flex items-center gap-2"><input type="radio" name="S5" value="B"> 很少（每季度或更少）</label>
             <label class="flex items-center gap-2"><input type="radio" name="S5" value="C"> 偶尔（每月）</label>
             <label class="flex items-center gap-2"><input type="radio" name="S5" value="D"> 经常（每周）</label>
@@ -458,6 +458,12 @@
                 <td><input type="checkbox" name="C2_合规/风险评估_2023"></td>
                 <td><input type="checkbox" name="C2_合规/风险评估_2024"></td>
                 <td><input type="checkbox" name="C2_合规/风险评估_2025"></td>
+              </tr>
+              <tr>
+                <td class="font-medium">未使用AI</td>
+                <td><input type="checkbox" name="C2_未使用AI_2023"></td>
+                <td><input type="checkbox" name="C2_未使用AI_2024"></td>
+                <td><input type="checkbox" name="C2_未使用AI_2025"></td>
               </tr>
               <tr>
                 <td class="font-medium">其他</td>
@@ -831,8 +837,8 @@
                 <td><input type="radio" name="D1_2025年_2" value="非常同意"></td>
               </tr>
 
-              <!-- AI 增加合规/审计风险（反向） -->
-              <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 增加合规/审计风险（反向）</td></tr>
+              <!-- AI 增加合规/审计风险 -->
+              <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 增加合规/审计风险</td></tr>
               <tr>
                 <td class="indent-row font-normal text-gray-600">2023年</td>
                 <td><input type="radio" name="D1_2023年_3" value="非常不同意"></td>
@@ -868,8 +874,8 @@
                 <th>非常同意</th>
               </tr>
               
-              <!-- AI 对初级岗位替代风险高（反向） -->
-              <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 对初级岗位替代风险高（反向）</td></tr>
+              <!-- AI 对初级岗位替代风险高 -->
+              <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 对初级岗位替代风险高</td></tr>
               <tr>
                 <td class="indent-row font-normal text-gray-600">2023年</td>
                 <td><input type="radio" name="D1_2023年_4" value="非常不同意"></td>
@@ -1110,15 +1116,15 @@
           </div>
         </div>
 
-        <!-- D4 单选题 -->
+        <!-- D4 多选题 -->
         <div>
-          <label class="font-bold">您倾向于在哪些情境下更信任 AI 的建议（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您倾向于在哪些情境下更信任 AI 的建议（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="A"> 重复性高、标准化的编程任务</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="B"> 有明确业务逻辑、可校验的分析</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="C"> 初期探索、获取灵感的阶段</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="D"> 有充足时间进行验证的项目</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D4" value="E"> 都不信任，仅作参考</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D4" value="A"> 重复性高、标准化的编程任务</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D4" value="B"> 有明确业务逻辑、可校验的分析</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D4" value="C"> 初期探索、获取灵感的阶段</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D4" value="D"> 有充足时间进行验证的项目</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="D4" value="E"> 都不信任，仅作参考</label>
           </div>
         </div>
       </div>
@@ -1142,16 +1148,16 @@
           </div>
         </div>
 
-        <!-- E2 单选题 -->
+        <!-- E2 多选题 -->
         <div>
-          <label class="font-bold">您对公司 AI 政策的建议（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您对公司 AI 政策的建议（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="A"> 制定更明确的使用指南与边界</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="B"> 加大 AI 工具与基础设施投入</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="C"> 增加相关培训与能力建设</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="D"> 建立最佳实践分享与交流机制</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="E"> 保持现状，观望发展</label>
-            <label class="flex items-center gap-2"><input type="radio" name="E2" value="F"> 更谨慎使用，加强风险控制</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="A"> 制定更明确的使用指南与边界</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="B"> 加大 AI 工具与基础设施投入</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="C"> 增加相关培训与能力建设</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="D"> 建立最佳实践分享与交流机制</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="E"> 保持现状，观望发展</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="F"> 更谨慎使用，加强风险控制</label>
           </div>
         </div>
 
@@ -1207,7 +1213,7 @@
         <div>
           <label class="font-bold">您的主要岗位级别（单选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-1">
-            <label><input type="radio" name="B2" value="A" required> 初级/助理</label>
+            <label><input type="radio" name="B2" value="A"> 初级/助理</label>
             <label><input type="radio" name="B2" value="B"> 中级/资深</label>
             <label><input type="radio" name="B2" value="C"> 主管/组长</label>
             <label><input type="radio" name="B2" value="D"> 经理/负责人</label>
@@ -1218,7 +1224,7 @@
         <div>
           <label class="font-bold">您的行业从业年限（单选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="radio" name="B3" value="A" required> 0–2 年</label>
+            <label><input type="radio" name="B3" value="A"> 0–2 年</label>
             <label><input type="radio" name="B3" value="B"> 3–5 年</label>
             <label><input type="radio" name="B3" value="C"> 6–9 年</label>
             <label><input type="radio" name="B3" value="D"> 10–14 年</label>
@@ -1239,16 +1245,16 @@
         </div>
 
         <div>
-          <label class="font-bold">您当前主要涉及的治疗领域（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您当前主要涉及的治疗领域（多选）<span class="required-star">*</span></label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="radio" name="B5" value="A" required> 肿瘤</label>
-            <label><input type="radio" name="B5" value="B"> 免疫</label>
-            <label><input type="radio" name="B5" value="C"> 代谢</label>
-            <label><input type="radio" name="B5" value="D"> 心血管</label>
-            <label><input type="radio" name="B5" value="E"> 神经</label>
-            <label><input type="radio" name="B5" value="F"> 感染</label>
-            <label><input type="radio" name="B5" value="G"> 罕见病</label>
-            <label><input type="radio" name="B5" value="H"> 其他/不固定</label>
+            <label><input type="checkbox" name="B5" value="A"> 肿瘤</label>
+            <label><input type="checkbox" name="B5" value="B"> 免疫</label>
+            <label><input type="checkbox" name="B5" value="C"> 代谢</label>
+            <label><input type="checkbox" name="B5" value="D"> 心血管</label>
+            <label><input type="checkbox" name="B5" value="E"> 神经</label>
+            <label><input type="checkbox" name="B5" value="F"> 感染</label>
+            <label><input type="checkbox" name="B5" value="G"> 罕见病</label>
+            <label><input type="checkbox" name="B5" value="H"> 其他/不固定</label>
           </div>
         </div>
       </div>
@@ -1368,6 +1374,8 @@
           });
         }
       });
+      
+
       
 
       
@@ -1507,45 +1515,170 @@
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // 基本验证
-        const requiredFields = form.querySelectorAll('[required]');
-        let valid = true;
-        let missingFields = [];
+        // 清除所有验证提示
+        document.querySelectorAll('.validation-error').forEach(el => el.remove());
         
-        requiredFields.forEach(field => {
-          let fieldValid = false;
+        // 定义所有必填项（按页面顺序）
+        const requiredQuestions = [
+          {name: 'S1', type: 'radio'},
+          {name: 'S2', type: 'radio'},
+          {name: 'S3', type: 'checkbox'},
+          {name: 'S5', type: 'radio'},
+          {name: 'S6', type: 'checkbox'},
+          {name: 'C1_2023', type: 'radio'},
+          {name: 'C1_2024', type: 'radio'},
+          {name: 'C1_2025', type: 'radio'},
+          {name: 'C2_2023', type: 'checkbox-column'},
+          {name: 'C2_2024', type: 'checkbox-column'},
+          {name: 'C2_2025', type: 'checkbox-column'},
+          {name: 'C3_2023', type: 'radio'},
+          {name: 'C3_2024', type: 'radio'},
+          {name: 'C3_2025', type: 'radio'},
+          {name: 'C4_2023', type: 'radio'},
+          {name: 'C4_2024', type: 'radio'},
+          {name: 'C4_2025', type: 'radio'},
+          {name: 'C5', type: 'checkbox'},
+          {name: 'C6', type: 'radio'},
+          {name: 'C7', type: 'checkbox'}
+        ];
+        
+        // 深度用户专项必填题（条件显示）
+        const deepUserQuestions = [
+          {name: 'CD1', type: 'checkbox'},
+          {name: 'CD2', type: 'radio'},
+          {name: 'CD3', type: 'checkbox'},
+          {name: 'CD4', type: 'radio'},
+          {name: 'CD5_simple', type: 'radio'},
+          {name: 'CD5_medium', type: 'radio'},
+          {name: 'CD5_complex', type: 'radio'},
+          {name: 'CD7', type: 'checkbox'},
+          {name: 'CD8', type: 'radio'}
+        ];
+        
+        // 如果深度用户区块显示，添加深度用户题目
+        const deepBlock = document.getElementById('blockC-DEEP');
+        if (deepBlock && !deepBlock.classList.contains('hidden')) {
+          requiredQuestions.push(...deepUserQuestions);
+        }
+        
+        // D、E、B区块题目
+        requiredQuestions.push(
+          {name: 'D1_2023年_1', type: 'radio'},
+          {name: 'D1_2024年_1', type: 'radio'},
+          {name: 'D1_2025年_1', type: 'radio'},
+          {name: 'D1_2023年_2', type: 'radio'},
+          {name: 'D1_2024年_2', type: 'radio'},
+          {name: 'D1_2025年_2', type: 'radio'},
+          {name: 'D1_2023年_3', type: 'radio'},
+          {name: 'D1_2024年_3', type: 'radio'},
+          {name: 'D1_2025年_3', type: 'radio'},
+          {name: 'D1_2023年_4', type: 'radio'},
+          {name: 'D1_2024年_4', type: 'radio'},
+          {name: 'D1_2025年_4', type: 'radio'},
+          {name: 'D1_2023年_5', type: 'radio'},
+          {name: 'D1_2024年_5', type: 'radio'},
+          {name: 'D1_2025年_5', type: 'radio'},
+          {name: 'D1_2023年_6', type: 'radio'},
+          {name: 'D1_2024年_6', type: 'radio'},
+          {name: 'D1_2025年_6', type: 'radio'},
+          {name: 'D1_2023年_7', type: 'radio'},
+          {name: 'D1_2024年_7', type: 'radio'},
+          {name: 'D1_2025年_7', type: 'radio'},
+          {name: 'D1_2023年_8', type: 'radio'},
+          {name: 'D1_2024年_8', type: 'radio'},
+          {name: 'D1_2025年_8', type: 'radio'},
+          {name: 'D1_2023年_9', type: 'radio'},
+          {name: 'D1_2024年_9', type: 'radio'},
+          {name: 'D1_2025年_9', type: 'radio'},
+          {name: 'D1_2023年_10', type: 'radio'},
+          {name: 'D1_2024年_10', type: 'radio'},
+          {name: 'D1_2025年_10', type: 'radio'},
+          {name: 'D2', type: 'radio'},
+          {name: 'D3', type: 'checkbox'},
+          {name: 'D4', type: 'checkbox'},
+          {name: 'E1', type: 'checkbox'},
+          {name: 'E2', type: 'checkbox'},
+          {name: 'B2', type: 'radio'},
+          {name: 'B3', type: 'radio'},
+          {name: 'B4', type: 'checkbox'},
+          {name: 'B5', type: 'checkbox'}
+        )
+        
+        let firstInvalidField = null;
+        
+        // 验证所有必填项
+        requiredQuestions.forEach(q => {
+          let hasValue = false;
+          let firstInput = null;
+          let targetElement = null;
           
-          if (field.type === 'radio') {
-            fieldValid = form.querySelector(`input[name="${field.name}"]:checked`) !== null;
-          } else if (field.type === 'checkbox') {
-            const checkboxGroup = form.querySelectorAll(`input[name="${field.name}"]`);
-            fieldValid = Array.from(checkboxGroup).some(cb => cb.checked);
+          if (q.type === 'checkbox-column') {
+            // 验证C2矩阵的某一列（年份）
+            const year = q.name.split('_')[1];
+            const columnInputs = form.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`);
+            hasValue = Array.from(columnInputs).some(input => input.checked);
+            firstInput = columnInputs[0];
+            
+            if (firstInput) {
+              const table = firstInput.closest('table');
+              const thead = table.querySelector('thead tr');
+              const thCells = thead.querySelectorAll('th');
+              let columnIndex = -1;
+              
+              // 找到对应年份的列索引
+              thCells.forEach((th, index) => {
+                if (th.textContent.includes(year)) {
+                  columnIndex = index;
+                }
+              });
+              
+              if (columnIndex > 0) {
+                targetElement = thCells[columnIndex];
+              }
+            }
           } else {
-            fieldValid = field.value.trim() !== '';
+            const inputs = form.querySelectorAll(`input[name="${q.name}"]`);
+            hasValue = Array.from(inputs).some(input => input.checked);
+            firstInput = inputs[0];
+            
+            // 对于矩阵题，在对应的行下方显示错误
+            if (firstInput && (q.name.includes('C1_') || q.name.includes('C3_') || q.name.includes('C4_') || q.name.includes('D1_') || q.name.includes('CD5_'))) {
+              const row = firstInput.closest('tr');
+              if (row) {
+                const yearCell = row.querySelector('td:first-child');
+                targetElement = yearCell;
+              }
+            } else if (firstInput) {
+              // 向上查找包含label.font-bold的div
+              let currentDiv = firstInput.closest('div');
+              while (currentDiv && !currentDiv.querySelector('label.font-bold')) {
+                currentDiv = currentDiv.parentElement.closest('div');
+              }
+              targetElement = currentDiv ? currentDiv.querySelector('label.font-bold') : null;
+            }
           }
           
-          if (!fieldValid) {
-            valid = false;
-            missingFields.push(field.name);
-            field.style.borderColor = '#ef4444';
-          } else {
-            field.style.borderColor = '';
+          if (!hasValue && targetElement) {
+            const errorMsg = document.createElement('p');
+            errorMsg.className = 'validation-error mt-2 text-sm text-red-600';
+            errorMsg.textContent = '请至少选择一项！';
+            
+            if (targetElement.tagName === 'TD' || targetElement.tagName === 'TH') {
+              // 对于表格单元格，在内部添加
+              targetElement.appendChild(errorMsg);
+            } else {
+              // 对于普通元素，在后面添加
+              targetElement.after(errorMsg);
+            }
+            
+            if (!firstInvalidField) {
+              firstInvalidField = firstInput ? firstInput.closest('div, tr') : null;
+            }
           }
         });
         
-        // B4问题的自定义验证
-        const b4Checkboxes = form.querySelectorAll('input[name="B4"]:checked');
-        if (b4Checkboxes.length === 0) {
-          valid = false;
-          missingFields.push('B4');
-        }
-        
-        if (!valid) {
-          alert('请完成以下必填项：' + missingFields.join(', '));
-          const firstMissing = form.querySelector(`[name="${missingFields[0]}"]`);
-          if (firstMissing) {
-            firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
+        if (firstInvalidField) {
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
         
