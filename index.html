@@ -193,27 +193,7 @@
         width: 13%;
       }
       
-      /* C1表格特殊处理（6列） */
-      .matrix-6col th:first-child,
-      .matrix-6col td:first-child {
-        width: 25%;
-      }
-      
-      .matrix-6col th:not(:first-child),
-      .matrix-6col td:not(:first-child) {
-        width: 15%;
-      }
-      
-      /* C3表格特殊处理（7列） */
-      .matrix-7col th:first-child,
-      .matrix-7col td:first-child {
-        width: 20%;
-      }
-      
-      .matrix-7col th:not(:first-child),
-      .matrix-7col td:not(:first-child) {
-        width: 13.3%;
-      }
+
       
       footer {
         border-radius: 0 0 16px 16px;
@@ -366,53 +346,6 @@
           </div>
         </div>
 
-        <div>
-          <label class="font-bold">您的主要岗位级别（单选）<span class="required-star">*</span></label>
-          <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-1">
-            <label><input type="radio" name="B2" value="A" required> 初级/助理</label>
-            <label><input type="radio" name="B2" value="B"> 中级/资深</label>
-            <label><input type="radio" name="B2" value="C"> 主管/组长</label>
-            <label><input type="radio" name="B2" value="D"> 经理/负责人</label>
-            <label><input type="radio" name="B2" value="E"> 总监及以上</label>
-          </div>
-        </div>
-
-        <div>
-          <label class="font-bold">您的行业从业年限（单选）<span class="required-star">*</span></label>
-          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="radio" name="B3" value="A" required> 0–2 年</label>
-            <label><input type="radio" name="B3" value="B"> 3–5 年</label>
-            <label><input type="radio" name="B3" value="C"> 6–9 年</label>
-            <label><input type="radio" name="B3" value="D"> 10–14 年</label>
-            <label><input type="radio" name="B3" value="E"> 15 年及以上</label>
-          </div>
-        </div>
-
-        <div>
-          <label class="font-bold">您常用的编程语言/工具（多选）<span class="required-star">*</span></label>
-          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="checkbox" name="B4" value="A"> SAS</label>
-            <label><input type="checkbox" name="B4" value="B"> R</label>
-            <label><input type="checkbox" name="B4" value="C"> Python</label>
-            <label><input type="checkbox" name="B4" value="D"> SQL</label>
-            <label><input type="checkbox" name="B4" value="E"> Julia</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="B4" value="F"> <span>其他：</span><input type="text" name="B4-OTHER" class="border rounded px-2 py-1 text-sm flex-1" placeholder="请填写" disabled></label>
-          </div>
-        </div>
-
-        <div>
-          <label class="font-bold">您当前主要涉及的治疗领域（单选）<span class="required-star">*</span></label>
-          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <label><input type="radio" name="B5" value="A" required> 肿瘤</label>
-            <label><input type="radio" name="B5" value="B"> 免疫</label>
-            <label><input type="radio" name="B5" value="C"> 代谢</label>
-            <label><input type="radio" name="B5" value="D"> 心血管</label>
-            <label><input type="radio" name="B5" value="E"> 神经</label>
-            <label><input type="radio" name="B5" value="F"> 感染</label>
-            <label><input type="radio" name="B5" value="G"> 罕见病</label>
-            <label><input type="radio" name="B5" value="H"> 其他/不固定</label>
-          </div>
-      </div>
         </div>
       <!--</div>-->
 
@@ -654,8 +587,22 @@
           </div>
         </div>
 
-
-
+        <!-- C7 多选题 -->
+        <div>
+          <label class="font-bold">您主要通过哪些渠道学习 AI 相关知识和技能（多选）<span class="required-star">*</span></label>
+          <div class="mt-2 space-y-2">
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="A"> 公司内部培训</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="B"> 在线课程（如 Coursera、Udemy 等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="C"> 行业会议/研讨会（如 PHUSE、其他专业会议）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="D"> 网络资源（博客、技术文档、GitHub 等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="E"> 同事/朋友分享</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="F"> 社交媒体（微信公众号、LinkedIn、Twitter 等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="G"> 专业书籍/论文</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="H"> 自学实践（直接使用 AI 工具摸索）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="I"> 没有主动学习</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="J"> <span>其他：</span><input type="text" name="C7-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+          </div>
+        </div>
 
       </div>
 
@@ -1017,8 +964,8 @@
                 <td><input type="radio" name="D1_2025年_7" value="非常同意"></td>
               </tr>
 
-              <!-- 我对 AI 在专业场景下的可信度更高 -->
-              <tr><td colspan="6" class="bg-gray-50 font-semibold">我对 AI 在专业场景下的可信度更高</td></tr>
+              <!-- AI 在专业场景下更值得信任 -->
+              <tr><td colspan="6" class="bg-gray-50 font-semibold">AI 在专业场景下更值得信任</td></tr>
               <tr>
                 <td class="indent-row font-normal text-gray-600">2023年</td>
                 <td><input type="radio" name="D1_2023年_8" value="非常不同意"></td>
@@ -1103,13 +1050,15 @@
 
         <!-- D2 单选题 -->
         <div>
-          <label class="font-bold">您预计未来 1 年 AI 在统计编程行业的影响（单选）<span class="required-star">*</span></label>
+          <label class="font-bold">您预计未来 3-5 年 AI 在统计编程行业的影响（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="A"> 进一步增强生产力，形成行业刚需</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="B"> 有助提升，但影响有限</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="C"> 与现有工具类似，不会显著改变行业</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="D"> 可能带来负面影响（如技能退化、过度依赖）</label>
-            <label class="flex items-center gap-2"><input type="radio" name="D2" value="E"> 不确定/难以预测</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="A"> 增加对人工统计编程的要求，扩展统计编程组的工作范围</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="B"> 减少对人工统计编程的需求，收缩统计编程组的工作范围</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="C"> 进一步增强生产力，形成行业刚需</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="D"> 有助提升，但影响有限</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="E"> 与现有工具类似，不会显著改变行业</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="F"> 可能带来负面影响（如技能退化、过度依赖）</label>
+            <label class="flex items-center gap-2"><input type="radio" name="D2" value="G"> 不确定/难以预测</label>
           </div>
         </div>
 
@@ -1219,6 +1168,59 @@
         </div>
       </div>
 
+      <!-- G. 职业概况 -->
+      <div id="blockG" class="bg-white rounded border p-5 space-y-6">
+        <h2 class="text-xl font-semibold">职业概况</h2>
+
+        <div>
+          <label class="font-bold">您的主要岗位级别（单选）<span class="required-star">*</span></label>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-1">
+            <label><input type="radio" name="B2" value="A" required> 初级/助理</label>
+            <label><input type="radio" name="B2" value="B"> 中级/资深</label>
+            <label><input type="radio" name="B2" value="C"> 主管/组长</label>
+            <label><input type="radio" name="B2" value="D"> 经理/负责人</label>
+            <label><input type="radio" name="B2" value="E"> 总监及以上</label>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold">您的行业从业年限（单选）<span class="required-star">*</span></label>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
+            <label><input type="radio" name="B3" value="A" required> 0–2 年</label>
+            <label><input type="radio" name="B3" value="B"> 3–5 年</label>
+            <label><input type="radio" name="B3" value="C"> 6–9 年</label>
+            <label><input type="radio" name="B3" value="D"> 10–14 年</label>
+            <label><input type="radio" name="B3" value="E"> 15 年及以上</label>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold">您常用的编程语言/工具（多选）<span class="required-star">*</span></label>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
+            <label><input type="checkbox" name="B4" value="A"> SAS</label>
+            <label><input type="checkbox" name="B4" value="B"> R</label>
+            <label><input type="checkbox" name="B4" value="C"> Python</label>
+            <label><input type="checkbox" name="B4" value="D"> SQL</label>
+            <label><input type="checkbox" name="B4" value="E"> Julia</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="B4" value="F"> <span>其他：</span><input type="text" name="B4-OTHER" class="border rounded px-2 py-1 text-sm flex-1" placeholder="请填写" disabled></label>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold">您当前主要涉及的治疗领域（单选）<span class="required-star">*</span></label>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-1">
+            <label><input type="radio" name="B5" value="A" required> 肿瘤</label>
+            <label><input type="radio" name="B5" value="B"> 免疫</label>
+            <label><input type="radio" name="B5" value="C"> 代谢</label>
+            <label><input type="radio" name="B5" value="D"> 心血管</label>
+            <label><input type="radio" name="B5" value="E"> 神经</label>
+            <label><input type="radio" name="B5" value="F"> 感染</label>
+            <label><input type="radio" name="B5" value="G"> 罕见病</label>
+            <label><input type="radio" name="B5" value="H"> 其他/不固定</label>
+          </div>
+        </div>
+      </div>
+
       <!-- F. 开放反馈 -->
       <div id="blockF" class="bg-white rounded border p-5 space-y-4">
         <h2 class="text-xl font-semibold">开放反馈</h2>
@@ -1300,12 +1302,12 @@
             endMsg.classList.remove('hidden');
             // 隐藏除第一题以外的所有题目
             document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockG, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.add('hidden'));
           } else {
             endMsg.classList.add('hidden');
             // 显示所有题目
             document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockG, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.remove('hidden'));
           }
         });
       });
@@ -1343,6 +1345,18 @@
         checkbox.addEventListener('change', function() {
           const checkedD3 = document.querySelectorAll('input[name="D3"]:checked');
           if (checkedD3.length > 3) {
+            this.checked = false;
+            alert('最多只能选择3项');
+          }
+        });
+      });
+      
+      // E1 多选限制（最多3项）
+      const e1Checkboxes = document.querySelectorAll('input[name="E1"]');
+      e1Checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const checkedE1 = document.querySelectorAll('input[name="E1"]:checked');
+          if (checkedE1.length > 3) {
             this.checked = false;
             alert('最多只能选择3项');
           }
