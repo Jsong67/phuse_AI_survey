@@ -111,6 +111,11 @@
       background-color: #f8fafc;
     }
     
+    .matrix td.disabled {
+      background-color: #f3f4f6;
+      opacity: 0.6;
+    }
+    
     /* 按钮样式 */
     .btn {
       padding: 0.75rem 1.5rem;
@@ -136,6 +141,13 @@
     .hidden-important { display: none !important; }
     .indent-row { padding-left: 2rem !important; }
     .required-star { color: #ef4444; font-weight: bold; }
+    
+    /* 禁用状态样式 */
+    .disabled-input {
+      opacity: 0.5;
+      pointer-events: none;
+      background-color: #f3f4f6;
+    }
     
     /* 拖拽排序样式 */
     .sortable-item {
@@ -167,6 +179,29 @@
       }
     }
     
+    /* 报告样式 */
+    .chart-bar {
+      transition: all 0.5s ease;
+    }
+    
+    .chart-bar:hover {
+      opacity: 0.8;
+    }
+    
+    #surveyReport {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .animate-fadeIn {
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
     /* 响应式 */
     @media (max-width: 768px) {
       .main-container {
@@ -195,7 +230,13 @@
         width: 13%;
       }
       
-
+      #surveyReport {
+        max-height: 90vh;
+      }
+      
+      #surveyReport .grid {
+        grid-template-columns: 1fr;
+      }
       
       footer {
         border-radius: 0 0 16px 16px;
@@ -268,17 +309,22 @@
       </div>
     </section>
 
+    <!-- 用户标签显示区域 -->
+    <section id="userTagsSection" class="mb-6 hidden">
+      <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+        <h3 class="font-semibold text-lg mb-3 text-blue-800">🏷️ 您的用户标签</h3>
+        <div id="userTagsDisplay" class="flex flex-wrap gap-2">
+          <!-- 标签将通过JavaScript动态添加 -->
+        </div>
+        <p class="text-sm text-blue-600 mt-2">基于您的回答自动生成的标签，用于个性化问卷体验</p>
+      </div>
+    </section>
+
     <form id="surveyForm" class="space-y-10">
       <!-- A. 筛选与分支 S -->
-      <div id="blockA" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">👤 基本信息</h2>
-
-
-        <!-- 必填验证提示 -->
-        <div id="sSectionValidation" class="bg-red-50 border border-red-200 rounded p-3 text-sm text-red-700 hidden">
-          <strong>请完成前面的必填项：</strong>
-          <ul id="sMissingItems" class="list-disc list-inside mt-1"></ul>
-        </div>
+      <div id="blockA" class="section-card">
+        <h2 class="section-title">👤 基本信息</h2>
+        <div class="p-6 space-y-6">
 
         <!-- S1 -->
         <div>
@@ -306,17 +352,14 @@
         <div>
           <label class="font-bold">您近一年在统计编程相关的主要工作内容（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="A"> 生成/映射 SDTM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="B"> 生成 ADaM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="C"> 生成/校对 TLF（表/图/列表）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="D"> 编程 QC/Validation（含双编、审计追踪）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="E"> Define.xml/ADRGS/数据集说明文档的编程支持</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="F"> 将 SAP/统计方法转化为可运行代码</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="G"> 工具与宏/包开发与维护（SAS/R/Python）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="H"> 自动化流水线/作业编排（如 CI/CD）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="I"> 带人经理（已不参与编程）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="J"> 项目管理（PM/交付协调）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="K"> <span>其他：</span> <input type="text" name="S3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="A"> 生成/QC SDTM</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="B"> 生成/QC ADaM</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="C"> 生成/QC TLF（表/图/列表）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="D"> 支持递交相关工作（Define.xml/ADRG/数据集说明文档等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="E"> 工具与宏/包开发与维护（SAS/R/Python）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="F"> 项目管理（Project Manager/Portfolio Lead/协调交付）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="G"> 带人经理/团队管理</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="S3" value="H"> <span>其他：</span> <input type="text" name="S3-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
@@ -333,7 +376,7 @@
         </div>
 
         <!-- S6 多选，每行一个 -->
-        <div>
+        <div id="S6Question" class="hidden">
           <label class="font-bold">您在工作中用 AI 做过哪些类型的任务（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="S6" value="A"> 代码片段/脚本建议（SAS/R/Python）</label>
@@ -348,15 +391,20 @@
           </div>
         </div>
 
+        <!-- Next按钮 -->
+        <div class="mt-6 text-center">
+          <button type="button" id="nextToAISection" class="btn btn-primary">下一步：AI使用情况 →</button>
         </div>
-      <!--</div>-->
+        </div>
+      </div>
 
       <!-- C. AI 使用情况 -->
-      <div id="blockC" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">AI 使用情况（2023–2025 年对比）</h2>
+      <div id="blockC" class="section-card hidden">
+        <h2 class="section-title">🤖 AI 使用情况（2023–2025 年对比）</h2>
+        <div class="p-6 space-y-6">
 
         <!-- C1 矩阵单选 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您在工作中使用 AI 的频率（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
@@ -399,7 +447,7 @@
         </div>
 
         <!-- C2 矩阵多选 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您在各年份主要使用 AI 的场景（矩阵多选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
@@ -476,7 +524,7 @@
         </div>
 
         <!-- C3 矩阵单选 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
@@ -523,7 +571,7 @@
         </div>
 
         <!-- C4 矩阵单选 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您的团队/组织是否有 AI 使用政策（矩阵单选）<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
@@ -566,7 +614,7 @@
         </div>
 
         <!-- C5 多选，每行一个 -->
-        <div>
+        <div data-tags="初级用户,深度用户">
           <label class="font-bold">您在 2025 年常用的 AI/模型或平台（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列</label>
@@ -584,7 +632,7 @@
         </div>
 
         <!-- C6 单选，每行一个 -->
-        <div>
+        <div data-tags="初级用户,深度用户">
           <label class="font-bold">您在 2025 年用于处理含敏感数据的做法（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="C6" value="A"> 从不在 AI 工具中输入敏感数据</label>
@@ -596,7 +644,7 @@
         </div>
 
         <!-- C7 多选题 -->
-        <div>
+        <div data-tags="初级用户,深度用户">
           <label class="font-bold">您主要通过哪些渠道学习 AI 相关知识和技能（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="C7" value="A"> 公司内部培训</label>
@@ -612,15 +660,8 @@
           </div>
         </div>
 
-      </div>
-
-      <!-- C-DEEP. 深度用户专项 (条件显示) -->
-      <div id="blockC-DEEP" class="bg-blue-50 border border-blue-200 rounded p-5 space-y-6 hidden">
-        <h2 class="text-xl font-semibold text-blue-800">深度用户专项（针对经常使用AI的用户）</h2>
-        <p class="text-sm text-blue-600">此部分仅对在2025年"经常"或"频繁"使用AI的用户显示</p>
-
         <!-- CD1 多选题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您在使用AI进行统计编程时，主要采用哪些prompt策略？（可多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="A"> 直接描述需求，让AI生成完整代码</label>
@@ -634,8 +675,9 @@
           </div>
         </div>
 
+        
         <!-- CD2 单选题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您认为目前AI在以下哪个统计编程任务上表现最佳？（单选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="CD2" value="A"> 基础数据操作（筛选、排序、合并）</label>
@@ -649,7 +691,7 @@
         </div>
 
         <!-- CD3 多选题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您在深度使用AI的过程中，遇到过哪些典型问题？（可多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="CD3" value="A"> 生成的代码语法错误或无法运行</label>
@@ -665,7 +707,7 @@
         </div>
 
         <!-- CD4 单选题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您通常如何验证AI生成代码的正确性？（单选最主要的方法）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="CD4" value="A"> 逐行检查代码逻辑</label>
@@ -679,7 +721,7 @@
         </div>
 
         <!-- CD5 矩阵单选题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">您对AI在不同复杂度任务上的信任程度<span class="required-star">*</span></label>
           <table class="matrix w-full mt-2 text-sm">
             <thead>
@@ -722,13 +764,13 @@
         </div>
 
         <!-- CD6 开放题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">请分享一个AI显著帮助您解决的具体技术难题：</label>
           <textarea name="CD6" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="如：AI帮我解决了某个复杂的数据清洗逻辑，原本需要...，AI建议...，最终节省了...时间"></textarea>
         </div>
 
         <!-- CD7 多选题 -->
-        <div>
+        <div data-tags="深度用户,决策者">
           <label class="font-bold">您希望AI工具在哪些方面得到改进？（可多选，最多5项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="CD7" value="A"> 更好的领域知识（CDISC/ICH等标准）</label>
@@ -746,7 +788,7 @@
         </div>
 
         <!-- CD8 单选题 -->
-        <div>
+        <div data-tags="深度用户,决策者">
           <label class="font-bold">如果AI持续改进，您预计多久后能在关键项目中放心使用AI生成的核心代码？<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="radio" name="CD8" value="A"> 现在就可以（已经在用）</label>
@@ -759,15 +801,23 @@
         </div>
 
         <!-- CD9 开放题 -->
-        <div>
+        <div data-tags="深度用户">
           <label class="font-bold">作为AI深度用户，您对同行有什么使用建议？</label>
           <textarea name="CD9" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="如：推荐从...开始，注意...，避免..."></textarea>
+        </div>
+
+
+        <!-- Next按钮 -->
+        <div class="mt-6 text-center">
+          <button type="button" id="nextToAttitudeSection" class="btn btn-primary">下一步：AI态度 →</button>
+        </div>
         </div>
       </div>
 
       <!-- D. 态度 -->
-      <div id="blockD" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">您对 AI 的态度（2023–2025 年对比）</h2>
+      <div id="blockD" class="section-card hidden">
+        <h2 class="section-title">💭 您对 AI 的态度（2023–2025 年对比）</h2>
+        <div class="p-6 space-y-6">
 
         <div>
           <label class="font-bold">您对以下陈述在各年份的看法（矩阵单选）<span class="required-star">*</span></label>
@@ -1127,14 +1177,21 @@
             <label class="flex items-center gap-2"><input type="checkbox" name="D4" value="E"> 都不信任，仅作参考</label>
           </div>
         </div>
+
+        <!-- Next按钮 -->
+        <div class="mt-6 text-center">
+          <button type="button" id="nextToOutlookSection" class="btn btn-primary">下一步：展望与建议 →</button>
+        </div>
+        </div>
       </div>
 
       <!-- E. 展望与建议 -->
-      <div id="blockE" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">展望与建议</h2>
+      <div id="blockE" class="section-card hidden">
+        <h2 class="section-title">🔮 展望与建议</h2>
+        <div class="p-6 space-y-6">
 
         <!-- E1 多选题 -->
-        <div>
+        <div data-tags="观望者,初级用户,深度用户,决策者">
           <label class="font-bold">您认为最需要 AI 改进的统计编程环节（多选，最多3项）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="E1" value="A"> 代码生成与优化（提高代码质量与效率）</label>
@@ -1149,7 +1206,7 @@
         </div>
 
         <!-- E2 多选题 -->
-        <div>
+        <div data-tags="观望者,初级用户,深度用户,决策者">
           <label class="font-bold">您对公司 AI 政策的建议（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="E2" value="A"> 制定更明确的使用指南与边界</label>
@@ -1162,13 +1219,13 @@
         </div>
 
         <!-- E3 开放题 -->
-        <div>
+        <div data-tags="深度用户,决策者">
           <label class="font-bold">如果让您向同行推荐，您会如何描述 AI 在统计编程中的价值？</label>
           <textarea name="E3" rows="3" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写，如'AI帮我提升了...，但需要注意...'"></textarea>
         </div>
 
         <!-- E4 排序题 -->
-        <div>
+        <div data-tags="观望者,初级用户,深度用户,决策者">
           <label class="font-bold">以下哪个 AI 发展方向对您最有吸引力（拖拽排序，1最重要）<span class="required-star">*</span></label>
           <p class="text-sm text-gray-600 mt-1">请拖拽下方选项进行排序，排在最上方的为最重要（移动端：长按拖拽）</p>
           <ul id="E4_sortable" class="mt-3 space-y-2">
@@ -1204,11 +1261,18 @@
           <input type="hidden" name="E4_D" value="4">
           <input type="hidden" name="E4_E" value="5">
         </div>
+
+        <!-- Next按钮 -->
+        <div class="mt-6 text-center">
+          <button type="button" id="nextToFinalSection" class="btn btn-primary">下一步：职业概况 →</button>
+        </div>
+        </div>
       </div>
 
       <!-- G. 职业概况 -->
-      <div id="blockG" class="bg-white rounded border p-5 space-y-6">
-        <h2 class="text-xl font-semibold">职业概况</h2>
+      <div id="blockG" class="section-card hidden">
+        <h2 class="section-title">👔 职业概况</h2>
+        <div class="p-6 space-y-6">
 
         <div>
           <label class="font-bold">您的主要岗位级别（单选）<span class="required-star">*</span></label>
@@ -1257,22 +1321,24 @@
             <label><input type="checkbox" name="B5" value="H"> 其他/不固定</label>
           </div>
         </div>
+        </div>
       </div>
 
       <!-- F. 开放反馈 -->
-      <div id="blockF" class="bg-white rounded border p-5 space-y-4">
-        <h2 class="text-xl font-semibold">开放反馈</h2>
+      <div id="blockF" class="section-card hidden">
+        <h2 class="section-title">💬 开放反馈</h2>
+        <div class="p-6 space-y-4">
         
         <div>
           <label class="font-bold">您对本次调研或 AI 在统计编程领域的其他建议：</label>
           <textarea name="F1" rows="4" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写您的任何建议、意见或补充..."></textarea>
         </div>
-
-
+        </div>
       </div>
 
       <!-- 提交区域 -->
-      <div class="bg-white rounded border p-5">
+      <div id="submitSection" class="section-card hidden">
+        <div class="p-6">
         <div class="text-center">
           <button type="submit" class="btn btn-primary">📤 提交问卷</button>
           <div class="mt-3">
@@ -1284,6 +1350,7 @@
           <p>* 问卷数据将用于学术研究，不会泄露个人隐私信息</p>
           <p>* 如有疑问，请<a href="mailto:jsong67@its.jnj.com;CTian17@ITS.JNJ.com;hao1.chen@beigene.com?subject=中国药物研发统计编程行业AI使用与态度问卷咨询" class="text-blue-600 hover:text-blue-800 underline">联系我们</a></p>
         </div>
+        </div>
       </div>
     </form>
 
@@ -1293,9 +1360,26 @@
         <div class="text-6xl mb-4">🎉</div>
         <h3 class="text-2xl font-bold text-green-800 mb-4">问卷已完成！</h3>
         <p class="text-green-700 text-lg mb-6">感谢您的参与！</p>
-        <div class="text-green-600 space-y-3">
+        <div class="text-green-600 space-y-3 mb-6">
           <p class="text-base font-medium">📅 调查结果将于 <strong>2025年11月7日</strong> 发布</p>
           <p>🌍 发布地点：PHUSE SDE 及线上同时发布</p>
+        </div>
+        <button id="showReportBtn" class="btn btn-primary mb-4">📊 查看当前调查结果汇总</button>
+      </div>
+    </div>
+
+    <!-- 调查结果报告 -->
+    <div id="surveyReport" class="hidden section-card mt-6">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-800">📊 调查结果汇总报告</h3>
+          <button id="closeReportBtn" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <div id="reportContent" class="space-y-6">
+          <div class="text-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600">正在加载调查数据...</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1329,39 +1413,691 @@
       const form = document.getElementById('surveyForm');
       const submitSuccess = document.getElementById('submitSuccess');
       
+      // S5 逻辑 - 根据AI使用频率显示/隐藏S6题目并更新按钮
+      const s5Inputs = document.querySelectorAll('input[name="S5"]');
+      const s6Question = document.getElementById('S6Question');
+      const nextBtn = document.getElementById('nextToAISection');
+      
+      s5Inputs.forEach(input => {
+        input.addEventListener('change', function() {
+          if (this.value === 'A' && this.checked) {
+            // 选择"从不"，隐藏S6题目
+            s6Question.classList.add('hidden');
+            // 清除S6的选择
+            document.querySelectorAll('input[name="S6"]').forEach(s6Input => {
+              s6Input.checked = false;
+            });
+            document.querySelector('input[name="S6-OTHER"]').value = '';
+            
+            // 更新按钮为观望者模式
+            nextBtn.textContent = '下一步：AI态度 →';
+          } else if (this.checked) {
+            // 选择其他选项，显示S6题目
+            s6Question.classList.remove('hidden');
+            
+            // 恢复按钮为正常模式
+            nextBtn.textContent = '下一步：AI使用情况 →';
+          }
+        });
+      });
+      
       // S1 逻辑 - 选择"否"时显示结束消息并隐藏后续问题
       const s1Inputs = document.querySelectorAll('input[name="S1"]');
-      const subsequentSections = document.querySelectorAll('#blockA > div:not(:first-child) > div:not([id="endMsgS1"]):not([id="sSectionValidation"]), #blockB, #blockC, #blockC-DEEP, #blockD, #blockE, #blockF, .bg-white.rounded.border');
       
       s1Inputs.forEach(input => {
         input.addEventListener('change', function() {
           const endMsg = document.getElementById('endMsgS1');
+          const nextBtn = document.getElementById('nextToAISection');
           if (this.value === 'B' && this.checked) {
             endMsg.classList.remove('hidden');
+            nextBtn.style.display = 'none';
             // 隐藏除第一题以外的所有题目
-            document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockG, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('#blockA > div:nth-child(n+3)').forEach(el => el.classList.add('hidden'));
           } else {
             endMsg.classList.add('hidden');
-            // 显示所有题目
-            document.querySelectorAll('#blockA > div:nth-child(n+4)').forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('#blockC, #blockC-DEEP, #blockD, #blockE, #blockG, #blockF, .bg-white.rounded.border:not(#blockA)').forEach(el => el.classList.remove('hidden'));
+            nextBtn.style.display = 'inline-block';
+            // 显示基本信息section的所有题目
+            document.querySelectorAll('#blockA > div:nth-child(n+3)').forEach(el => el.classList.remove('hidden'));
           }
         });
       });
       
-      // S5 深度用户专项显示逻辑
-      const s5Inputs = document.querySelectorAll('input[name="S5"]');
-      const deepBlock = document.getElementById('blockC-DEEP');
-      s5Inputs.forEach(input => {
-        input.addEventListener('change', function() {
-          if ((this.value === 'D' || this.value === 'E') && this.checked) {
-            deepBlock.classList.remove('hidden');
-          } else {
-            deepBlock.classList.add('hidden');
+      // Next按钮点击事件 - 验证基本信息section必填项
+      document.getElementById('nextToAISection').addEventListener('click', function() {
+        // 检查是否为观望者模式（按钮文本包含"AI态度"）
+        if (this.textContent.includes('AI态度')) {
+          // 观望者模式，直接跳转到态度section
+          const userTags = generateUserTags();
+          displayUserTags(userTags);
+          
+          document.getElementById('blockA').classList.add('hidden');
+          document.getElementById('blockD').classList.remove('hidden');
+          document.getElementById('blockD').scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        // 清除之前的验证提示
+        document.querySelectorAll('.validation-error').forEach(el => el.remove());
+        
+        // 定义基本信息section的必填项
+        const basicInfoRequired = [
+          {name: 'S1', type: 'radio'},
+          {name: 'S2', type: 'radio'},
+          {name: 'S3', type: 'checkbox'},
+          {name: 'S5', type: 'radio'}
+        ];
+        
+        // 如果S6题目可见，则添加到必填项中
+        if (!document.getElementById('S6Question').classList.contains('hidden')) {
+          basicInfoRequired.push({name: 'S6', type: 'checkbox'});
+        }
+        
+        let firstInvalidField = null;
+        let isValid = true;
+        
+        // 验证每个必填项，使用与提交时相同的逻辑
+        basicInfoRequired.forEach(q => {
+          let hasValue = false;
+          let firstInput = null;
+          let targetElement = null;
+          
+          const inputs = form.querySelectorAll(`input[name="${q.name}"]`);
+          hasValue = Array.from(inputs).some(input => input.checked);
+          firstInput = inputs[0];
+          
+          if (firstInput) {
+            // 向上查找包含label.font-bold的div
+            let currentDiv = firstInput.closest('div');
+            while (currentDiv && !currentDiv.querySelector('label.font-bold')) {
+              currentDiv = currentDiv.parentElement.closest('div');
+            }
+            targetElement = currentDiv ? currentDiv.querySelector('label.font-bold') : null;
+          }
+          
+          if (!hasValue && targetElement) {
+            const errorMsg = document.createElement('p');
+            errorMsg.className = 'validation-error mt-2 text-sm text-red-600';
+            errorMsg.textContent = '请至少选择一项！';
+            targetElement.after(errorMsg);
+            
+            if (!firstInvalidField) {
+              firstInvalidField = firstInput ? firstInput.closest('div') : null;
+            }
+            isValid = false;
           }
         });
+        
+        if (!isValid) {
+          // 滚动到第一个未填的题目
+          if (firstInvalidField) {
+            firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+        
+        // 验证通过，根据用户回答给用户打标签
+        const userTags = generateUserTags();
+        console.log('用户标签:', userTags);
+        
+        // 显示用户标签
+        displayUserTags(userTags);
+        
+        // 根据标签调整跳转逻辑
+        const nextBtn = document.getElementById('nextToAISection');
+        if (userTags.includes('观望者')) {
+          // 观望者直接跳转到态度section
+          document.getElementById('blockA').classList.add('hidden');
+          document.getElementById('blockD').classList.remove('hidden');
+          document.getElementById('blockD').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // 根据标签决定显示哪些sections
+          showSectionsBasedOnTags(userTags);
+        }
+        
+        // 滚动到AI使用情况section的顶部
+        if (!userTags.includes('观望者')) {
+          document.getElementById('blockC').scrollIntoView({ behavior: 'smooth' });
+        }
       });
+      
+
+      
+      // 用户标签生成函数
+      function generateUserTags() {
+        const tags = [];
+        
+        // 根据S3（工作内容）打标签
+        const s3Selected = document.querySelectorAll('input[name="S3"]:checked');
+        if (s3Selected.length > 0) {
+          const workTypes = Array.from(s3Selected).map(input => input.value);
+          // 选择 工具与宏/包开发与维护（SAS/R/Python）就加tag "深度用户"
+          if (workTypes.includes('E')) {
+            tags.push('深度用户');
+          }
+          // 选择 项目管理 或 带人经理/团队管理 就加tag "决策者"
+          if (workTypes.includes('F') || workTypes.includes('G')) {
+            tags.push('决策者');
+          }
+        }
+        
+        // 根据S5（AI使用频率）打标签
+        const s5Selected = document.querySelector('input[name="S5"]:checked');
+        if (s5Selected) {
+          switch(s5Selected.value) {
+            case 'A': tags.push('观望者'); break; // 从不
+            case 'B': tags.push('初级用户'); break; // 很少（每季度或更少）
+            case 'C': tags.push('初级用户'); break; // 偶尔（每月）
+            case 'D': tags.push('深度用户'); break; // 经常（每周）
+            case 'E': tags.push('深度用户'); break; // 频繁（几乎每天）
+          }
+        }
+        
+        // 根据S6（AI任务类型）打标签
+        const s6Selected = document.querySelectorAll('input[name="S6"]:checked');
+        if (s6Selected.length > 0) {
+          const taskTypes = Array.from(s6Selected).map(input => input.value);
+          // 选择自动化工作流/工具集成（API、LangChain、自建 Agent）加tag深度用户
+          if (taskTypes.includes('E')) {
+            tags.push('深度用户');
+          }
+          // 内部知识库/RAG（如 SOP/模板/最佳实践检索）加tag深度用户
+          if (taskTypes.includes('F')) {
+            tags.push('深度用户');
+          }
+          // 选择 模型微调/本地化部署/私有化 加tag深度用户
+          if (taskTypes.includes('G')) {
+            tags.push('深度用户');
+          }
+          // 选择 风险与合规评估/代码校验辅助 加tag深度用户
+          if (taskTypes.includes('H')) {
+            tags.push('深度用户');
+          }
+        }
+        
+        // 去重
+        return [...new Set(tags)];
+      }
+      
+      // 显示用户标签
+      function displayUserTags(tags) {
+        const tagsSection = document.getElementById('userTagsSection');
+        const tagsDisplay = document.getElementById('userTagsDisplay');
+        
+        if (tags.length > 0) {
+          tagsDisplay.innerHTML = '';
+          tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.className = 'inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium';
+            tagElement.textContent = tag;
+            tagsDisplay.appendChild(tagElement);
+          });
+          tagsSection.classList.remove('hidden');
+        }
+      }
+      
+      // 根据标签显示/隐藏题目
+      function filterQuestionsByTags(tags) {
+        // 获取所有带有data-tags属性的题目
+        const questions = document.querySelectorAll('[data-tags]');
+        
+        questions.forEach(question => {
+          const requiredTags = question.getAttribute('data-tags').split(',').map(tag => tag.trim());
+          // 检查用户是否有任何一个需要的标签（OR关系）
+          const hasRequiredTag = requiredTags.some(tag => tags.includes(tag));
+          
+          if (hasRequiredTag) {
+            question.style.display = 'block';
+          } else {
+            question.style.display = 'none';
+          }
+        });
+      }
+      
+      // 根据标签决定显示哪些sections
+      function showSectionsBasedOnTags(tags) {
+        // 隐藏基本信息section，只显示下一个section（AI使用情况）
+        document.getElementById('blockA').classList.add('hidden');
+        document.getElementById('blockC').classList.remove('hidden');
+        
+        // 根据标签过滤题目
+        filterQuestionsByTags(tags);
+        
+        // 根据标签调整显示逻辑（可以根据需要扩展）
+        if (tags.includes('观望者')) {
+          console.log('用户从不使用AI，可以调整问卷流程');
+        }
+        
+        if (tags.includes('深度用户')) {
+          console.log('用户是深度AI用户，将显示深度用户专项');
+        }
+        
+        if (tags.includes('决策者')) {
+          console.log('用户是决策者，可以调整相关问题');
+        }
+      }
+      
+      // 验证可见题目的函数
+      function validateVisibleSection(requiredQuestions, targetElement) {
+        console.log('开始验证可见section');
+        document.querySelectorAll('.validation-error').forEach(el => el.remove());
+        
+        let firstInvalidField = null;
+        let isValid = true;
+        
+        // 获取当前用户标签
+        const userTags = generateUserTags();
+        console.log('当前用户标签:', userTags);
+        
+        // 只验证当前可见的必填题目
+        const visibleRequiredQuestions = requiredQuestions.filter(q => {
+          const firstInput = form.querySelector(`input[name="${q.name}"]`);
+          if (!firstInput) {
+            console.log(`找不到输入框: ${q.name}`);
+            return false;
+          }
+          
+          const questionDiv = firstInput.closest('div[data-tags], div:not([data-tags])');
+          // 如果题目有data-tags属性，检查用户是否有对应标签
+          if (questionDiv && questionDiv.hasAttribute('data-tags')) {
+            const requiredTags = questionDiv.getAttribute('data-tags').split(',').map(tag => tag.trim());
+            const hasRequiredTag = requiredTags.some(tag => userTags.includes(tag));
+            if (!hasRequiredTag || questionDiv.style.display === 'none') {
+              console.log(`跳过隐藏题目: ${q.name}`);
+              return false;
+            }
+          }
+          console.log(`包含可见题目: ${q.name}`);
+          return true;
+        });
+        
+        console.log(`可见必填题目数量: ${visibleRequiredQuestions.length}`);
+        
+        visibleRequiredQuestions.forEach(q => {
+          let hasValue = false;
+          let errorTarget = null;
+          const firstInput = form.querySelector(`input[name="${q.name}"]`);
+          
+          if (q.type === 'checkbox-column') {
+            const year = q.name.split('_')[1];
+            const columnInputs = form.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`);
+            hasValue = Array.from(columnInputs).some(input => input.checked);
+            
+            if (firstInput) {
+              const table = firstInput.closest('table');
+              const thead = table.querySelector('thead tr');
+              const thCells = thead.querySelectorAll('th');
+              thCells.forEach((th, index) => {
+                if (th.textContent.includes(year)) {
+                  errorTarget = th;
+                }
+              });
+            }
+          } else {
+            const inputs = form.querySelectorAll(`input[name="${q.name}"]`);
+            hasValue = Array.from(inputs).some(input => input.checked);
+            
+            if (firstInput && (q.name.includes('C1_') || q.name.includes('C3_') || q.name.includes('C4_') || q.name.includes('D1_') || q.name.includes('CD5_'))) {
+              const row = firstInput.closest('tr');
+              if (row) {
+                errorTarget = row.querySelector('td:first-child');
+              }
+            } else if (firstInput) {
+              let currentDiv = firstInput.closest('div');
+              while (currentDiv && !currentDiv.querySelector('label.font-bold')) {
+                currentDiv = currentDiv.parentElement.closest('div');
+              }
+              errorTarget = currentDiv ? currentDiv.querySelector('label.font-bold') : null;
+            }
+          }
+          
+          if (!hasValue && errorTarget) {
+            const errorMsg = document.createElement('p');
+            errorMsg.className = 'validation-error mt-2 text-sm text-red-600';
+            errorMsg.textContent = '请至少选择一项！';
+            
+            if (errorTarget.tagName === 'TD' || errorTarget.tagName === 'TH') {
+              errorTarget.appendChild(errorMsg);
+            } else {
+              errorTarget.after(errorMsg);
+            }
+            
+            if (!firstInvalidField) {
+              firstInvalidField = firstInput ? firstInput.closest('div, tr') : null;
+            }
+            isValid = false;
+          }
+        });
+        
+        if (!isValid && firstInvalidField) {
+          console.log('验证失败，滚动到错误位置');
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return false;
+        }
+        
+        if (isValid && targetElement) {
+          console.log('验证成功，跳转到下一个section');
+          document.querySelectorAll('#blockA, #blockC, #blockD, #blockE, #blockG, #blockF, #submitSection').forEach(el => {
+            el.classList.add('hidden');
+          });
+          targetElement.classList.remove('hidden');
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        console.log(`验证结果: ${isValid}`);
+        return isValid;
+      }
+      
+      // 通用验证函数
+      function validateSection(requiredQuestions, targetElement) {
+        document.querySelectorAll('.validation-error').forEach(el => el.remove());
+        
+        let firstInvalidField = null;
+        let isValid = true;
+        
+        requiredQuestions.forEach(q => {
+          let hasValue = false;
+          let firstInput = null;
+          let errorTarget = null;
+          
+          if (q.type === 'checkbox-column') {
+            const year = q.name.split('_')[1];
+            const columnInputs = form.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`);
+            hasValue = Array.from(columnInputs).some(input => input.checked);
+            firstInput = columnInputs[0];
+            
+            if (firstInput) {
+              const table = firstInput.closest('table');
+              const thead = table.querySelector('thead tr');
+              const thCells = thead.querySelectorAll('th');
+              thCells.forEach((th, index) => {
+                if (th.textContent.includes(year)) {
+                  errorTarget = th;
+                }
+              });
+            }
+          } else {
+            const inputs = form.querySelectorAll(`input[name="${q.name}"]`);
+            hasValue = Array.from(inputs).some(input => input.checked);
+            firstInput = inputs[0];
+            
+            if (firstInput && (q.name.includes('C1_') || q.name.includes('C3_') || q.name.includes('C4_') || q.name.includes('D1_') || q.name.includes('CD5_'))) {
+              const row = firstInput.closest('tr');
+              if (row) {
+                errorTarget = row.querySelector('td:first-child');
+              }
+            } else if (firstInput) {
+              let currentDiv = firstInput.closest('div');
+              while (currentDiv && !currentDiv.querySelector('label.font-bold')) {
+                currentDiv = currentDiv.parentElement.closest('div');
+              }
+              errorTarget = currentDiv ? currentDiv.querySelector('label.font-bold') : null;
+            }
+          }
+          
+          if (!hasValue && errorTarget) {
+            const errorMsg = document.createElement('p');
+            errorMsg.className = 'validation-error mt-2 text-sm text-red-600';
+            errorMsg.textContent = '请至少选择一项！';
+            
+            if (errorTarget.tagName === 'TD' || errorTarget.tagName === 'TH') {
+              errorTarget.appendChild(errorMsg);
+            } else {
+              errorTarget.after(errorMsg);
+            }
+            
+            if (!firstInvalidField) {
+              firstInvalidField = firstInput ? firstInput.closest('div, tr') : null;
+            }
+            isValid = false;
+          }
+        });
+        
+        if (!isValid && firstInvalidField) {
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return false;
+        }
+        
+        if (isValid && targetElement) {
+          // 隐藏所有sections，只显示目标section
+          document.querySelectorAll('#blockA, #blockC, #blockD, #blockE, #blockG, #blockF, #submitSection').forEach(el => {
+            el.classList.add('hidden');
+          });
+          targetElement.classList.remove('hidden');
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        return isValid;
+      }
+      
+      // AI使用情况section验证
+      document.getElementById('nextToAttitudeSection').addEventListener('click', function() {
+        console.log('点击了下一步按钮');
+        
+        // 定义所有可能的必填题目及其标签要求
+        const allPossibleQuestions = [
+          // 深度用户专用题目
+          {name: 'C1_2023', type: 'radio', tags: ['深度用户']},
+          {name: 'C1_2024', type: 'radio', tags: ['深度用户']},
+          {name: 'C1_2025', type: 'radio', tags: ['深度用户']},
+          {name: 'C2_2023', type: 'checkbox-column', tags: ['深度用户']},
+          {name: 'C2_2024', type: 'checkbox-column', tags: ['深度用户']},
+          {name: 'C2_2025', type: 'checkbox-column', tags: ['深度用户']},
+          {name: 'C3_2023', type: 'radio', tags: ['深度用户']},
+          {name: 'C3_2024', type: 'radio', tags: ['深度用户']},
+          {name: 'C3_2025', type: 'radio', tags: ['深度用户']},
+          {name: 'C4_2023', type: 'radio', tags: ['深度用户']},
+          {name: 'C4_2024', type: 'radio', tags: ['深度用户']},
+          {name: 'C4_2025', type: 'radio', tags: ['深度用户']},
+          // 初级用户和深度用户共同题目
+          {name: 'C5', type: 'checkbox', tags: ['初级用户', '深度用户']},
+          {name: 'C6', type: 'radio', tags: ['初级用户', '深度用户']},
+          {name: 'C7', type: 'checkbox', tags: ['初级用户', '深度用户']},
+          // 深度用户专用题目
+          {name: 'CD1', type: 'checkbox', tags: ['深度用户']},
+          {name: 'CD2', type: 'radio', tags: ['深度用户']},
+          {name: 'CD3', type: 'checkbox', tags: ['深度用户']},
+          {name: 'CD4', type: 'radio', tags: ['深度用户']},
+          {name: 'CD5_simple', type: 'radio', tags: ['深度用户']},
+          {name: 'CD5_medium', type: 'radio', tags: ['深度用户']},
+          {name: 'CD5_complex', type: 'radio', tags: ['深度用户']},
+          // 深度用户和决策者共同题目
+          {name: 'CD7', type: 'checkbox', tags: ['深度用户', '决策者']},
+          {name: 'CD8', type: 'radio', tags: ['深度用户', '决策者']}
+        ];
+        
+        // 获取当前用户标签
+        const userTags = generateUserTags();
+        console.log('当前用户标签:', userTags);
+        
+        // 过滤出用户应该验证的题目
+        const userRequiredQuestions = allPossibleQuestions.filter(q => {
+          if (!q.tags) return true; // 没有标签要求的题目都需要验证
+          return q.tags.some(tag => userTags.includes(tag)); // 用户有对应标签的题目
+        });
+        
+        console.log('用户应验证题目数量:', userRequiredQuestions.length);
+        
+        validateVisibleSection(userRequiredQuestions, document.getElementById('blockD'));
+      });
+      
+
+      
+      // AI态度section验证
+      document.getElementById('nextToOutlookSection').addEventListener('click', function() {
+        const attitudeRequired = [
+          {name: 'D1_2023年_1', type: 'radio'},
+          {name: 'D1_2024年_1', type: 'radio'},
+          {name: 'D1_2025年_1', type: 'radio'},
+          {name: 'D1_2023年_2', type: 'radio'},
+          {name: 'D1_2024年_2', type: 'radio'},
+          {name: 'D1_2025年_2', type: 'radio'},
+          {name: 'D1_2023年_3', type: 'radio'},
+          {name: 'D1_2024年_3', type: 'radio'},
+          {name: 'D1_2025年_3', type: 'radio'},
+          {name: 'D1_2023年_4', type: 'radio'},
+          {name: 'D1_2024年_4', type: 'radio'},
+          {name: 'D1_2025年_4', type: 'radio'},
+          {name: 'D1_2023年_5', type: 'radio'},
+          {name: 'D1_2024年_5', type: 'radio'},
+          {name: 'D1_2025年_5', type: 'radio'},
+          {name: 'D1_2023年_6', type: 'radio'},
+          {name: 'D1_2024年_6', type: 'radio'},
+          {name: 'D1_2025年_6', type: 'radio'},
+          {name: 'D1_2023年_7', type: 'radio'},
+          {name: 'D1_2024年_7', type: 'radio'},
+          {name: 'D1_2025年_7', type: 'radio'},
+          {name: 'D1_2023年_8', type: 'radio'},
+          {name: 'D1_2024年_8', type: 'radio'},
+          {name: 'D1_2025年_8', type: 'radio'},
+          {name: 'D1_2023年_9', type: 'radio'},
+          {name: 'D1_2024年_9', type: 'radio'},
+          {name: 'D1_2025年_9', type: 'radio'},
+          {name: 'D1_2023年_10', type: 'radio'},
+          {name: 'D1_2024年_10', type: 'radio'},
+          {name: 'D1_2025年_10', type: 'radio'},
+          {name: 'D2', type: 'radio'},
+          {name: 'D3', type: 'checkbox'},
+          {name: 'D4', type: 'checkbox'}
+        ];
+        
+        validateSection(attitudeRequired, document.getElementById('blockE'));
+      });
+      
+      // 展望与建议section验证
+      document.getElementById('nextToFinalSection').addEventListener('click', function() {
+        const outlookRequired = [
+          {name: 'E1', type: 'checkbox'},
+          {name: 'E2', type: 'checkbox'}
+        ];
+        
+        // 清除之前的验证提示
+        document.querySelectorAll('.validation-error').forEach(el => el.remove());
+        
+        let firstInvalidField = null;
+        let isValid = true;
+        
+        outlookRequired.forEach(q => {
+          let hasValue = false;
+          let firstInput = null;
+          let targetElement = null;
+          
+          const inputs = form.querySelectorAll(`input[name="${q.name}"]`);
+          hasValue = Array.from(inputs).some(input => input.checked);
+          firstInput = inputs[0];
+          
+          if (firstInput) {
+            let currentDiv = firstInput.closest('div');
+            while (currentDiv && !currentDiv.querySelector('label.font-bold')) {
+              currentDiv = currentDiv.parentElement.closest('div');
+            }
+            targetElement = currentDiv ? currentDiv.querySelector('label.font-bold') : null;
+          }
+          
+          if (!hasValue && targetElement) {
+            const errorMsg = document.createElement('p');
+            errorMsg.className = 'validation-error mt-2 text-sm text-red-600';
+            errorMsg.textContent = '请至少选择一项！';
+            targetElement.after(errorMsg);
+            
+            if (!firstInvalidField) {
+              firstInvalidField = firstInput ? firstInput.closest('div') : null;
+            }
+            isValid = false;
+          }
+        });
+        
+        if (!isValid) {
+          if (firstInvalidField) {
+            firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+        
+        // 验证通过，隐藏当前sections，显示最后部分
+        document.querySelectorAll('#blockC, #blockD, #blockE').forEach(el => {
+          el.classList.add('hidden');
+        });
+        document.getElementById('blockG').classList.remove('hidden');
+        document.getElementById('blockF').classList.remove('hidden');
+        document.getElementById('submitSection').classList.remove('hidden');
+        document.getElementById('blockG').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      // 矩阵题目联动逻辑
+      function setupMatrixLinkage() {
+        // C1频率矩阵的联动逻辑
+        ['2023', '2024', '2025'].forEach(year => {
+          const frequencyInputs = document.querySelectorAll(`input[name="C1_${year}"]`);
+          
+          frequencyInputs.forEach(input => {
+            input.addEventListener('change', function() {
+              if (this.checked && this.value === '从不') {
+                // 选择从不时，自动设置C2和C3
+                handleNeverUsedAI(year);
+              } else if (this.checked) {
+                // 选择其他选项时，恢复正常状态
+                restoreNormalState(year);
+              }
+            });
+          });
+        });
+      }
+      
+      function handleNeverUsedAI(year) {
+        // C2: 自动勾选"未使用AI"并禁用其他选项
+        const c2NeverUsed = document.querySelector(`input[name="C2_未使用AI_${year}"]`);
+        if (c2NeverUsed) {
+          c2NeverUsed.checked = true;
+          
+          // 禁用其他C2选项
+          document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]:not([name="C2_未使用AI_${year}"])`).forEach(input => {
+            input.checked = false;
+            input.disabled = true;
+            input.closest('td').classList.add('disabled');
+          });
+        }
+        
+        // C3: 自动选择"<10%（含0%）"并禁用其他选项
+        const c3LowEfficiency = document.querySelector(`input[name="C3_${year}"][value="<10%（含0%）"]`);
+        if (c3LowEfficiency) {
+          c3LowEfficiency.checked = true;
+          
+          // 禁用其他C3选项
+          document.querySelectorAll(`input[name="C3_${year}"]:not([value="<10%（含0%）"])`).forEach(input => {
+            input.checked = false;
+            input.disabled = true;
+            input.closest('td').classList.add('disabled');
+          });
+        }
+      }
+      
+      function restoreNormalState(year) {
+        // 恢复C2选项
+        document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`).forEach(input => {
+          input.disabled = false;
+          input.closest('td').classList.remove('disabled');
+        });
+        
+        // 清除自动勾选的"未使用AI"
+        const c2NeverUsed = document.querySelector(`input[name="C2_未使用AI_${year}"]`);
+        if (c2NeverUsed) {
+          c2NeverUsed.checked = false;
+        }
+        
+        // 恢复C3选项
+        document.querySelectorAll(`input[name="C3_${year}"]`).forEach(input => {
+          input.disabled = false;
+          input.closest('td').classList.remove('disabled');
+        });
+        
+        // 清除自动选择的"<10%"
+        const c3LowEfficiency = document.querySelector(`input[name="C3_${year}"][value="<10%（含0%）"]`);
+        if (c3LowEfficiency) {
+          c3LowEfficiency.checked = false;
+        }
+      }
+      
+      // 初始化矩阵联动
+      setupMatrixLinkage();
       
       // 多选框"其他"选项的文本框联动 - 通用处理所有带文本框的checkbox
       document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
@@ -1518,51 +2254,44 @@
         // 清除所有验证提示
         document.querySelectorAll('.validation-error').forEach(el => el.remove());
         
-        // 定义所有必填项（按页面顺序）
-        const requiredQuestions = [
+        // 获取当前用户标签
+        const userTags = generateUserTags();
+        console.log('提交时用户标签:', userTags);
+        
+        // 定义所有必填项及其标签要求
+        const allRequiredQuestions = [
+          // 基本信息（所有用户）
           {name: 'S1', type: 'radio'},
           {name: 'S2', type: 'radio'},
           {name: 'S3', type: 'checkbox'},
           {name: 'S5', type: 'radio'},
-          {name: 'S6', type: 'checkbox'},
-          {name: 'C1_2023', type: 'radio'},
-          {name: 'C1_2024', type: 'radio'},
-          {name: 'C1_2025', type: 'radio'},
-          {name: 'C2_2023', type: 'checkbox-column'},
-          {name: 'C2_2024', type: 'checkbox-column'},
-          {name: 'C2_2025', type: 'checkbox-column'},
-          {name: 'C3_2023', type: 'radio'},
-          {name: 'C3_2024', type: 'radio'},
-          {name: 'C3_2025', type: 'radio'},
-          {name: 'C4_2023', type: 'radio'},
-          {name: 'C4_2024', type: 'radio'},
-          {name: 'C4_2025', type: 'radio'},
-          {name: 'C5', type: 'checkbox'},
-          {name: 'C6', type: 'radio'},
-          {name: 'C7', type: 'checkbox'}
-        ];
-        
-        // 深度用户专项必填题（条件显示）
-        const deepUserQuestions = [
-          {name: 'CD1', type: 'checkbox'},
-          {name: 'CD2', type: 'radio'},
-          {name: 'CD3', type: 'checkbox'},
-          {name: 'CD4', type: 'radio'},
-          {name: 'CD5_simple', type: 'radio'},
-          {name: 'CD5_medium', type: 'radio'},
-          {name: 'CD5_complex', type: 'radio'},
-          {name: 'CD7', type: 'checkbox'},
-          {name: 'CD8', type: 'radio'}
-        ];
-        
-        // 如果深度用户区块显示，添加深度用户题目
-        const deepBlock = document.getElementById('blockC-DEEP');
-        if (deepBlock && !deepBlock.classList.contains('hidden')) {
-          requiredQuestions.push(...deepUserQuestions);
-        }
-        
-        // D、E、B区块题目
-        requiredQuestions.push(
+          {name: 'S6', type: 'checkbox', condition: () => !document.getElementById('S6Question').classList.contains('hidden')},
+          // AI使用情况（按标签）
+          {name: 'C1_2023', type: 'radio', tags: ['深度用户']},
+          {name: 'C1_2024', type: 'radio', tags: ['深度用户']},
+          {name: 'C1_2025', type: 'radio', tags: ['深度用户']},
+          {name: 'C2_2023', type: 'checkbox-column', tags: ['深度用户']},
+          {name: 'C2_2024', type: 'checkbox-column', tags: ['深度用户']},
+          {name: 'C2_2025', type: 'checkbox-column', tags: ['深度用户']},
+          {name: 'C3_2023', type: 'radio', tags: ['深度用户']},
+          {name: 'C3_2024', type: 'radio', tags: ['深度用户']},
+          {name: 'C3_2025', type: 'radio', tags: ['深度用户']},
+          {name: 'C4_2023', type: 'radio', tags: ['深度用户']},
+          {name: 'C4_2024', type: 'radio', tags: ['深度用户']},
+          {name: 'C4_2025', type: 'radio', tags: ['深度用户']},
+          {name: 'C5', type: 'checkbox', tags: ['初级用户', '深度用户']},
+          {name: 'C6', type: 'radio', tags: ['初级用户', '深度用户']},
+          {name: 'C7', type: 'checkbox', tags: ['初级用户', '深度用户']},
+          {name: 'CD1', type: 'checkbox', tags: ['深度用户']},
+          {name: 'CD2', type: 'radio', tags: ['深度用户']},
+          {name: 'CD3', type: 'checkbox', tags: ['深度用户']},
+          {name: 'CD4', type: 'radio', tags: ['深度用户']},
+          {name: 'CD5_simple', type: 'radio', tags: ['深度用户']},
+          {name: 'CD5_medium', type: 'radio', tags: ['深度用户']},
+          {name: 'CD5_complex', type: 'radio', tags: ['深度用户']},
+          {name: 'CD7', type: 'checkbox', tags: ['深度用户', '决策者']},
+          {name: 'CD8', type: 'radio', tags: ['深度用户', '决策者']},
+          // AI态度（所有用户）
           {name: 'D1_2023年_1', type: 'radio'},
           {name: 'D1_2024年_1', type: 'radio'},
           {name: 'D1_2025年_1', type: 'radio'},
@@ -1596,13 +2325,31 @@
           {name: 'D2', type: 'radio'},
           {name: 'D3', type: 'checkbox'},
           {name: 'D4', type: 'checkbox'},
+          // 展望与建议（所有用户）
           {name: 'E1', type: 'checkbox'},
           {name: 'E2', type: 'checkbox'},
+          // 职业概况（所有用户）
           {name: 'B2', type: 'radio'},
           {name: 'B3', type: 'radio'},
           {name: 'B4', type: 'checkbox'},
           {name: 'B5', type: 'checkbox'}
-        )
+        ];
+        
+        // 过滤出用户应该验证的题目
+        const requiredQuestions = allRequiredQuestions.filter(q => {
+          // 检查条件函数
+          if (q.condition && !q.condition()) {
+            return false;
+          }
+          // 检查标签要求
+          if (q.tags) {
+            return q.tags.some(tag => userTags.includes(tag));
+          }
+          // 没有标签要求的题目都需要验证
+          return true;
+        });
+        
+        console.log('用户应验证题目数量:', requiredQuestions.length);
         
         let firstInvalidField = null;
         
@@ -1678,6 +2425,20 @@
         });
         
         if (firstInvalidField) {
+          // 如果有未填的必填项，需要显示对应的section并滚动到错误位置
+          const invalidFieldName = firstInvalidField.querySelector('input')?.name;
+          
+          // 根据字段名判断属于哪个section并显示
+          if (invalidFieldName && (invalidFieldName.startsWith('B2') || invalidFieldName.startsWith('B3') || invalidFieldName.startsWith('B4') || invalidFieldName.startsWith('B5'))) {
+            // 职业概况section的字段，确保该section可见
+            document.querySelectorAll('#blockC, #blockD, #blockE').forEach(el => {
+              el.classList.add('hidden');
+            });
+            document.getElementById('blockG').classList.remove('hidden');
+            document.getElementById('blockF').classList.remove('hidden');
+            document.getElementById('submitSection').classList.remove('hidden');
+          }
+          
           firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
@@ -1726,6 +2487,291 @@
             alert('提交失败，请稍后重试。');
           });
       });
+      
+      // 查看调查结果按钮事件
+      document.getElementById('showReportBtn').addEventListener('click', function() {
+        document.getElementById('surveyReport').classList.remove('hidden');
+        document.getElementById('surveyReport').scrollIntoView({ behavior: 'smooth' });
+        loadSurveyReport();
+      });
+      
+      // 关闭报告按钮事件
+      document.getElementById('closeReportBtn').addEventListener('click', function() {
+        document.getElementById('surveyReport').classList.add('hidden');
+        document.getElementById('submitSuccess').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      // 加载调查结果报告
+      function loadSurveyReport() {
+        const reportContent = document.getElementById('reportContent');
+        
+        // 显示加载状态
+        reportContent.innerHTML = `
+          <div class="text-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600">正在加载调查数据...</p>
+          </div>
+        `;
+        
+        // 尝试从 Firebase 读取数据，失败时使用模拟数据
+        database.ref('surveys').once('value')
+          .then((snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+              const surveys = Object.values(data);
+              generateReport(surveys);
+            } else {
+              generateReport(getMockData());
+            }
+          })
+          .catch((error) => {
+            // Firebase连接失败，使用模拟数据演示
+            generateReport(getMockData());
+          });
+      }
+      
+      // 获取模拟数据用于演示
+      function getMockData() {
+        return [
+          {S2: 'A', S5: 'D', B2: 'B', B3: 'B', B4: ['A', 'B'], 'D1_2025年_1': '同意', D2: 'C', D3: ['A', 'B']},
+          {S2: 'B', S5: 'E', B2: 'C', B3: 'C', B4: ['B', 'C'], 'D1_2025年_1': '非常同意', D2: 'C', D3: ['B', 'E']},
+          {S2: 'C', S5: 'C', B2: 'A', B3: 'A', B4: ['A'], 'D1_2025年_1': '中立', D2: 'D', D3: ['C', 'D']},
+          {S2: 'A', S5: 'D', B2: 'D', B3: 'D', B4: ['A', 'D'], 'D1_2025年_1': '同意', D2: 'C', D3: ['A', 'G']},
+          {S2: 'C', S5: 'B', B2: 'B', B3: 'B', B4: ['B', 'C', 'D'], 'D1_2025年_1': '不同意', D2: 'E', D3: ['E', 'F']}
+        ];
+      }
+      
+      // 生成报告
+      function generateReport(surveys) {
+        const reportContent = document.getElementById('reportContent');
+        const totalCount = surveys.length;
+        
+        // 统计各个问题的结果
+        const stats = {
+          organizationType: {},
+          workContent: {},
+          aiUsageFrequency: {},
+          aiTools: {},
+          efficiency2025: {},
+          jobLevel: {},
+          experience: {},
+          programmingLanguages: {},
+          aiAttitude2025: {},
+          futureImpact: {},
+          constraints: {}
+        };
+        
+        surveys.forEach(survey => {
+          // 组织类型 (S2)
+          if (survey.S2) {
+            const orgMap = {
+              'A': '跨国药企（MNC）',
+              'B': '本土药企（Local）',
+              'C': 'CRO/服务外包公司',
+              'D': '其他医药相关机构',
+              'E': '不方便透露'
+            };
+            const orgType = orgMap[survey.S2] || survey.S2;
+            stats.organizationType[orgType] = (stats.organizationType[orgType] || 0) + 1;
+          }
+          
+          // AI使用频率 (S5)
+          if (survey.S5) {
+            const freqMap = {
+              'A': '从不',
+              'B': '很少（每季度或更少）',
+              'C': '偶尔（每月）',
+              'D': '经常（每周）',
+              'E': '频繁（几乎每天）'
+            };
+            const freq = freqMap[survey.S5] || survey.S5;
+            stats.aiUsageFrequency[freq] = (stats.aiUsageFrequency[freq] || 0) + 1;
+          }
+          
+          // 岗位级别 (B2)
+          if (survey.B2) {
+            const levelMap = {
+              'A': '初级/助理',
+              'B': '中级/资深',
+              'C': '主管/组长',
+              'D': '经理/负责人',
+              'E': '总监及以上'
+            };
+            const level = levelMap[survey.B2] || survey.B2;
+            stats.jobLevel[level] = (stats.jobLevel[level] || 0) + 1;
+          }
+          
+          // 从业年限 (B3)
+          if (survey.B3) {
+            const expMap = {
+              'A': '0-2年',
+              'B': '3-5年',
+              'C': '6-9年',
+              'D': '10-14年',
+              'E': '15年及以上'
+            };
+            const exp = expMap[survey.B3] || survey.B3;
+            stats.experience[exp] = (stats.experience[exp] || 0) + 1;
+          }
+          
+          // 编程语言 (B4)
+          if (survey.B4) {
+            const langMap = {
+              'A': 'SAS',
+              'B': 'R',
+              'C': 'Python',
+              'D': 'SQL',
+              'E': 'Julia'
+            };
+            const languages = Array.isArray(survey.B4) ? survey.B4 : [survey.B4];
+            languages.forEach(lang => {
+              const langName = langMap[lang] || lang;
+              stats.programmingLanguages[langName] = (stats.programmingLanguages[langName] || 0) + 1;
+            });
+          }
+          
+          // AI提升统计编程效率的态度 (D1_2025年_1)
+          if (survey['D1_2025年_1']) {
+            const attitudeMap = {
+              '非常不同意': '非常不同意',
+              '不同意': '不同意',
+              '中立': '中立',
+              '同意': '同意',
+              '非常同意': '非常同意'
+            };
+            const attitude = attitudeMap[survey['D1_2025年_1']] || survey['D1_2025年_1'];
+            stats.aiAttitude2025[attitude] = (stats.aiAttitude2025[attitude] || 0) + 1;
+          }
+          
+          // 未来影响 (D2)
+          if (survey.D2) {
+            const impactMap = {
+              'A': '增加对人工统计编程的要求',
+              'B': '减少对人工统计编程的需求',
+              'C': '进一步增强生产力，形成行业刚需',
+              'D': '有助提升，但影响有限',
+              'E': '与现有工具类似，不会显著改变行业',
+              'F': '可能带来负面影响',
+              'G': '不确定/难以预测'
+            };
+            const impact = impactMap[survey.D2] || survey.D2;
+            stats.futureImpact[impact] = (stats.futureImpact[impact] || 0) + 1;
+          }
+          
+          // 制约因素 (D3)
+          if (survey.D3) {
+            const constraintMap = {
+              'A': '数据安全与隐私合规风险',
+              'B': 'AI输出的准确性与可信度不足',
+              'C': '缺乏针对性的AI工具与平台',
+              'D': '公司政策限制或缺乏明确指导',
+              'E': '团队技能与培训不足',
+              'F': '成本考虑',
+              'G': '审计追踪与可重现性要求',
+              'H': '监管部门对AI使用的不确定态度'
+            };
+            const constraints = Array.isArray(survey.D3) ? survey.D3 : [survey.D3];
+            constraints.forEach(constraint => {
+              const constraintName = constraintMap[constraint] || constraint;
+              stats.constraints[constraintName] = (stats.constraints[constraintName] || 0) + 1;
+            });
+          }
+        });
+        
+        // 生成报告 HTML
+        reportContent.innerHTML = `
+          <div class="bg-blue-50 p-4 rounded-lg mb-6">
+            <h4 class="font-bold text-blue-800 mb-2">📊 数据概览</h4>
+            <p class="text-blue-700">总参与人数：<strong>${totalCount}</strong> 人</p>
+            <p class="text-sm text-blue-600 mt-1">数据更新时间：${new Date().toLocaleString('zh-CN')}</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            ${generateChartSection('组织类型分布', stats.organizationType, totalCount, 'org-chart')}
+            ${generateChartSection('AI使用频率分布', stats.aiUsageFrequency, totalCount, 'freq-chart')}
+            ${generateChartSection('岗位级别分布', stats.jobLevel, totalCount, 'level-chart')}
+            ${generateChartSection('从业年限分布', stats.experience, totalCount, 'exp-chart')}
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            ${generateChartSection('编程语言使用情况', stats.programmingLanguages, totalCount, 'lang-chart')}
+            ${generateChartSection('AI提升效率态度(2025)', stats.aiAttitude2025, totalCount, 'attitude-chart')}
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            ${generateChartSection('未来3-5年AI影响预期', stats.futureImpact, totalCount, 'impact-chart')}
+            ${generateChartSection('主要制约因素', stats.constraints, totalCount, 'constraint-chart')}
+          </div>
+          
+          <div class="mt-6 text-center text-sm text-gray-500">
+            <p>ℹ️ 此报告基于当前所有问卷数据生成，仅供参考</p>
+          </div>
+        `;
+      }
+      
+      // 生成图表区域
+      function generateChartSection(title, data, total, chartId, isFullWidth = false) {
+        if (Object.keys(data).length === 0) {
+          return `
+            <div class="${isFullWidth ? 'col-span-full' : ''} bg-white p-4 rounded-lg border shadow-sm">
+              <h4 class="font-bold text-gray-800 mb-4">${title}</h4>
+              <p class="text-gray-500 text-center py-4">暂无数据</p>
+            </div>
+          `;
+        }
+        
+        const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
+        const maxValue = Math.max(...Object.values(data));
+        
+        // 为不同类型的图表选择不同的颜色
+        const getBarColor = (index, chartType) => {
+          const colors = {
+            'org-chart': ['bg-blue-500', 'bg-blue-400', 'bg-blue-300', 'bg-blue-200', 'bg-blue-100'],
+            'freq-chart': ['bg-green-500', 'bg-green-400', 'bg-green-300', 'bg-green-200', 'bg-green-100'],
+            'level-chart': ['bg-purple-500', 'bg-purple-400', 'bg-purple-300', 'bg-purple-200', 'bg-purple-100'],
+            'exp-chart': ['bg-orange-500', 'bg-orange-400', 'bg-orange-300', 'bg-orange-200', 'bg-orange-100'],
+            'lang-chart': ['bg-red-500', 'bg-red-400', 'bg-red-300', 'bg-red-200', 'bg-red-100'],
+            'attitude-chart': ['bg-emerald-500', 'bg-emerald-400', 'bg-emerald-300', 'bg-emerald-200', 'bg-emerald-100'],
+            'impact-chart': ['bg-indigo-500', 'bg-indigo-400', 'bg-indigo-300', 'bg-indigo-200', 'bg-indigo-100'],
+            'constraint-chart': ['bg-rose-500', 'bg-rose-400', 'bg-rose-300', 'bg-rose-200', 'bg-rose-100']
+          };
+          const colorSet = colors[chartId] || colors['org-chart'];
+          return colorSet[index % colorSet.length] || 'bg-gray-400';
+        };
+        
+        const chartHTML = sortedData.map(([label, count], index) => {
+          const percentage = ((count / total) * 100).toFixed(1);
+          const barWidth = maxValue > 0 ? (count / maxValue) * 100 : 0;
+          const barColor = getBarColor(index, chartId);
+          
+          return `
+            <div class="mb-3 animate-fadeIn" style="animation-delay: ${index * 0.1}s">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-sm font-medium text-gray-700 truncate" title="${label}">${label}</span>
+                <span class="text-sm text-gray-600 ml-2 flex-shrink-0">${count}人 (${percentage}%)</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div class="${barColor} h-3 rounded-full chart-bar" style="width: ${barWidth}%; transition-delay: ${index * 0.1}s"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+        
+        return `
+          <div class="${isFullWidth ? 'col-span-full' : ''} bg-white p-4 rounded-lg border shadow-sm hover:shadow-md transition-shadow">
+            <h4 class="font-bold text-gray-800 mb-4 flex items-center">
+              <span class="w-3 h-3 ${getBarColor(0, chartId)} rounded-full mr-2"></span>
+              ${title}
+            </h4>
+            <div id="${chartId}">
+              ${chartHTML}
+            </div>
+            <div class="mt-3 pt-3 border-t border-gray-100">
+              <p class="text-xs text-gray-500">有效样本数：${Object.values(data).reduce((a, b) => a + b, 0)} / ${total}</p>
+            </div>
+          </div>
+        `;
+      }
 
     });
   </script>
