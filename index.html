@@ -214,9 +214,11 @@
         display: block;
         transform: rotate(90deg);
         transform-origin: center;
-        width: 90vh;
-        height: 70vw;
-        margin: 15vw -5vh;
+        width: auto;
+        max-width: 120vh;
+        height: auto;
+        max-height: 80vw;
+        margin: 10vw -10vh;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
@@ -2855,6 +2857,10 @@
         const values = sortedData.map(([, value]) => value);
         const total = denominator || values.reduce((sum, val) => sum + val, 0);
         
+        // 移动端动态计算宽度
+        const maxLabelLength = Math.max(...categories.map(cat => cat.length));
+        const mobileWidth = isMobile() ? Math.max(400, maxLabelLength * 12 + 200) : null;
+        
         const chart = Highcharts.chart(containerId, {
           chart: {
             type: 'bar',
@@ -2862,7 +2868,7 @@
             animation: {
               duration: 1000
             },
-            width: isMobile() ? 500 : null,
+            width: mobileWidth,
             height: isMobile() ? Math.max(300, categories.length * 35) : null
           },
           title: {
@@ -2960,7 +2966,7 @@
           canvas.height = chart.chartHeight;
           
           img.onload = function() {
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
             
             // 添加提示信息
             const hintDiv = document.createElement('div');
