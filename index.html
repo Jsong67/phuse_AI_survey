@@ -214,9 +214,9 @@
         display: block;
         transform: rotate(90deg);
         transform-origin: center;
-        width: 100vh;
-        height: 80vw;
-        margin: 10vw -10vh;
+        width: 90vh;
+        height: 70vw;
+        margin: 15vw -5vh;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
@@ -2795,8 +2795,8 @@
             animation: {
               duration: 1000
             },
-            width: isMobile() ? 500 : null,
-            height: isMobile() ? 400 : null
+            width: isMobile() ? 400 : null,
+            height: isMobile() ? 350 : 300
           },
           title: {
             text: null
@@ -2815,9 +2815,12 @@
               cursor: 'pointer',
               dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                distance: isMobile() ? -30 : 20,
+                format: isMobile() ? '{point.percentage:.1f}%' : '<b>{point.name}</b>: {point.percentage:.1f}%',
                 style: {
-                  fontSize: isMobile() ? '11px' : '11px'
+                  fontSize: isMobile() ? '10px' : '11px',
+                  color: isMobile() ? 'white' : 'black',
+                  textOutline: isMobile() ? '1px black' : 'none'
                 }
               },
               showInLegend: true,
@@ -2859,20 +2862,21 @@
             animation: {
               duration: 1000
             },
-            width: isMobile() ? 700 : null,
-            height: isMobile() ? Math.max(400, categories.length * 50) : null
+            width: isMobile() ? 500 : null,
+            height: isMobile() ? Math.max(300, categories.length * 35) : null
           },
           title: {
             text: null
           },
           xAxis: {
-            categories: categories,
+            categories: isMobile() ? categories.map(() => '') : categories,
             title: {
               text: null
             },
             labels: {
+              enabled: !isMobile(),
               style: {
-                fontSize: isMobile() ? '12px' : '12px'
+                fontSize: '12px'
               },
               useHTML: true
             }
@@ -2897,13 +2901,24 @@
             bar: {
               dataLabels: {
                 enabled: true,
+                inside: false,
+                align: isMobile() ? 'left' : 'right',
+                x: isMobile() ? -5 : 5,
                 formatter: function() {
                   const percentage = ((this.y / total) * 100).toFixed(1);
-                  return `${this.y} (${percentage}%)`;
+                  const originalCategory = categories[this.point.index];
+                  if (isMobile()) {
+                    return `<b>${originalCategory}</b><br/>${this.y} (${percentage}%)`;
+                  } else {
+                    return `${this.y} (${percentage}%)`;
+                  }
                 },
                 style: {
-                  fontSize: isMobile() ? '11px' : '11px'
-                }
+                  fontSize: isMobile() ? '9px' : '11px',
+                  color: 'black',
+                  textOutline: 'none'
+                },
+                useHTML: true
               },
               colorByPoint: true,
               animation: {
@@ -2941,8 +2956,8 @@
           const img = new Image();
           
           // 设置canvas尺寸为横屏模式
-          canvas.width = Math.max(chart.chartWidth, 600);
-          canvas.height = Math.max(chart.chartHeight, 400);
+          canvas.width = chart.chartWidth;
+          canvas.height = chart.chartHeight;
           
           img.onload = function() {
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
