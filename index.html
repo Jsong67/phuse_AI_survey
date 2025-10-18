@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>中国药物研发统计编程行业 AI 应用演变与展望调研（2023-2025）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="screen-orientation" content="landscape" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -201,6 +202,31 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
+    /* 移动端横屏提示 */
+    .landscape-hint {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #1f2937;
+      color: white;
+      padding: 0.75rem;
+      text-align: center;
+      z-index: 9999;
+      font-size: 0.875rem;
+    }
+    
+    @media (max-width: 768px) and (orientation: portrait) {
+      .landscape-hint {
+        display: block;
+      }
+      
+      #surveyReport {
+        margin-top: 3rem;
+      }
+    }
+    
     /* 响应式 */
     @media (max-width: 768px) {
       .main-container {
@@ -242,6 +268,11 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
+  <!-- 移动端横屏提示 -->
+  <div class="landscape-hint">
+    🔄 为了更好的查看体验，建议您将手机横屏显示查看报告
+  </div>
+  
   <div class="max-w-5xl main-container">
     <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
       <h1 class="text-3xl font-bold mb-4">中国药物研发统计编程行业 AI 应用演变与展望调研（2023-2025）</h1>
