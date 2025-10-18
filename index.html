@@ -8,6 +8,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+
   <meta name="color-scheme" content="light" />
   <style>
     /* 基础样式优化 */
@@ -188,10 +190,7 @@
       opacity: 0.8;
     }
     
-    #surveyReport {
-      max-height: 80vh;
-      overflow-y: auto;
-    }
+
     
     .animate-fadeIn {
       animation: fadeIn 0.5s ease-in;
@@ -230,9 +229,7 @@
         width: 13%;
       }
       
-      #surveyReport {
-        max-height: 90vh;
-      }
+
       
       #surveyReport .grid {
         grid-template-columns: 1fr;
@@ -1364,7 +1361,7 @@
           <p class="text-base font-medium">📅 调查结果将于 <strong>2025年11月7日</strong> 发布</p>
           <p>🌍 发布地点：PHUSE SDE 及线上同时发布</p>
         </div>
-        <button id="showReportBtn" class="btn btn-primary mb-4">📊 查看当前调查结果汇总</button>
+        <button id="showReportBtn" class="btn btn-primary mb-4">📊 查看关键结果汇总（实时）</button>
       </div>
     </div>
 
@@ -2495,6 +2492,8 @@
         loadSurveyReport();
       });
       
+
+      
       // 关闭报告按钮事件
       document.getElementById('closeReportBtn').addEventListener('click', function() {
         document.getElementById('surveyReport').classList.add('hidden');
@@ -2533,11 +2532,12 @@
       // 获取模拟数据用于演示
       function getMockData() {
         return [
-          {S2: 'A', S5: 'D', B2: 'B', B3: 'B', B4: ['A', 'B'], 'D1_2025年_1': '同意', D2: 'C', D3: ['A', 'B']},
-          {S2: 'B', S5: 'E', B2: 'C', B3: 'C', B4: ['B', 'C'], 'D1_2025年_1': '非常同意', D2: 'C', D3: ['B', 'E']},
-          {S2: 'C', S5: 'C', B2: 'A', B3: 'A', B4: ['A'], 'D1_2025年_1': '中立', D2: 'D', D3: ['C', 'D']},
-          {S2: 'A', S5: 'D', B2: 'D', B3: 'D', B4: ['A', 'D'], 'D1_2025年_1': '同意', D2: 'C', D3: ['A', 'G']},
-          {S2: 'C', S5: 'B', B2: 'B', B3: 'B', B4: ['B', 'C', 'D'], 'D1_2025年_1': '不同意', D2: 'E', D3: ['E', 'F']}
+          {S2: 'A', S3: ['A', 'B'], S5: 'D', S6: ['A', 'B'], D2: 'C', D3: ['A', 'B'], D4: ['A', 'B'], E1: ['A', 'B'], E2: ['A', 'B']},
+          {S2: 'B', S3: ['B', 'C'], S5: 'E', S6: ['C', 'D'], D2: 'D', D3: ['B', 'C'], D4: ['B', 'C'], E1: ['B', 'C'], E2: ['B', 'C']},
+          {S2: 'C', S3: ['A'], S5: 'C', S6: ['A'], D2: 'B', D3: ['A'], D4: ['A'], E1: ['A'], E2: ['A']},
+          {S2: 'A', S3: ['E', 'F'], S5: 'D', S6: ['E', 'F'], D2: 'C', D3: ['D', 'E'], D4: ['C', 'D'], E1: ['D', 'E'], E2: ['C', 'D']},
+          {S2: 'C', S3: ['B', 'C', 'D'], S5: 'B', S6: ['B'], D2: 'F', D3: ['F', 'G'], D4: ['E'], E1: ['F', 'G'], E2: ['E', 'F']},
+          {S2: 'B', S3: ['A', 'C'], S5: 'E', S6: ['A', 'C', 'G'], D2: 'C', D3: ['A', 'H'], D4: ['A', 'D'], E1: ['A', 'C'], E2: ['B', 'D']}
         ];
       }
       
@@ -2546,231 +2546,310 @@
         const reportContent = document.getElementById('reportContent');
         const totalCount = surveys.length;
         
-        // 统计各个问题的结果
+        // 只统计关键问题的结果
         const stats = {
-          organizationType: {},
-          workContent: {},
-          aiUsageFrequency: {},
-          aiTools: {},
-          efficiency2025: {},
-          jobLevel: {},
-          experience: {},
-          programmingLanguages: {},
-          aiAttitude2025: {},
-          futureImpact: {},
-          constraints: {}
+          S2: {}, // 组织类型
+          S3: {}, // 工作内容
+          S5: {}, // AI使用频率
+          S6: {}, // AI任务类型
+          D2: {}, // AI未来影响
+          D3: {}, // AI应用制约因素
+          D4: {}, // AI信任情境
+          E1: {}, // AI改进环节
+          E2: {}  // AI政策建议
+        };
+        
+        // 计算多选题的有效回答人数
+        const multipleChoiceRespondents = {};
+        ['S3', 'S6', 'D3', 'D4', 'E1', 'E2'].forEach(field => {
+          multipleChoiceRespondents[field] = surveys.filter(survey => survey[field]).length;
+        });
+        
+        // 定义映射关系
+        const mappings = {
+          S2: {'A': '跨国药企（MNC）', 'B': '本土药企（Local）', 'C': 'CRO/服务外包公司', 'D': '其他医药相关机构', 'E': '不方便透露'},
+          S3: {'A': '生成/QC SDTM', 'B': '生成/QC ADaM', 'C': '生成/QC TLF', 'D': '支持递交相关工作', 'E': '工具与宏/包开发与维护', 'F': '项目管理', 'G': '带人经理/团队管理'},
+          S5: {'A': '从不', 'B': '很少（每季度或更少）', 'C': '偶尔（每月）', 'D': '经常（每周）', 'E': '频繁（几乎每天）'},
+          S6: {'A': '代码片段/脚本建议', 'B': '数据清洗/转换/映射', 'C': '生成统计分析思路/表图草案', 'D': '文档生成/润色', 'E': '自动化工作流/工具集成', 'F': '内部知识库/RAG', 'G': '模型微调/本地化部署/私有化', 'H': '风险与合规评估/代码校验辅助'},
+          D2: {'A': '增加对人工统计编程的要求，<br>扩展统计编程组的工作范围', 'B': '减少对人工统计编程的需求，<br>收缩统计编程组的工作范围', 'C': '进一步增强生产力，形成行业刚需', 'D': '有助提升，但影响有限', 'E': '与现有工具类似，不会显著改变行业', 'F': '可能带来负面影响（如技能退化、过度依赖）', 'G': '不确定/难以预测'},
+          D3: {'A': '数据安全与隐私合规风险', 'B': 'AI输出的准确性与可信度不足', 'C': '缺乏针对性的AI工具与平台', 'D': '公司政策限制或缺乏明确指导', 'E': '团队技能与培训不足', 'F': '成本考虑（license、计算资源等）', 'G': '审计追踪与可重现性要求', 'H': '监管部门对AI使用的不确定态度'},
+          D4: {'A': '重复性高、标准化的编程任务', 'B': '有明确业务逻辑、可校验的分析', 'C': '初期探索、获取灵感的阶段', 'D': '有充足时间进行验证的项目', 'E': '都不信任，仅作参考'},
+          E1: {'A': '代码生成与优化（提高代码质量与效率）', 'B': '数据清洗与转换的自动化', 'C': '质量控制与校验（QC自动化）', 'D': '技术文档生成与维护', 'E': '知识管理与最佳实践检索', 'F': '合规性检查与风险评估', 'G': '培训与技能提升辅助'},
+          E2: {'A': '制定更明确的使用指南与边界', 'B': '加大 AI 工具与基础设施投入', 'C': '增加相关培训与能力建设', 'D': '建立最佳实践分享与交流机制', 'E': '保持现状，观望发展', 'F': '更谨慎使用，加强风险控制'}
         };
         
         surveys.forEach(survey => {
-          // 组织类型 (S2)
-          if (survey.S2) {
-            const orgMap = {
-              'A': '跨国药企（MNC）',
-              'B': '本土药企（Local）',
-              'C': 'CRO/服务外包公司',
-              'D': '其他医药相关机构',
-              'E': '不方便透露'
-            };
-            const orgType = orgMap[survey.S2] || survey.S2;
-            stats.organizationType[orgType] = (stats.organizationType[orgType] || 0) + 1;
-          }
+          // 处理单选题
+          ['S2', 'S5', 'D2'].forEach(field => {
+            if (survey[field]) {
+              const label = mappings[field][survey[field]] || survey[field];
+              stats[field][label] = (stats[field][label] || 0) + 1;
+            }
+          });
           
-          // AI使用频率 (S5)
-          if (survey.S5) {
-            const freqMap = {
-              'A': '从不',
-              'B': '很少（每季度或更少）',
-              'C': '偶尔（每月）',
-              'D': '经常（每周）',
-              'E': '频繁（几乎每天）'
-            };
-            const freq = freqMap[survey.S5] || survey.S5;
-            stats.aiUsageFrequency[freq] = (stats.aiUsageFrequency[freq] || 0) + 1;
-          }
-          
-          // 岗位级别 (B2)
-          if (survey.B2) {
-            const levelMap = {
-              'A': '初级/助理',
-              'B': '中级/资深',
-              'C': '主管/组长',
-              'D': '经理/负责人',
-              'E': '总监及以上'
-            };
-            const level = levelMap[survey.B2] || survey.B2;
-            stats.jobLevel[level] = (stats.jobLevel[level] || 0) + 1;
-          }
-          
-          // 从业年限 (B3)
-          if (survey.B3) {
-            const expMap = {
-              'A': '0-2年',
-              'B': '3-5年',
-              'C': '6-9年',
-              'D': '10-14年',
-              'E': '15年及以上'
-            };
-            const exp = expMap[survey.B3] || survey.B3;
-            stats.experience[exp] = (stats.experience[exp] || 0) + 1;
-          }
-          
-          // 编程语言 (B4)
-          if (survey.B4) {
-            const langMap = {
-              'A': 'SAS',
-              'B': 'R',
-              'C': 'Python',
-              'D': 'SQL',
-              'E': 'Julia'
-            };
-            const languages = Array.isArray(survey.B4) ? survey.B4 : [survey.B4];
-            languages.forEach(lang => {
-              const langName = langMap[lang] || lang;
-              stats.programmingLanguages[langName] = (stats.programmingLanguages[langName] || 0) + 1;
-            });
-          }
-          
-          // AI提升统计编程效率的态度 (D1_2025年_1)
-          if (survey['D1_2025年_1']) {
-            const attitudeMap = {
-              '非常不同意': '非常不同意',
-              '不同意': '不同意',
-              '中立': '中立',
-              '同意': '同意',
-              '非常同意': '非常同意'
-            };
-            const attitude = attitudeMap[survey['D1_2025年_1']] || survey['D1_2025年_1'];
-            stats.aiAttitude2025[attitude] = (stats.aiAttitude2025[attitude] || 0) + 1;
-          }
-          
-          // 未来影响 (D2)
-          if (survey.D2) {
-            const impactMap = {
-              'A': '增加对人工统计编程的要求',
-              'B': '减少对人工统计编程的需求',
-              'C': '进一步增强生产力，形成行业刚需',
-              'D': '有助提升，但影响有限',
-              'E': '与现有工具类似，不会显著改变行业',
-              'F': '可能带来负面影响',
-              'G': '不确定/难以预测'
-            };
-            const impact = impactMap[survey.D2] || survey.D2;
-            stats.futureImpact[impact] = (stats.futureImpact[impact] || 0) + 1;
-          }
-          
-          // 制约因素 (D3)
-          if (survey.D3) {
-            const constraintMap = {
-              'A': '数据安全与隐私合规风险',
-              'B': 'AI输出的准确性与可信度不足',
-              'C': '缺乏针对性的AI工具与平台',
-              'D': '公司政策限制或缺乏明确指导',
-              'E': '团队技能与培训不足',
-              'F': '成本考虑',
-              'G': '审计追踪与可重现性要求',
-              'H': '监管部门对AI使用的不确定态度'
-            };
-            const constraints = Array.isArray(survey.D3) ? survey.D3 : [survey.D3];
-            constraints.forEach(constraint => {
-              const constraintName = constraintMap[constraint] || constraint;
-              stats.constraints[constraintName] = (stats.constraints[constraintName] || 0) + 1;
-            });
-          }
+          // 处理多选题
+          ['S3', 'S6', 'D3', 'D4', 'E1', 'E2'].forEach(field => {
+            if (survey[field]) {
+              const values = Array.isArray(survey[field]) ? survey[field] : [survey[field]];
+              values.forEach(value => {
+                const label = mappings[field][value] || value;
+                stats[field][label] = (stats[field][label] || 0) + 1;
+              });
+            }
+          });
         });
         
         // 生成报告 HTML
         reportContent.innerHTML = `
           <div class="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 class="font-bold text-blue-800 mb-2">📊 数据概览</h4>
+            <h4 class="font-bold text-blue-800 mb-2">📊 关键数据概览</h4>
             <p class="text-blue-700">总参与人数：<strong>${totalCount}</strong> 人</p>
             <p class="text-sm text-blue-600 mt-1">数据更新时间：${new Date().toLocaleString('zh-CN')}</p>
           </div>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            ${generateChartSection('组织类型分布', stats.organizationType, totalCount, 'org-chart')}
-            ${generateChartSection('AI使用频率分布', stats.aiUsageFrequency, totalCount, 'freq-chart')}
-            ${generateChartSection('岗位级别分布', stats.jobLevel, totalCount, 'level-chart')}
-            ${generateChartSection('从业年限分布', stats.experience, totalCount, 'exp-chart')}
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            ${generateChartSection('编程语言使用情况', stats.programmingLanguages, totalCount, 'lang-chart')}
-            ${generateChartSection('AI提升效率态度(2025)', stats.aiAttitude2025, totalCount, 'attitude-chart')}
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            ${generateChartSection('未来3-5年AI影响预期', stats.futureImpact, totalCount, 'impact-chart')}
-            ${generateChartSection('主要制约因素', stats.constraints, totalCount, 'constraint-chart')}
+          <div class="space-y-8">
+            <div class="bg-white p-6 rounded-lg border shadow-sm">
+              <h3 class="text-xl font-bold text-gray-800 mb-6">👤 基本信息</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                ${generatePieChart('组织类型', stats.S2, 'chart-S2')}
+                ${generatePieChart('AI使用频率', stats.S5, 'chart-S5')}
+              </div>
+              <div class="mt-6">
+                ${generateBarChart('主要工作内容', stats.S3, 'chart-S3')}
+                ${generateBarChart('AI任务类型', stats.S6, 'chart-S6')}
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border shadow-sm">
+              <h3 class="text-xl font-bold text-gray-800 mb-6">💭 对AI的态度</h3>
+              <div class="mt-6">
+                ${generateBarChart('AI未来3-5年影响预期', stats.D2, 'chart-D2')}
+                ${generateBarChart('AI应用制约因素', stats.D3, 'chart-D3')}
+                ${generateBarChart('AI信任情境', stats.D4, 'chart-D4')}
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border shadow-sm">
+              <h3 class="text-xl font-bold text-gray-800 mb-6">🔮 展望与建议</h3>
+              <div class="mt-6">
+                ${generateBarChart('最需要AI改进的环节', stats.E1, 'chart-E1')}
+                ${generateBarChart('对公司AI政策的建议', stats.E2, 'chart-E2')}
+              </div>
+            </div>
           </div>
           
           <div class="mt-6 text-center text-sm text-gray-500">
-            <p>ℹ️ 此报告基于当前所有问卷数据生成，仅供参考</p>
+            <p>ℹ️ 此报告仅显示关键题目的统计结果</p>
+            <p>📋 详细的报告将于11月7日于PHUSE线下会议和线上同步发布</p>
+          </div>
+        `;
+        
+        // 设置滚动监听器，延迟渲染图表
+        setTimeout(() => {
+          setupScrollObserver(stats, totalCount, multipleChoiceRespondents);
+        }, 100);
+      }
+      
+      // 生成饼图
+      function generatePieChart(title, data, chartId) {
+        if (Object.keys(data).length === 0) {
+          return `<div class="text-center py-8"><p class="text-gray-500">${title}: 暂无数据</p></div>`;
+        }
+        return `
+          <div>
+            <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
+            <div id="${chartId}" style="width: 100%; height: 300px;"></div>
           </div>
         `;
       }
       
-      // 生成图表区域
-      function generateChartSection(title, data, total, chartId, isFullWidth = false) {
+      // 生成条形图
+      function generateBarChart(title, data, chartId) {
         if (Object.keys(data).length === 0) {
-          return `
-            <div class="${isFullWidth ? 'col-span-full' : ''} bg-white p-4 rounded-lg border shadow-sm">
-              <h4 class="font-bold text-gray-800 mb-4">${title}</h4>
-              <p class="text-gray-500 text-center py-4">暂无数据</p>
-            </div>
-          `;
+          return `<div class="text-center py-8"><p class="text-gray-500">${title}: 暂无数据</p></div>`;
         }
-        
-        const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
-        const maxValue = Math.max(...Object.values(data));
-        
-        // 为不同类型的图表选择不同的颜色
-        const getBarColor = (index, chartType) => {
-          const colors = {
-            'org-chart': ['bg-blue-500', 'bg-blue-400', 'bg-blue-300', 'bg-blue-200', 'bg-blue-100'],
-            'freq-chart': ['bg-green-500', 'bg-green-400', 'bg-green-300', 'bg-green-200', 'bg-green-100'],
-            'level-chart': ['bg-purple-500', 'bg-purple-400', 'bg-purple-300', 'bg-purple-200', 'bg-purple-100'],
-            'exp-chart': ['bg-orange-500', 'bg-orange-400', 'bg-orange-300', 'bg-orange-200', 'bg-orange-100'],
-            'lang-chart': ['bg-red-500', 'bg-red-400', 'bg-red-300', 'bg-red-200', 'bg-red-100'],
-            'attitude-chart': ['bg-emerald-500', 'bg-emerald-400', 'bg-emerald-300', 'bg-emerald-200', 'bg-emerald-100'],
-            'impact-chart': ['bg-indigo-500', 'bg-indigo-400', 'bg-indigo-300', 'bg-indigo-200', 'bg-indigo-100'],
-            'constraint-chart': ['bg-rose-500', 'bg-rose-400', 'bg-rose-300', 'bg-rose-200', 'bg-rose-100']
-          };
-          const colorSet = colors[chartId] || colors['org-chart'];
-          return colorSet[index % colorSet.length] || 'bg-gray-400';
-        };
-        
-        const chartHTML = sortedData.map(([label, count], index) => {
-          const percentage = ((count / total) * 100).toFixed(1);
-          const barWidth = maxValue > 0 ? (count / maxValue) * 100 : 0;
-          const barColor = getBarColor(index, chartId);
-          
-          return `
-            <div class="mb-3 animate-fadeIn" style="animation-delay: ${index * 0.1}s">
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-sm font-medium text-gray-700 truncate" title="${label}">${label}</span>
-                <span class="text-sm text-gray-600 ml-2 flex-shrink-0">${count}人 (${percentage}%)</span>
-              </div>
-              <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                <div class="${barColor} h-3 rounded-full chart-bar" style="width: ${barWidth}%; transition-delay: ${index * 0.1}s"></div>
-              </div>
-            </div>
-          `;
-        }).join('');
-        
         return `
-          <div class="${isFullWidth ? 'col-span-full' : ''} bg-white p-4 rounded-lg border shadow-sm hover:shadow-md transition-shadow">
-            <h4 class="font-bold text-gray-800 mb-4 flex items-center">
-              <span class="w-3 h-3 ${getBarColor(0, chartId)} rounded-full mr-2"></span>
-              ${title}
-            </h4>
-            <div id="${chartId}">
-              ${chartHTML}
-            </div>
-            <div class="mt-3 pt-3 border-t border-gray-100">
-              <p class="text-xs text-gray-500">有效样本数：${Object.values(data).reduce((a, b) => a + b, 0)} / ${total}</p>
-            </div>
+          <div class="mt-6">
+            <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
+            <div id="${chartId}" style="width: 100%; min-height: 400px;"></div>
           </div>
         `;
+      }
+      
+      // 生成词云
+      function generateWordCloud(title, textArray, chartId) {
+        if (textArray.length === 0) {
+          return `<div class="text-center py-8"><p class="text-gray-500">${title}: 暂无数据</p></div>`;
+        }
+        return `
+          <div>
+            <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
+            <div id="${chartId}" style="width: 100%; height: 300px; border: 1px solid #e5e7eb; border-radius: 8px;"></div>
+          </div>
+        `;
+      }
+      
+      // 设置滚动观察器
+      function setupScrollObserver(stats, totalCount, multipleChoiceRespondents) {
+        if (typeof Highcharts === 'undefined') {
+          console.log('Highcharts未加载，使用备用方案');
+          return;
+        }
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.rendered) {
+              const chartId = entry.target.id;
+              const field = chartId.replace('chart-', '');
+              
+              if (['S2', 'S5'].includes(field) && Object.keys(stats[field]).length > 0) {
+                renderHighchartsPie(chartId, stats[field]);
+              } else if (['S3', 'S6', 'D2', 'D3', 'D4', 'E1', 'E2'].includes(field) && Object.keys(stats[field]).length > 0) {
+                const denominator = ['S3', 'S6', 'D3', 'D4', 'E1', 'E2'].includes(field) ? multipleChoiceRespondents[field] : totalCount;
+                renderHighchartsBar(chartId, stats[field], denominator);
+              }
+              
+              entry.target.dataset.rendered = 'true';
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        // 观察所有图表容器
+        ['S2', 'S5', 'S3', 'S6', 'D2', 'D3', 'D4', 'E1', 'E2'].forEach(field => {
+          const element = document.getElementById(`chart-${field}`);
+          if (element) {
+            observer.observe(element);
+          }
+        });
+      }
+      
+
+      
+      // 渲染Highcharts饼图
+      function renderHighchartsPie(containerId, data) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        const chartData = Object.entries(data).map(([name, y]) => ({ name, y }));
+        
+        Highcharts.chart(containerId, {
+          chart: {
+            type: 'pie',
+            backgroundColor: 'transparent',
+            animation: {
+              duration: 1000
+            }
+          },
+          title: {
+            text: null
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}人 ({point.percentage:.1f}%)</b>'
+          },
+          accessibility: {
+            point: {
+              valueSuffix: '%'
+            }
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+              },
+              showInLegend: true,
+              animation: {
+                duration: 1000
+              }
+            }
+          },
+          colors: ['#A8DADC', '#D4A574', '#E9C46A', '#F4A261', '#E76F51', '#2A9D8F', '#264653', '#E63946', '#F77F00', '#FCBF49'],
+          series: [{
+            name: '人数',
+            colorByPoint: true,
+            data: chartData
+          }]
+        });
+      }
+      
+      // 渲染Highcharts条形图
+      function renderHighchartsBar(containerId, data, denominator) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
+        const categories = sortedData.map(([name]) => name);
+        const values = sortedData.map(([, value]) => value);
+        const total = denominator || values.reduce((sum, val) => sum + val, 0);
+        
+        Highcharts.chart(containerId, {
+          chart: {
+            type: 'bar',
+            backgroundColor: 'transparent',
+            animation: {
+              duration: 1000
+            }
+          },
+          title: {
+            text: null
+          },
+          xAxis: {
+            categories: categories,
+            title: {
+              text: null
+            },
+            labels: {
+              style: {
+                fontSize: '12px'
+              },
+              useHTML: true
+            }
+          },
+          yAxis: {
+            min: 0,
+            title: {
+              text: '人数',
+              align: 'high'
+            },
+            labels: {
+              overflow: 'justify'
+            }
+          },
+          tooltip: {
+            formatter: function() {
+              const percentage = ((this.y / total) * 100).toFixed(1);
+              return `<b>${this.x}</b><br/>人数: ${this.y}<br/>比例: ${percentage}%`;
+            }
+          },
+          plotOptions: {
+            bar: {
+              dataLabels: {
+                enabled: true,
+                formatter: function() {
+                  const percentage = ((this.y / total) * 100).toFixed(1);
+                  return `${this.y} (${percentage}%)`;
+                }
+              },
+              colorByPoint: true,
+              animation: {
+                duration: 1000
+              }
+            }
+          },
+          legend: {
+            enabled: false
+          },
+          credits: {
+            enabled: false
+          },
+          colors: ['#A8DADC', '#D4A574', '#E9C46A', '#F4A261', '#E76F51', '#2A9D8F', '#264653', '#E63946', '#F77F00', '#FCBF49'],
+          series: [{
+            name: '人数',
+            data: values
+          }]
+        });
       }
 
     });
