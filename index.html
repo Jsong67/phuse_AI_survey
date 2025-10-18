@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <title>中国药物研发统计编程行业 AI 应用演变与展望调研（2023-2025）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="screen-orientation" content="landscape" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -202,28 +201,32 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 移动端横屏提示 */
-    .landscape-hint {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #1f2937;
-      color: white;
-      padding: 0.75rem;
-      text-align: center;
-      z-index: 9999;
-      font-size: 0.875rem;
-    }
-    
-    @media (max-width: 768px) and (orientation: portrait) {
-      .landscape-hint {
-        display: block;
+    /* 移动端图片显示模式 */
+    @media (max-width: 768px) {
+      .chart-container {
+        position: relative;
       }
       
-      #surveyReport {
-        margin-top: 3rem;
+      .chart-mobile-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      .chart-desktop {
+        display: none;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .chart-mobile-image {
+        display: none;
+      }
+      
+      .chart-desktop {
+        display: block;
       }
     }
     
@@ -268,10 +271,7 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
-  <!-- 移动端横屏提示 -->
-  <div class="landscape-hint">
-    🔄 为了更好的查看体验，建议您将手机横屏显示查看报告
-  </div>
+
   
   <div class="max-w-5xl main-container">
     <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
@@ -2689,7 +2689,7 @@
         return `
           <div>
             <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
-            <div id="${chartId}" style="width: 100%; height: 300px;"></div>
+            <div id="${chartId}" class="chart-container" style="width: 100%; height: 300px;"></div>
           </div>
         `;
       }
@@ -2702,7 +2702,7 @@
         return `
           <div class="mt-6">
             <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
-            <div id="${chartId}" style="width: 100%; min-height: 400px;"></div>
+            <div id="${chartId}" class="chart-container" style="width: 100%; min-height: 400px;"></div>
           </div>
         `;
       }
@@ -2756,6 +2756,11 @@
       
 
       
+      // 检测是否为移动端
+      function isMobile() {
+        return window.innerWidth <= 768;
+      }
+      
       // 渲染Highcharts饼图
       function renderHighchartsPie(containerId, data) {
         const container = document.getElementById(containerId);
@@ -2763,13 +2768,15 @@
         
         const chartData = Object.entries(data).map(([name, y]) => ({ name, y }));
         
-        Highcharts.chart(containerId, {
+        const chart = Highcharts.chart(containerId, {
           chart: {
             type: 'pie',
             backgroundColor: 'transparent',
             animation: {
               duration: 1000
-            }
+            },
+            width: isMobile() ? 400 : null,
+            height: isMobile() ? 300 : null
           },
           title: {
             text: null
@@ -2803,6 +2810,13 @@
             data: chartData
           }]
         });
+        
+        // 移动端转换为图片
+        if (isMobile()) {
+          setTimeout(() => {
+            convertChartToImage(chart, container);
+          }, 1500);
+        }
       }
       
       // 渲染Highcharts条形图
@@ -2815,13 +2829,15 @@
         const values = sortedData.map(([, value]) => value);
         const total = denominator || values.reduce((sum, val) => sum + val, 0);
         
-        Highcharts.chart(containerId, {
+        const chart = Highcharts.chart(containerId, {
           chart: {
             type: 'bar',
             backgroundColor: 'transparent',
             animation: {
               duration: 1000
-            }
+            },
+            width: isMobile() ? 400 : null,
+            height: isMobile() ? Math.max(300, categories.length * 40) : null
           },
           title: {
             text: null
@@ -2833,7 +2849,7 @@
             },
             labels: {
               style: {
-                fontSize: '12px'
+                fontSize: isMobile() ? '10px' : '12px'
               },
               useHTML: true
             }
@@ -2861,6 +2877,9 @@
                 formatter: function() {
                   const percentage = ((this.y / total) * 100).toFixed(1);
                   return `${this.y} (${percentage}%)`;
+                },
+                style: {
+                  fontSize: isMobile() ? '9px' : '11px'
                 }
               },
               colorByPoint: true,
@@ -2881,6 +2900,57 @@
             data: values
           }]
         });
+        
+        // 移动端转换为图片
+        if (isMobile()) {
+          setTimeout(() => {
+            convertChartToImage(chart, container);
+          }, 1500);
+        }
+      }
+      
+      // 将图表转换为图片（移动端）
+      function convertChartToImage(chart, container) {
+        try {
+          const svg = chart.getSVG();
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+          
+          // 设置canvas尺寸
+          canvas.width = chart.chartWidth;
+          canvas.height = chart.chartHeight;
+          
+          img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+            
+            // 创建图片元素替换图表
+            const imgElement = document.createElement('img');
+            imgElement.src = canvas.toDataURL('image/png');
+            imgElement.className = 'chart-mobile-image';
+            imgElement.alt = '图表图片';
+            
+            // 隐藏原图表，显示图片
+            const chartDiv = container.querySelector('.highcharts-container');
+            if (chartDiv) {
+              chartDiv.style.display = 'none';
+            }
+            
+            container.appendChild(imgElement);
+          };
+          
+          img.onerror = function() {
+            console.log('图片转换失败，保持原图表显示');
+          };
+          
+          // 将SVG转换为data URL
+          const svgBlob = new Blob([svg], {type: 'image/svg+xml;charset=utf-8'});
+          const url = URL.createObjectURL(svgBlob);
+          img.src = url;
+          
+        } catch (error) {
+          console.log('图表转换为图片失败:', error);
+        }
       }
 
     });
