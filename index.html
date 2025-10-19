@@ -15,7 +15,7 @@
     /* 基础样式优化 */
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #0033A0 0%, #6CACE4 100%);
       min-height: 100vh;
     }
     
@@ -55,7 +55,7 @@
     input[type="radio"], input[type="checkbox"] {
       width: 18px;
       height: 18px;
-      accent-color: #4f46e5;
+      accent-color: #0033A0;
     }
     
     input[type="text"], input[type="email"], textarea, select {
@@ -67,8 +67,8 @@
     
     input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
       outline: none;
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      border-color: #0033A0;
+      box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.1);
     }
     
     /* 标签样式 */
@@ -129,14 +129,14 @@
     }
     
     .btn-primary {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      background: linear-gradient(135deg, #0033A0 0%, #4AB7AE 100%);
       color: white;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 51, 160, 0.3);
     }
     
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+      box-shadow: 0 6px 20px rgba(0, 51, 160, 0.4);
     }
     
     /* 其他样式 */
@@ -179,6 +179,77 @@
       .drag-handle {
         font-size: 1.2rem;
       }
+    }
+    
+    /* 效率滑动条样式 */
+    .efficiency-slider-container {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+    
+    .efficiency-slider-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .efficiency-slider-label {
+      min-width: 80px;
+      font-weight: 500;
+      color: #334155;
+    }
+    
+    .efficiency-slider-wrapper {
+      flex: 1;
+      position: relative;
+    }
+    
+    .efficiency-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: linear-gradient(to right, #e5e7eb 0%, #0033A0 50%, #4AB7AE 100%);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .efficiency-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #0033A0;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .efficiency-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #0033A0;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .efficiency-slider-value {
+      min-width: 50px;
+      text-align: center;
+      font-weight: 600;
+      color: #0033A0;
+    }
+    
+    .efficiency-slider-marks {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: #64748b;
     }
     
     /* 报告样式 */
@@ -246,7 +317,7 @@
     
     .css-chart-bar {
       height: 100%;
-      background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+      background: linear-gradient(90deg, #6CACE4, #0033A0);
       border-radius: 12px;
       transition: width 1s ease-out;
       position: relative;
@@ -357,7 +428,7 @@
 
   
   <div class="max-w-5xl main-container">
-    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 text-center">
+    <header class="text-white p-8 text-center" style="background: linear-gradient(to right, #0033A0, #4AB7AE);">
       <h1 class="text-3xl font-bold mb-4">中国药物研发统计编程行业 AI 应用演变与展望调研（2023-2025）</h1>
 
 
@@ -395,7 +466,7 @@
             <span class="text-lg">🤖</span>
             <div>
               <strong>AI 定义</strong><br>
-              本问卷中的"AI"特指生成式 AI/大语言模型及其衍生工具（如ChatGPT、Claude、Copilot、代码生成工具等），不包含传统宏/脚本工具。
+              本问卷中的"AI"特指生成式 AI/大语言模型及其衍生工具，不包含传统宏/脚本工具。
             </div>
           </div>
           
@@ -403,9 +474,9 @@
             <span class="text-lg">📅</span>
             <div>
               <strong>年份口径与背景</strong><br>
-              • 2023年（2023.01–12）：生成式AI"元年"，ChatGPT等工具开始普及<br>
-              • 2024年（2024.01–12）：AI技术"高速发展"期，各类工具百花齐放<br>
-              • 2025年（2025.01–填写当月）：行业"逐步落地"阶段，实际项目应用增多
+              • 2023年：生成式AI"元年"，ChatGPT等工具开始普及<br>
+              • 2024年：AI技术"高速发展"期，各类工具百花齐放<br>
+              • 2025年：行业"逐步落地"阶段，实际项目应用增多
             </div>
           </div>
           
@@ -413,7 +484,7 @@
             <span class="text-lg">🎯</span>
             <div>
               <strong>调研目的</strong><br>
-              追踪中国药物研发统计编程行业在AI应用方面的演进轨迹，为行业发展提供数据支撑和趋势洞察。
+              AI技术的迅猛发展正为药物研发统计编程行业带来前所未有的机遇与挑战，如何把握这一波AI浪潮与每一位从业者息息相关。本次调研旨在真实呈现行业AI应用现状，洞察未来发展趋势。调研结果将作为PHUSE SDE会议的重要议题，由行业专家基于数据进行深入研讨，共同为行业转型升级提供决策参考。
             </div>
           </div>
           
@@ -421,7 +492,7 @@
             <span class="text-lg">📊</span>
             <div>
               <strong>完成问卷后可查看实时关键结果汇总</strong><br>
-              建议使用电脑打开问卷和结果报告，或者用手机端浏览器打开旋转屏幕以获得更佳的体验。
+              建议使用电脑打开问卷和结果报告，或者用手机端浏览器打开，并旋转屏幕以获得更佳的体验。
             </div>
           </div>
         </div>
@@ -642,51 +713,53 @@
           </table>
         </div>
 
-        <!-- C3 矩阵单选 -->
+        <!-- C3 效率提升滑动条 -->
         <div data-tags="深度用户">
-          <label class="font-bold">您自评在各年份因 AI 带来的效率提升幅度（矩阵单选）<span class="required-star">*</span></label>
-          <table class="matrix w-full mt-2 text-sm">
-            <thead>
-              <tr class="bg-gray-50">
-                <th class="text-left">年份</th>
-                <th>&lt;10%（含0%）</th>
-                <th>10–30%</th>
-                <th>30–50%</th>
-                <th>50–100%</th>
-                <th>&gt;100%</th>
-                <th>不好说/未评估</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="font-medium">2023 年</td>
-                <td><input type="radio" name="C3_2023" value="<10%（含0%）"></td>
-                <td><input type="radio" name="C3_2023" value="10–30%"></td>
-                <td><input type="radio" name="C3_2023" value="30–50%"></td>
-                <td><input type="radio" name="C3_2023" value="50–100%"></td>
-                <td><input type="radio" name="C3_2023" value=">100%"></td>
-                <td><input type="radio" name="C3_2023" value="不好说/未评估"></td>
-              </tr>
-              <tr>
-                <td class="font-medium">2024 年</td>
-                <td><input type="radio" name="C3_2024" value="<10%（含0%）"></td>
-                <td><input type="radio" name="C3_2024" value="10–30%"></td>
-                <td><input type="radio" name="C3_2024" value="30–50%"></td>
-                <td><input type="radio" name="C3_2024" value="50–100%"></td>
-                <td><input type="radio" name="C3_2024" value=">100%"></td>
-                <td><input type="radio" name="C3_2024" value="不好说/未评估"></td>
-              </tr>
-              <tr>
-                <td class="font-medium">2025 年</td>
-                <td><input type="radio" name="C3_2025" value="<10%（含0%）"></td>
-                <td><input type="radio" name="C3_2025" value="10–30%"></td>
-                <td><input type="radio" name="C3_2025" value="30–50%"></td>
-                <td><input type="radio" name="C3_2025" value="50–100%"></td>
-                <td><input type="radio" name="C3_2025" value=">100%"></td>
-                <td><input type="radio" name="C3_2025" value="不好说/未评估"></td>
-              </tr>
-            </tbody>
-          </table>
+          <label class="font-bold">您自评在各年份因 AI 带来的效率提升幅度<span class="required-star">*</span></label>
+          <div class="efficiency-slider-container">
+            <div class="efficiency-slider-row">
+              <span class="efficiency-slider-label">2023年</span>
+              <div class="efficiency-slider-wrapper">
+                <input type="range" class="efficiency-slider" name="C3_2023" min="0" max="100" value="50" step="1">
+                <div class="efficiency-slider-marks">
+                  <span>0%</span>
+                  <span>25%</span>
+                  <span>50%</span>
+                  <span>75%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+              <span class="efficiency-slider-value" id="C3_2023_value">50%</span>
+            </div>
+            <div class="efficiency-slider-row">
+              <span class="efficiency-slider-label">2024年</span>
+              <div class="efficiency-slider-wrapper">
+                <input type="range" class="efficiency-slider" name="C3_2024" min="0" max="100" value="50" step="1">
+                <div class="efficiency-slider-marks">
+                  <span>0%</span>
+                  <span>25%</span>
+                  <span>50%</span>
+                  <span>75%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+              <span class="efficiency-slider-value" id="C3_2024_value">50%</span>
+            </div>
+            <div class="efficiency-slider-row">
+              <span class="efficiency-slider-label">2025年</span>
+              <div class="efficiency-slider-wrapper">
+                <input type="range" class="efficiency-slider" name="C3_2025" min="0" max="100" value="50" step="1">
+                <div class="efficiency-slider-marks">
+                  <span>0%</span>
+                  <span>25%</span>
+                  <span>50%</span>
+                  <span>75%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+              <span class="efficiency-slider-value" id="C3_2025_value">50%</span>
+            </div>
+          </div>
         </div>
 
         <!-- C4 矩阵单选 -->
@@ -1480,8 +1553,7 @@
         <h3 class="text-2xl font-bold text-green-800 mb-4">问卷已完成！</h3>
         <p class="text-green-700 text-lg mb-6">感谢您的参与！</p>
         <div class="text-green-600 space-y-3 mb-6">
-          <p class="text-base font-medium">📅 调查结果将于 <strong>2025年11月7日</strong> 发布</p>
-          <p>🌍 发布地点：PHUSE SDE 及线上同时发布</p>
+          <p class="text-base font-medium">📅 调查结果将于 <strong>2025年11月7日</strong> 在 PHUSE SDE 及线上同时发布</p>
         </div>
         <button id="showReportBtn" class="btn btn-primary mb-4">📊 查看关键结果汇总（实时）</button>
       </div>
@@ -1532,6 +1604,17 @@
       const form = document.getElementById('surveyForm');
       const submitSuccess = document.getElementById('submitSuccess');
       
+      // C3 效率滑动条逻辑
+      ['2023', '2024', '2025'].forEach(year => {
+        const slider = document.querySelector(`input[name="C3_${year}"]`);
+        const valueDisplay = document.getElementById(`C3_${year}_value`);
+        if (slider && valueDisplay) {
+          slider.addEventListener('input', function() {
+            valueDisplay.textContent = this.value + '%';
+          });
+        }
+      });
+      
       // S5 逻辑 - 根据AI使用频率显示/隐藏S6题目并更新按钮
       const s5Inputs = document.querySelectorAll('input[name="S5"]');
       const s6Question = document.getElementById('S6Question');
@@ -1560,7 +1643,7 @@
         });
       });
       
-      // S1 逻辑 - 选择"否"时显示结束消息并隐藏后续问题
+      // S1 逻辑 - 选择"否"时显示结束消息并隐藏除S1以外的所有题目
       const s1Inputs = document.querySelectorAll('input[name="S1"]');
       
       s1Inputs.forEach(input => {
@@ -1570,13 +1653,19 @@
           if (this.value === 'B' && this.checked) {
             endMsg.classList.remove('hidden');
             nextBtn.style.display = 'none';
-            // 隐藏除第一题以外的所有题目
-            document.querySelectorAll('#blockA > div:nth-child(n+3)').forEach(el => el.classList.add('hidden'));
+            // 隐藏blockA中除S1以外的所有题目
+            const blockAChildren = document.querySelectorAll('#blockA .p-6 > div');
+            blockAChildren.forEach((el, index) => {
+              if (index > 0) { // 跳过S1（第一个div）
+                el.classList.add('hidden');
+              }
+            });
           } else {
             endMsg.classList.add('hidden');
             nextBtn.style.display = 'inline-block';
             // 显示基本信息section的所有题目
-            document.querySelectorAll('#blockA > div:nth-child(n+3)').forEach(el => el.classList.remove('hidden'));
+            const blockAChildren = document.querySelectorAll('#blockA .p-6 > div');
+            blockAChildren.forEach(el => el.classList.remove('hidden'));
           }
         });
       });
@@ -1591,7 +1680,7 @@
           
           document.getElementById('blockA').classList.add('hidden');
           document.getElementById('blockD').classList.remove('hidden');
-          document.getElementById('blockD').scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('userTagsSection').scrollIntoView({ behavior: 'smooth' });
           return;
         }
         // 清除之前的验证提示
@@ -1666,16 +1755,14 @@
           // 观望者直接跳转到态度section
           document.getElementById('blockA').classList.add('hidden');
           document.getElementById('blockD').classList.remove('hidden');
-          document.getElementById('blockD').scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('userTagsSection').scrollIntoView({ behavior: 'smooth' });
         } else {
           // 根据标签决定显示哪些sections
           showSectionsBasedOnTags(userTags);
         }
         
-        // 滚动到AI使用情况section的顶部
-        if (!userTags.includes('观望者')) {
-          document.getElementById('blockC').scrollIntoView({ behavior: 'smooth' });
-        }
+        // 滚动到用户标签位置
+        document.getElementById('userTagsSection').scrollIntoView({ behavior: 'smooth' });
       });
       
 
@@ -1749,6 +1836,14 @@
             tagElement.textContent = tag;
             tagsDisplay.appendChild(tagElement);
           });
+          
+          const messageP = tagsSection.querySelector('p');
+          if (tags.includes('深度用户')) {
+            messageP.textContent = '基于您的回答生成用户标签，用于个性化问卷体验。您是AI的深度用户，我们希望详细了解您在AI使用过程中的感受与AI改进建议，以及对AI在行业中的定位与未来展望。问卷约10分钟，您的声音对我们至关重要！';
+          } else if (tags.includes('观望者') || tags.includes('初级用户')) {
+            messageP.textContent = '基于您的回答生成用户标签，用于个性化问卷体验。虽然您使用AI的频率不高，但您对AI的态度与未来展望对我们同样至关重要！问卷约5分钟。';
+          }
+          
           tagsSection.classList.remove('hidden');
         }
       }
@@ -2761,8 +2856,7 @@
           </div>
           
           <div class="mt-6 text-center text-sm text-gray-500">
-            <p>ℹ️ 此报告仅显示关键题目的统计结果</p>
-            <p>📋 详细的报告将于11月7日于PHUSE线下会议和线上同步发布</p>
+            <p>ℹ️ 此报告仅显示关键题目的统计结果，详细的报告将于11月7日于PHUSE线下会议和线上同步发布</p>
           </div>
         `;
         
