@@ -190,6 +190,12 @@
       opacity: 0.8;
     }
     
+    .chart-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
 
     
     .animate-fadeIn {
@@ -201,54 +207,122 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 移动端图片显示模式 */
-    @media (max-width: 768px) {
-      .chart-container {
-        position: relative;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-      }
-      
-      .chart-mobile-image {
-        display: block;
-        transform: rotate(90deg);
-        transform-origin: center;
-        width: auto;
-        max-width: 120vh;
-        height: auto;
-        max-height: 80vw;
-        margin: 10vw -10vh;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-      
-      .mobile-chart-hint {
-        background: #1f2937;
-        color: white;
-        padding: 0.5rem;
-        text-align: center;
-        font-size: 0.75rem;
-        border-radius: 4px;
-        margin-bottom: 0.5rem;
-      }
-      
-      .chart-desktop {
-        display: none;
-      }
+    /* CSS图表样式 */
+    .css-chart {
+      width: 100%;
+      margin: 1rem 0;
     }
     
-    @media (min-width: 769px) {
-      .chart-mobile-image {
-        display: none;
+    .css-chart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      background: #f8fafc;
+      transition: all 0.3s ease;
+    }
+    
+    .css-chart-item:hover {
+      background: #e2e8f0;
+      transform: translateX(2px);
+    }
+    
+    .css-chart-label {
+      flex: 0 0 40%;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      padding-right: 0.5rem;
+    }
+    
+    .css-chart-bar-container {
+      flex: 1;
+      position: relative;
+      height: 24px;
+      background: #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .css-chart-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+      border-radius: 12px;
+      transition: width 1s ease-out;
+      position: relative;
+    }
+    
+    .css-chart-value {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    
+    .css-pie-chart {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    
+    .css-pie-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      background: #f8fafc;
+      font-size: 0.875rem;
+    }
+    
+    .css-pie-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .css-pie-label {
+      font-weight: 500;
+      color: #374151;
+    }
+    
+    .css-pie-value {
+      font-weight: 600;
+      color: #1f2937;
+    }
+    
+    /* 移动端优化 */
+    @media (max-width: 768px) {
+      .css-chart-label {
+        flex: 0 0 35%;
+        font-size: 0.75rem;
       }
       
-      .mobile-chart-hint {
-        display: none;
+      .css-chart-bar-container {
+        height: 20px;
       }
       
-      .chart-desktop {
-        display: block;
+      .css-chart-value {
+        font-size: 0.7rem;
+        right: 4px;
+      }
+      
+      .css-pie-chart {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .css-pie-item {
+        justify-content: space-between;
       }
     }
     
@@ -353,6 +427,14 @@
             <div>
               <strong>调研目的</strong><br>
               追踪中国药物研发统计编程行业在AI应用方面的演进轨迹，为行业发展提供数据支撑和趋势洞察。
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-lg">📊</span>
+            <div>
+              <strong>完成问卷后可查看实时关键结果汇总</strong><br>
+              建议使用横屏模式打开问卷和结果报告以获得更佳的体验。
             </div>
           </div>
         </div>
@@ -2703,28 +2785,70 @@
         }, 100);
       }
       
-      // 生成饼图
+      // 生成CSS饼图
       function generatePieChart(title, data, chartId) {
         if (Object.keys(data).length === 0) {
           return `<div class="text-center py-8"><p class="text-gray-500">${title}: 暂无数据</p></div>`;
         }
+        
+        const total = Object.values(data).reduce((sum, val) => sum + val, 0);
+        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#6366f1'];
+        
+        let pieItems = '';
+        Object.entries(data).forEach(([label, value], index) => {
+          const percentage = ((value / total) * 100).toFixed(1);
+          const color = colors[index % colors.length];
+          pieItems += `
+            <div class="css-pie-item">
+              <div class="css-pie-color" style="background-color: ${color};"></div>
+              <span class="css-pie-label">${label}</span>
+              <span class="css-pie-value">${value}人 (${percentage}%)</span>
+            </div>
+          `;
+        });
+        
         return `
           <div>
             <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
-            <div id="${chartId}" class="chart-container" style="width: 100%; height: 300px;"></div>
+            <div id="${chartId}" class="css-pie-chart">
+              ${pieItems}
+            </div>
           </div>
         `;
       }
       
-      // 生成条形图
+      // 生成CSS条形图
       function generateBarChart(title, data, chartId) {
         if (Object.keys(data).length === 0) {
           return `<div class="text-center py-8"><p class="text-gray-500">${title}: 暂无数据</p></div>`;
         }
+        
+        const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
+        const maxValue = Math.max(...Object.values(data));
+        const total = Object.values(data).reduce((sum, val) => sum + val, 0);
+        
+        let barItems = '';
+        sortedData.forEach(([label, value]) => {
+          const percentage = ((value / total) * 100).toFixed(1);
+          const width = (value / maxValue) * 100;
+          barItems += `
+            <div class="css-chart-item">
+              <div class="css-chart-label">${label}</div>
+              <div class="css-chart-bar-container">
+                <div class="css-chart-bar" style="width: ${width}%;">
+                  <span class="css-chart-value">${value} (${percentage}%)</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        
         return `
           <div class="mt-6">
             <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
-            <div id="${chartId}" class="chart-container" style="width: 100%; min-height: 400px;"></div>
+            <div id="${chartId}" class="css-chart">
+              ${barItems}
+            </div>
           </div>
         `;
       }
@@ -2742,266 +2866,15 @@
         `;
       }
       
-      // 设置滚动观察器
+      // 设置滚动观察器（CSS图表不需要特殊处理）
       function setupScrollObserver(stats, totalCount, multipleChoiceRespondents) {
-        if (typeof Highcharts === 'undefined') {
-          console.log('Highcharts未加载，使用备用方案');
-          return;
-        }
-        
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.dataset.rendered) {
-              const chartId = entry.target.id;
-              const field = chartId.replace('chart-', '');
-              
-              if (['S2', 'S5'].includes(field) && Object.keys(stats[field]).length > 0) {
-                renderHighchartsPie(chartId, stats[field]);
-              } else if (['S3', 'S6', 'D2', 'D3', 'D4', 'E1', 'E2'].includes(field) && Object.keys(stats[field]).length > 0) {
-                const denominator = ['S3', 'S6', 'D3', 'D4', 'E1', 'E2'].includes(field) ? multipleChoiceRespondents[field] : totalCount;
-                renderHighchartsBar(chartId, stats[field], denominator);
-              }
-              
-              entry.target.dataset.rendered = 'true';
-            }
-          });
-        }, { threshold: 0.1 });
-        
-        // 观察所有图表容器
-        ['S2', 'S5', 'S3', 'S6', 'D2', 'D3', 'D4', 'E1', 'E2'].forEach(field => {
-          const element = document.getElementById(`chart-${field}`);
-          if (element) {
-            observer.observe(element);
-          }
-        });
+        // CSS图表已经直接渲染，不需要额外处理
+        console.log('图表已使用CSS直接渲染，无需额外处理');
       }
       
 
       
-      // 检测是否为移动端
-      function isMobile() {
-        return window.innerWidth <= 768;
-      }
-      
-      // 渲染Highcharts饼图
-      function renderHighchartsPie(containerId, data) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        
-        const chartData = Object.entries(data).map(([name, y]) => ({ name, y }));
-        
-        const chart = Highcharts.chart(containerId, {
-          chart: {
-            type: 'pie',
-            backgroundColor: 'transparent',
-            animation: {
-              duration: 1000
-            },
-            width: isMobile() ? 400 : null,
-            height: isMobile() ? 350 : 300
-          },
-          title: {
-            text: null
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}人 ({point.percentage:.1f}%)</b>'
-          },
-          accessibility: {
-            point: {
-              valueSuffix: '%'
-            }
-          },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: true,
-                distance: isMobile() ? -30 : 20,
-                format: isMobile() ? '{point.percentage:.1f}%' : '<b>{point.name}</b>: {point.percentage:.1f}%',
-                style: {
-                  fontSize: isMobile() ? '10px' : '11px',
-                  color: isMobile() ? 'white' : 'black',
-                  textOutline: isMobile() ? '1px black' : 'none'
-                }
-              },
-              showInLegend: true,
-              animation: {
-                duration: 1000
-              }
-            }
-          },
-          colors: ['#A8DADC', '#D4A574', '#E9C46A', '#F4A261', '#E76F51', '#2A9D8F', '#264653', '#E63946', '#F77F00', '#FCBF49'],
-          series: [{
-            name: '人数',
-            colorByPoint: true,
-            data: chartData
-          }]
-        });
-        
-        // 移动端转换为图片
-        if (isMobile()) {
-          setTimeout(() => {
-            convertChartToImage(chart, container);
-          }, 1500);
-        }
-      }
-      
-      // 渲染Highcharts条形图
-      function renderHighchartsBar(containerId, data, denominator) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        
-        const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
-        const categories = sortedData.map(([name]) => name);
-        const values = sortedData.map(([, value]) => value);
-        const total = denominator || values.reduce((sum, val) => sum + val, 0);
-        
-        // 移动端动态计算宽度
-        const maxLabelLength = Math.max(...categories.map(cat => cat.length));
-        const mobileWidth = isMobile() ? Math.max(400, maxLabelLength * 12 + 200) : null;
-        
-        const chart = Highcharts.chart(containerId, {
-          chart: {
-            type: 'bar',
-            backgroundColor: 'transparent',
-            animation: {
-              duration: 1000
-            },
-            width: mobileWidth,
-            height: isMobile() ? Math.max(300, categories.length * 35) : null
-          },
-          title: {
-            text: null
-          },
-          xAxis: {
-            categories: isMobile() ? categories.map(() => '') : categories,
-            title: {
-              text: null
-            },
-            labels: {
-              enabled: !isMobile(),
-              style: {
-                fontSize: '12px'
-              },
-              useHTML: true
-            }
-          },
-          yAxis: {
-            min: 0,
-            title: {
-              text: '人数',
-              align: 'high'
-            },
-            labels: {
-              overflow: 'justify'
-            }
-          },
-          tooltip: {
-            formatter: function() {
-              const percentage = ((this.y / total) * 100).toFixed(1);
-              return `<b>${this.x}</b><br/>人数: ${this.y}<br/>比例: ${percentage}%`;
-            }
-          },
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                enabled: true,
-                inside: false,
-                align: isMobile() ? 'left' : 'right',
-                x: isMobile() ? -5 : 5,
-                formatter: function() {
-                  const percentage = ((this.y / total) * 100).toFixed(1);
-                  const originalCategory = categories[this.point.index];
-                  if (isMobile()) {
-                    return `<b>${originalCategory}</b><br/>${this.y} (${percentage}%)`;
-                  } else {
-                    return `${this.y} (${percentage}%)`;
-                  }
-                },
-                style: {
-                  fontSize: isMobile() ? '9px' : '11px',
-                  color: 'black',
-                  textOutline: 'none'
-                },
-                useHTML: true
-              },
-              colorByPoint: true,
-              animation: {
-                duration: 1000
-              }
-            }
-          },
-          legend: {
-            enabled: false
-          },
-          credits: {
-            enabled: false
-          },
-          colors: ['#A8DADC', '#D4A574', '#E9C46A', '#F4A261', '#E76F51', '#2A9D8F', '#264653', '#E63946', '#F77F00', '#FCBF49'],
-          series: [{
-            name: '人数',
-            data: values
-          }]
-        });
-        
-        // 移动端转换为图片
-        if (isMobile()) {
-          setTimeout(() => {
-            convertChartToImage(chart, container);
-          }, 1500);
-        }
-      }
-      
-      // 将图表转换为图片（移动端）
-      function convertChartToImage(chart, container) {
-        try {
-          const svg = chart.getSVG();
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          const img = new Image();
-          
-          // 设置canvas尺寸为横屏模式
-          canvas.width = chart.chartWidth;
-          canvas.height = chart.chartHeight;
-          
-          img.onload = function() {
-            ctx.drawImage(img, 0, 0);
-            
-            // 添加提示信息
-            const hintDiv = document.createElement('div');
-            hintDiv.className = 'mobile-chart-hint';
-            hintDiv.innerHTML = '📱 请将手机横屏查看，或向左滑动浏览完整图表';
-            
-            // 创建图片元素替换图表
-            const imgElement = document.createElement('img');
-            imgElement.src = canvas.toDataURL('image/png');
-            imgElement.className = 'chart-mobile-image';
-            imgElement.alt = '图表图片';
-            
-            // 隐藏原图表，显示图片
-            const chartDiv = container.querySelector('.highcharts-container');
-            if (chartDiv) {
-              chartDiv.style.display = 'none';
-            }
-            
-            container.appendChild(hintDiv);
-            container.appendChild(imgElement);
-          };
-          
-          img.onerror = function() {
-            console.log('图片转换失败，保持原图表显示');
-          };
-          
-          // 将SVG转换为data URL
-          const svgBlob = new Blob([svg], {type: 'image/svg+xml;charset=utf-8'});
-          const url = URL.createObjectURL(svgBlob);
-          img.src = url;
-          
-        } catch (error) {
-          console.log('图表转换为图片失败:', error);
-        }
-      }
+      // CSS图表不需要额外的渲染函数，已经在generatePieChart和generateBarChart中直接生成HTML
 
     });
   </script>
