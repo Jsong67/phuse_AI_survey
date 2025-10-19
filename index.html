@@ -265,10 +265,8 @@
     
     .css-pie-chart {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
       margin: 1rem 0;
     }
     
@@ -312,15 +310,6 @@
       .css-chart-value {
         font-size: 0.7rem;
         right: 4px;
-      }
-      
-      .css-pie-chart {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .css-pie-item {
-        justify-content: space-between;
       }
     }
     
@@ -432,7 +421,7 @@
             <span class="text-lg">📊</span>
             <div>
               <strong>完成问卷后可查看实时关键结果汇总</strong><br>
-              建议使用电脑打开问卷和结果报告以获得更佳的体验。
+              建议使用电脑打开问卷和结果报告，或者用手机端浏览器打开旋转屏幕以获得更佳的体验。
             </div>
           </div>
         </div>
@@ -2822,11 +2811,13 @@
         }
         
         const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
-        const maxValue = Math.max(...Object.values(data));
+        // 只取前3项
+        const top3Data = sortedData.slice(0, 3);
+        const maxValue = Math.max(...top3Data.map(([, value]) => value));
         const total = Object.values(data).reduce((sum, val) => sum + val, 0);
         
         let barItems = '';
-        sortedData.forEach(([label, value]) => {
+        top3Data.forEach(([label, value]) => {
           const percentage = ((value / total) * 100).toFixed(1);
           const width = (value / maxValue) * 100;
           barItems += `
@@ -2843,7 +2834,7 @@
         
         return `
           <div class="mt-6">
-            <h4 class="font-bold text-gray-700 mb-3">${title}</h4>
+            <h4 class="font-bold text-gray-700 mb-3">${title} (Top3)</h4>
             <div id="${chartId}" class="css-chart">
               ${barItems}
             </div>
