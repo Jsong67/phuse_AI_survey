@@ -841,15 +841,14 @@
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> Claude</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> Gemini、Grok等其他国外模型</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> MS Copilot、Gemini、Grok等其他国外模型</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="D"> DeepSeek</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> Copilot（SAS/R/Python/VS Code 等）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> 国产大模型（阿里/百度/字节/华为等）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="G"> 私有化/本地 LLM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="H"> 公司自研工具</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="I"> 不了解/未关注</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="J"> 不方便透露</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="K"> <span>其他：</span><input type="text" name="C5-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> 国产大模型（阿里/百度/字节/华为等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> 私有化/本地 LLM</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="G"> 公司自研工具</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="H"> 不了解/未关注</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="I"> 不方便透露</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="J"> <span>其他：</span><input type="text" name="C5-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
 
@@ -2472,7 +2471,7 @@
       // C5: 常用AI工具 - 互斥逻辑
       document.querySelectorAll('input[name="C5"]').forEach(input => {
         input.addEventListener('change', function() {
-          const blockValues = ['I', 'J']; // 不了解/未关注, 不方便透露
+          const blockValues = ['H', 'I']; // 不了解/未关注, 不方便透露
           if (blockValues.includes(this.value) && this.checked) {
             document.querySelectorAll('input[name="C5"]').forEach(other => {
               if (!blockValues.includes(other.value)) {
