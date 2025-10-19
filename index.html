@@ -252,6 +252,18 @@
       color: #64748b;
     }
     
+    .efficiency-slider-marks span:nth-child(2),
+    .efficiency-slider-marks span:nth-child(4) {
+      display: inline;
+    }
+    
+    @media (max-width: 768px) {
+      .efficiency-slider-marks span:nth-child(2),
+      .efficiency-slider-marks span:nth-child(4) {
+        display: none;
+      }
+    }
+    
     /* 报告样式 */
     .chart-bar {
       transition: all 0.5s ease;
@@ -601,10 +613,10 @@
               <tr class="bg-gray-50">
                 <th class="text-left">年份</th>
                 <th>从不</th>
-                <th>很少（季度）</th>
+                <th>很少（季）</th>
                 <th>偶尔（月）</th>
                 <th>经常（周）</th>
-                <th>频繁（几乎每天）</th>
+                <th>频繁（天）</th>
               </tr>
             </thead>
             <tbody>
@@ -625,12 +637,12 @@
                 <td><input type="radio" name="C1_2024" value="频繁（几乎每天）"></td>
               </tr>
               <tr>
-                <td class="font-medium">2025 年（至今）</td>
+                <td class="font-medium">2025 年</td>
                 <td><input type="radio" name="C1_2025" value="从不"></td>
-                <td><input type="radio" name="C1_2025" value="很少（季度）"></td>
+                <td><input type="radio" name="C1_2025" value="很少（季）"></td>
                 <td><input type="radio" name="C1_2025" value="偶尔（月）"></td>
                 <td><input type="radio" name="C1_2025" value="经常（周）"></td>
-                <td><input type="radio" name="C1_2025" value="频繁（几乎每天）"></td>
+                <td><input type="radio" name="C1_2025" value="频繁（天）"></td>
               </tr>
             </tbody>
           </table>
@@ -811,7 +823,7 @@
           <div class="mt-2 space-y-2">
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> Claude</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> Gemini</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> Gemini、Grok等其他国外模型</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="D"> DeepSeek</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> Copilot（SAS/R/Python/VS Code 等）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> 国产大模型（阿里/百度/字节/华为等）</label>
