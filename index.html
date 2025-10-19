@@ -595,7 +595,7 @@
 
         <!-- Next按钮 -->
         <div class="mt-6 text-center">
-          <button type="button" id="nextToAISection" class="btn btn-primary">下一步：AI使用情况 →</button>
+          <button type="button" id="nextToAISection" class="btn btn-primary">下一页：AI使用情况 →</button>
         </div>
         </div>
       </div>
@@ -1011,9 +1011,10 @@
         </div>
 
 
-        <!-- Next按钮 -->
-        <div class="mt-6 text-center">
-          <button type="button" id="nextToAttitudeSection" class="btn btn-primary">下一步：AI态度 →</button>
+        <!-- 导航按钮 -->
+        <div class="mt-6 flex justify-center gap-4">
+          <button type="button" id="prevToBasicSection" class="btn btn-primary">← 上一页：基本信息</button>
+          <button type="button" id="nextToAttitudeSection" class="btn btn-primary">下一页：AI态度 →</button>
         </div>
         </div>
       </div>
@@ -1382,9 +1383,10 @@
           </div>
         </div>
 
-        <!-- Next按钮 -->
-        <div class="mt-6 text-center">
-          <button type="button" id="nextToOutlookSection" class="btn btn-primary">下一步：展望与建议 →</button>
+        <!-- 导航按钮 -->
+        <div class="mt-6 flex justify-center gap-4">
+          <button type="button" id="prevToAISection" class="btn btn-primary">← 上一页：AI使用情况</button>
+          <button type="button" id="nextToOutlookSection" class="btn btn-primary">下一页：展望与建议 →</button>
         </div>
         </div>
       </div>
@@ -1466,9 +1468,10 @@
           <input type="hidden" name="E4_E" value="5">
         </div>
 
-        <!-- Next按钮 -->
-        <div class="mt-6 text-center">
-          <button type="button" id="nextToFinalSection" class="btn btn-primary">下一步：职业概况 →</button>
+        <!-- 导航按钮 -->
+        <div class="mt-6 flex justify-center gap-4">
+          <button type="button" id="prevToAttitudeSection" class="btn btn-primary">← 上一页：AI态度</button>
+          <button type="button" id="nextToFinalSection" class="btn btn-primary">下一页：职业概况 →</button>
         </div>
         </div>
       </div>
@@ -1536,6 +1539,11 @@
         <div>
           <label class="font-bold">您对本次调研或 AI 在统计编程领域的其他建议：</label>
           <textarea name="F1" rows="4" class="w-full border rounded px-2 py-1 text-sm mt-2" placeholder="可选填写您的任何建议、意见或补充..."></textarea>
+        </div>
+        
+        <!-- 导航按钮 -->
+        <div class="mt-6 flex justify-center">
+          <button type="button" id="prevToOutlookSection" class="btn btn-primary">← 上一页：展望与建议</button>
         </div>
         </div>
       </div>
@@ -1616,6 +1624,21 @@
       const form = document.getElementById('surveyForm');
       const submitSuccess = document.getElementById('submitSuccess');
       
+      // 监听blockD（AI态度页）的显示状态，动态更新上一页按钮文本
+      const blockD = document.getElementById('blockD');
+      const observer = new MutationObserver(function() {
+        if (!blockD.classList.contains('hidden')) {
+          const userTags = generateUserTags();
+          const prevBtn = document.getElementById('prevToAISection');
+          if (prevBtn) {
+            prevBtn.textContent = (userTags.includes('观望者') && !userTags.includes('深度用户')) 
+              ? '← 上一页：基本信息' 
+              : '← 上一页：AI使用情况';
+          }
+        }
+      });
+      observer.observe(blockD, { attributes: true, attributeFilter: ['class'] });
+      
       // C3 效率滑动条逻辑
       ['2023', '2024', '2025'].forEach(year => {
         const slider = document.querySelector(`input[name="C3_${year}"]`);
@@ -1644,13 +1667,13 @@
             document.querySelector('input[name="S6-OTHER"]').value = '';
             
             // 更新按钮为观望者模式
-            nextBtn.textContent = '下一步：AI态度 →';
+            nextBtn.textContent = '下一页：AI态度 →';
           } else if (this.checked) {
             // 选择其他选项，显示S6题目
             s6Question.classList.remove('hidden');
             
             // 恢复按钮为正常模式
-            nextBtn.textContent = '下一步：AI使用情况 →';
+            nextBtn.textContent = '下一页：AI使用情况 →';
           }
         });
       });
@@ -1689,6 +1712,9 @@
           // 观望者模式，直接跳转到态度section
           const userTags = generateUserTags();
           displayUserTags(userTags);
+          
+          // 更新AI态度页的上一页按钮文本
+          document.getElementById('prevToAISection').textContent = '← 上一页：基本信息';
           
           document.getElementById('blockA').classList.add('hidden');
           document.getElementById('blockD').classList.remove('hidden');
@@ -1765,6 +1791,9 @@
         const nextBtn = document.getElementById('nextToAISection');
         if (userTags.includes('观望者')) {
           // 观望者直接跳转到态度section
+          // 更新AI态度页的上一页按钮文本
+          document.getElementById('prevToAISection').textContent = '← 上一页：基本信息';
+          
           document.getElementById('blockA').classList.add('hidden');
           document.getElementById('blockD').classList.remove('hidden');
           document.getElementById('userTagsSection').scrollIntoView({ behavior: 'smooth' });
@@ -2088,11 +2117,80 @@
             el.classList.add('hidden');
           });
           targetElement.classList.remove('hidden');
+          // 如果跳转到blockD（AI态度），根据用户标签更新上一页按钮文本
+          if (targetElement.id === 'blockD') {
+            const userTags = generateUserTags();
+            const prevBtn = document.getElementById('prevToAISection');
+            if (prevBtn) {
+              prevBtn.textContent = (userTags.includes('观望者') && !userTags.includes('深度用户')) 
+                ? '← 上一页：基本信息' 
+                : '← 上一页：AI使用情况';
+            }
+          }
           targetElement.scrollIntoView({ behavior: 'smooth' });
         }
         
         return isValid;
       }
+      
+      // 上一页按钮事件
+      document.getElementById('prevToBasicSection')?.addEventListener('click', function() {
+        document.getElementById('blockC').classList.add('hidden');
+        document.getElementById('blockA').classList.remove('hidden');
+        document.getElementById('blockA').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      document.getElementById('prevToAISection')?.addEventListener('click', function() {
+        document.getElementById('blockD').classList.add('hidden');
+        // 如果是观望者且没有深度用户标签，返回基本信息页
+        const userTags = generateUserTags();
+        if (userTags.includes('观望者') && !userTags.includes('深度用户')) {
+          const blockA = document.getElementById('blockA');
+          blockA.classList.remove('hidden');
+          // 确保所有题目显示
+          const blockAChildren = blockA.querySelectorAll('.p-6 > div');
+          blockAChildren.forEach(el => {
+            if (el.id !== 'S6Question') {
+              el.classList.remove('hidden');
+            }
+          });
+          document.getElementById('nextToAISection').style.display = 'inline-block';
+          document.getElementById('endMsgS1').classList.add('hidden');
+          blockA.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          document.getElementById('blockC').classList.remove('hidden');
+          document.getElementById('blockC').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+      
+      document.getElementById('prevToAttitudeSection')?.addEventListener('click', function() {
+        document.getElementById('blockE').classList.add('hidden');
+        document.getElementById('blockD').classList.remove('hidden');
+        document.getElementById('blockD').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      document.getElementById('prevToOutlookSection')?.addEventListener('click', function() {
+        document.getElementById('blockG').classList.add('hidden');
+        document.getElementById('blockF').classList.add('hidden');
+        document.getElementById('submitSection').classList.add('hidden');
+        document.getElementById('blockE').classList.remove('hidden');
+        document.getElementById('blockE').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      // 以下是旧代码，已被上面的简化版本替换
+      /*
+      document.getElementById('prevToAttitudeSection_OLD')?.addEventListener('click', function() {
+        document.getElementById('blockE').classList.add('hidden');
+        const userTags = generateUserTags();
+        if (userTags.includes('观望者') && !userTags.includes('深度用户')) {
+          document.getElementById('blockC').classList.remove('hidden');
+          document.getElementById('blockC').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          document.getElementById('blockD').classList.remove('hidden');
+          document.getElementById('blockD').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+      */
       
       // AI使用情况section验证
       document.getElementById('nextToAttitudeSection').addEventListener('click', function() {
@@ -2266,6 +2364,30 @@
             });
           });
         });
+        
+        // C2场景矩阵的互斥逻辑 - 未使用AI
+        ['2023', '2024', '2025'].forEach(year => {
+          document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`).forEach(input => {
+            input.addEventListener('change', function() {
+              if (input.name === `C2_未使用AI_${year}` && input.checked) {
+                // 选中未使用AI，禁用其他选项
+                document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]:not([name="C2_未使用AI_${year}"])`).forEach(other => {
+                  other.checked = false;
+                  other.disabled = true;
+                  const td = other.closest('td');
+                  if (td) td.classList.add('disabled');
+                });
+              } else if (input.name === `C2_未使用AI_${year}` && !input.checked) {
+                // 取消未使用AI，恢复其他选项
+                document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]:not([name="C2_未使用AI_${year}"])`).forEach(other => {
+                  other.disabled = false;
+                  const td = other.closest('td');
+                  if (td) td.classList.remove('disabled');
+                });
+              }
+            });
+          });
+        });
       }
       
       function handleNeverUsedAI(year) {
@@ -2278,7 +2400,8 @@
           document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]:not([name="C2_未使用AI_${year}"])`).forEach(input => {
             input.checked = false;
             input.disabled = true;
-            input.closest('td').classList.add('disabled');
+            const td = input.closest('td');
+            if (td) td.classList.add('disabled');
           });
         }
         
@@ -2291,7 +2414,8 @@
           document.querySelectorAll(`input[name="C3_${year}"]:not([value="<10%（含0%）"])`).forEach(input => {
             input.checked = false;
             input.disabled = true;
-            input.closest('td').classList.add('disabled');
+            const td = input.closest('td');
+            if (td) td.classList.add('disabled');
           });
         }
       }
@@ -2300,7 +2424,8 @@
         // 恢复C2选项
         document.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`).forEach(input => {
           input.disabled = false;
-          input.closest('td').classList.remove('disabled');
+          const td = input.closest('td');
+          if (td) td.classList.remove('disabled');
         });
         
         // 清除自动勾选的"未使用AI"
@@ -2312,7 +2437,8 @@
         // 恢复C3选项
         document.querySelectorAll(`input[name="C3_${year}"]`).forEach(input => {
           input.disabled = false;
-          input.closest('td').classList.remove('disabled');
+          const td = input.closest('td');
+          if (td) td.classList.remove('disabled');
         });
         
         // 清除自动选择的"<10%"
@@ -2324,6 +2450,83 @@
       
       // 初始化矩阵联动
       setupMatrixLinkage();
+      
+      // C5: 常用AI工具 - 互斥逻辑
+      document.querySelectorAll('input[name="C5"]').forEach(input => {
+        input.addEventListener('change', function() {
+          const blockValues = ['I', 'J']; // 不了解/未关注, 不方便透露
+          if (blockValues.includes(this.value) && this.checked) {
+            document.querySelectorAll('input[name="C5"]').forEach(other => {
+              if (!blockValues.includes(other.value)) {
+                other.checked = false;
+                other.disabled = true;
+              }
+            });
+          } else if (blockValues.includes(this.value) && !this.checked) {
+            const anyBlockChecked = Array.from(document.querySelectorAll('input[name="C5"]'))
+              .some(inp => blockValues.includes(inp.value) && inp.checked);
+            if (!anyBlockChecked) {
+              document.querySelectorAll('input[name="C5"]').forEach(other => {
+                if (!blockValues.includes(other.value)) other.disabled = false;
+              });
+            }
+          }
+        });
+      });
+      
+      // C7: 学习渠道 - 互斥逻辑
+      document.querySelectorAll('input[name="C7"]').forEach(input => {
+        input.addEventListener('change', function() {
+          if (this.value === 'I' && this.checked) { // 没有主动学习
+            document.querySelectorAll('input[name="C7"]').forEach(other => {
+              if (other.value !== 'I') {
+                other.checked = false;
+                other.disabled = true;
+              }
+            });
+          } else if (this.value === 'I' && !this.checked) {
+            document.querySelectorAll('input[name="C7"]').forEach(other => {
+              if (other.value !== 'I') other.disabled = false;
+            });
+          }
+        });
+      });
+      
+      // CD2: AI表现最佳任务 - 互斥逻辑
+      document.querySelectorAll('input[name="CD2"]').forEach(input => {
+        input.addEventListener('change', function() {
+          if (this.value === 'G' && this.checked) { // 都表现一般
+            document.querySelectorAll('input[name="CD2"]').forEach(other => {
+              if (other.value !== 'G') {
+                other.checked = false;
+                other.disabled = true;
+              }
+            });
+          } else if (this.checked) {
+            document.querySelectorAll('input[name="CD2"]').forEach(other => {
+              if (other.value !== this.value) other.disabled = false;
+            });
+          }
+        });
+      });
+      
+      // D4: 信任AI的情境 - 互斥逻辑
+      document.querySelectorAll('input[name="D4"]').forEach(input => {
+        input.addEventListener('change', function() {
+          if (this.value === 'E' && this.checked) { // 都不信任，仅作参考
+            document.querySelectorAll('input[name="D4"]').forEach(other => {
+              if (other.value !== 'E') {
+                other.checked = false;
+                other.disabled = true;
+              }
+            });
+          } else if (this.value === 'E' && !this.checked) {
+            document.querySelectorAll('input[name="D4"]').forEach(other => {
+              if (other.value !== 'E') other.disabled = false;
+            });
+          }
+        });
+      });
       
       // 多选框"其他"选项的文本框联动 - 通用处理所有带文本框的checkbox
       document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
