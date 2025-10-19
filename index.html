@@ -396,6 +396,24 @@
       }
     }
     
+    /* 导航按钮响应式布局 */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-buttons {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .nav-buttons button {
+        width: 100%;
+      }
+    }
+    
     /* 响应式 */
     @media (max-width: 768px) {
       .main-container {
@@ -1012,7 +1030,7 @@
 
 
         <!-- 导航按钮 -->
-        <div class="mt-6 flex justify-center gap-4">
+        <div class="nav-buttons">
           <button type="button" id="prevToBasicSection" class="btn btn-primary">← 上一页：基本信息</button>
           <button type="button" id="nextToAttitudeSection" class="btn btn-primary">下一页：AI态度 →</button>
         </div>
@@ -1384,7 +1402,7 @@
         </div>
 
         <!-- 导航按钮 -->
-        <div class="mt-6 flex justify-center gap-4">
+        <div class="nav-buttons">
           <button type="button" id="prevToAISection" class="btn btn-primary">← 上一页：AI使用情况</button>
           <button type="button" id="nextToOutlookSection" class="btn btn-primary">下一页：展望与建议 →</button>
         </div>
@@ -1469,7 +1487,7 @@
         </div>
 
         <!-- 导航按钮 -->
-        <div class="mt-6 flex justify-center gap-4">
+        <div class="nav-buttons">
           <button type="button" id="prevToAttitudeSection" class="btn btn-primary">← 上一页：AI态度</button>
           <button type="button" id="nextToFinalSection" class="btn btn-primary">下一页：职业概况 →</button>
         </div>
@@ -1542,7 +1560,7 @@
         </div>
         
         <!-- 导航按钮 -->
-        <div class="mt-6 flex justify-center">
+        <div class="nav-buttons">
           <button type="button" id="prevToOutlookSection" class="btn btn-primary">← 上一页：展望与建议</button>
         </div>
         </div>
