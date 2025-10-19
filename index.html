@@ -215,8 +215,8 @@
     
     .css-chart-item {
       display: flex;
-      align-items: center;
-      margin-bottom: 0.5rem;
+      flex-direction: column;
+      margin-bottom: 1rem;
       padding: 0.5rem;
       border-radius: 6px;
       background: #f8fafc;
@@ -225,19 +225,18 @@
     
     .css-chart-item:hover {
       background: #e2e8f0;
-      transform: translateX(2px);
+      transform: translateY(-2px);
     }
     
     .css-chart-label {
-      flex: 0 0 40%;
       font-size: 0.875rem;
       font-weight: 500;
       color: #374151;
-      padding-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      text-align: left;
     }
     
     .css-chart-bar-container {
-      flex: 1;
       position: relative;
       height: 24px;
       background: #e5e7eb;
@@ -303,7 +302,6 @@
     /* 移动端优化 */
     @media (max-width: 768px) {
       .css-chart-label {
-        flex: 0 0 35%;
         font-size: 0.75rem;
       }
       
@@ -434,7 +432,7 @@
             <span class="text-lg">📊</span>
             <div>
               <strong>完成问卷后可查看实时关键结果汇总</strong><br>
-              建议使用横屏模式打开问卷和结果报告以获得更佳的体验。
+              建议使用电脑打开问卷和结果报告以获得更佳的体验。
             </div>
           </div>
         </div>
