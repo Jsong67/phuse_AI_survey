@@ -140,6 +140,7 @@
     }
     
     /* 其他样式 */
+    .hidden { display: none !important; }
     .hidden-important { display: none !important; }
     .indent-row { padding-left: 2rem !important; }
     .required-star { color: #ef4444; font-weight: bold; }
@@ -839,16 +840,74 @@
         <div data-tags="初级用户,深度用户">
           <label class="font-bold">您在 2025 年常用的 AI/模型或平台（多选）<span class="required-star">*</span></label>
           <div class="mt-2 space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> Claude</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> MS Copilot、Gemini、Grok等其他国外模型</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="D"> DeepSeek</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> 国产大模型（阿里/百度/字节/华为等）</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> 私有化/本地 LLM</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="G"> 公司自研工具</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="H"> 不了解/未关注</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="I"> 不方便透露</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="A"> ChatGPT 系列（OpenAI）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="B"> Claude 系列（Anthropic）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="C"> Gemini（Google）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="D"> Kimi（月之暗面）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="E"> 文心一言（百度）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="F"> 通义千问（阿里）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="G"> DeepSeek（深度求索）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="H"> 其他国产模型（如豆包、讯飞星火等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="I"> 其他国外模型（如 Grok, Perplexity 等）</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="K"> 公司自研AI平台\AI工具</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="L"> 不清楚</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="C5" value="J"> <span>其他：</span><input type="text" name="C5-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
+          </div>
+        </div>
+
+        <!-- C5_1 单选题 - 是否参与开发（默认隐藏）-->
+        <div id="C5_1Question" class="hidden" data-tags="初级用户,深度用户">
+          <label class="font-bold">您是否参与了公司自研AI平台\AI工具的开发？<span class="required-star">*</span></label>
+          <div class="mt-2 space-y-2">
+            <label class="flex items-center gap-2"><input type="radio" name="C5_1" value="A"> 是</label>
+            <label class="flex items-center gap-2"><input type="radio" name="C5_1" value="B"> 否</label>
+          </div>
+        </div>
+
+        <!-- C5_2 单选题 - 开发状态（默认隐藏）-->
+        <div id="C5_2Question" class="hidden" data-tags="初级用户,深度用户">
+          <label class="font-bold">以下哪一项最符合您团队开发的状态（单选）<span class="required-star">*</span></label>
+          <div class="mt-2 space-y-2">
+            <label class="flex items-start gap-2">
+              <input type="radio" name="C5_2" value="A">
+              <div>
+                <strong>无代码（No-Code）</strong><br>
+                <span class="text-sm text-gray-600">全程拖拽+自然语言配置，一行代码都不写，业务同事也能搞定；流行工具：Coze/扣子、OpenAI GPTs、Stack AI</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="C5_2" value="B">
+              <div>
+                <strong>低代码（Low-Code）</strong><br>
+                <span class="text-sm text-gray-600">主要靠可视化，但偶尔写几行脚本或 SQL，技术/业务一起上；流行工具：Dify、Flowise、Langflow、n8n</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="C5_2" value="C">
+              <div>
+                <strong>纯代码（Pro-Code）</strong><br>
+                <span class="text-sm text-gray-600">用 LangChain/LlamaIndex/AutoGen/CrewAI 等框架手写 Python/Java，全程 IDE 驱动</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="C5_2" value="D">
+              <div>
+                <strong>混合模式</strong><br>
+                <span class="text-sm text-gray-600">先用无代码或低代码快速验证，再切到纯代码深度定制，灵活切换</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="C5_2" value="E">
+              <div>
+                <strong>还没开始，正在调研</strong>
+              </div>
+            </label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="C5_2" value="F">
+              <div>
+                <strong>不方便透露</strong>
+              </div>
+            </label>
           </div>
         </div>
 
@@ -892,6 +951,7 @@
             <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="E"> 角色扮演（如"你是SAS专家"）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="F"> 提供上下文（数据结构、业务背景）</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="G"> 要求解释代码逻辑与思路</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="I"> 未在统计编程时使用AI</label>
             <label class="flex items-center gap-2"><input type="checkbox" name="CD1" value="H"> <span>其他策略：</span><input type="text" name="CD1-OTHER" class="border rounded px-2 py-1 text-sm ml-2 flex-1" placeholder="请填写" disabled></label>
           </div>
         </div>
@@ -908,6 +968,7 @@
             <label class="flex items-center gap-2"><input type="radio" name="CD2" value="E"> 代码注释与文档生成</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD2" value="F"> 错误调试与代码优化</label>
             <label class="flex items-center gap-2"><input type="radio" name="CD2" value="G"> 都表现一般</label>
+            <label class="flex items-center gap-2"><input type="radio" name="CD2" value="H"> 未在统计编程时使用AI</label>
           </div>
         </div>
 
@@ -2230,6 +2291,8 @@
           {name: 'C4_2025', type: 'radio', tags: ['深度用户']},
           // 初级用户和深度用户共同题目
           {name: 'C5', type: 'checkbox', tags: ['初级用户', '深度用户']},
+          {name: 'C5_1', type: 'radio', tags: ['初级用户', '深度用户'], condition: () => !document.getElementById('C5_1Question').classList.contains('hidden')},
+          {name: 'C5_2', type: 'radio', tags: ['初级用户', '深度用户'], condition: () => !document.getElementById('C5_2Question').classList.contains('hidden')},
           {name: 'C6', type: 'radio', tags: ['初级用户', '深度用户']},
           {name: 'C7', type: 'checkbox', tags: ['初级用户', '深度用户']},
           // 深度用户专用题目
@@ -2468,25 +2531,52 @@
       // 初始化矩阵联动
       setupMatrixLinkage();
       
-      // C5: 常用AI工具 - 互斥逻辑
+      // C5: 常用AI工具 - 互斥逻辑和跟进问题显示
       document.querySelectorAll('input[name="C5"]').forEach(input => {
         input.addEventListener('change', function() {
-          const blockValues = ['H', 'I']; // 不了解/未关注, 不方便透露
-          if (blockValues.includes(this.value) && this.checked) {
+          const blockValue = 'L'; // 不清楚
+          const c5_1Question = document.getElementById('C5_1Question');
+          const c5_2Question = document.getElementById('C5_2Question');
+          
+          // 如果选择"不清楚"，block其他选项
+          if (this.value === blockValue && this.checked) {
             document.querySelectorAll('input[name="C5"]').forEach(other => {
-              if (!blockValues.includes(other.value)) {
+              if (other.value !== blockValue) {
                 other.checked = false;
                 other.disabled = true;
               }
             });
-          } else if (blockValues.includes(this.value) && !this.checked) {
-            const anyBlockChecked = Array.from(document.querySelectorAll('input[name="C5"]'))
-              .some(inp => blockValues.includes(inp.value) && inp.checked);
-            if (!anyBlockChecked) {
-              document.querySelectorAll('input[name="C5"]').forEach(other => {
-                if (!blockValues.includes(other.value)) other.disabled = false;
-              });
-            }
+          } else if (this.value === blockValue && !this.checked) {
+            document.querySelectorAll('input[name="C5"]').forEach(other => {
+              if (other.value !== blockValue) other.disabled = false;
+            });
+          }
+          
+          // 只有选择"公司自研AI平台\AI工具"才显示C5_1
+          const kChecked = document.querySelector('input[name="C5"][value="K"]').checked;
+          if (kChecked) {
+            c5_1Question.classList.remove('hidden');
+          } else {
+            c5_1Question.classList.add('hidden');
+            c5_2Question.classList.add('hidden');
+            document.querySelectorAll('input[name="C5_1"]').forEach(inp => inp.checked = false);
+            document.querySelectorAll('input[name="C5_2"]').forEach(inp => inp.checked = false);
+          }
+        });
+      });
+      
+      // C5_1: 是否参与开发 - 显示C5_2问题
+      document.querySelectorAll('input[name="C5_1"]').forEach(input => {
+        input.addEventListener('change', function() {
+          const c5_2Question = document.getElementById('C5_2Question');
+          if (this.value === 'A' && this.checked) {
+            // 选择"是"，显示C5_2问题
+            c5_2Question.classList.remove('hidden');
+          } else if (this.value === 'B' && this.checked) {
+            // 选择"否"，隐藏C5_2问题
+            c5_2Question.classList.add('hidden');
+            // 清除C5_2的选择
+            document.querySelectorAll('input[name="C5_2"]').forEach(inp => inp.checked = false);
           }
         });
       });
@@ -2509,23 +2599,26 @@
         });
       });
       
-      // CD2: AI表现最佳任务 - 互斥逻辑
-      document.querySelectorAll('input[name="CD2"]').forEach(input => {
+      // CD1: prompt策略 - 互斥逻辑
+      document.querySelectorAll('input[name="CD1"]').forEach(input => {
         input.addEventListener('change', function() {
-          if (this.value === 'G' && this.checked) { // 都表现一般
-            document.querySelectorAll('input[name="CD2"]').forEach(other => {
-              if (other.value !== 'G') {
+          if (this.value === 'I' && this.checked) {
+            document.querySelectorAll('input[name="CD1"]').forEach(other => {
+              if (other.value !== 'I') {
                 other.checked = false;
                 other.disabled = true;
               }
             });
-          } else if (this.checked) {
-            document.querySelectorAll('input[name="CD2"]').forEach(other => {
-              if (other.value !== this.value) other.disabled = false;
+          } else if (this.value === 'I' && !this.checked) {
+            document.querySelectorAll('input[name="CD1"]').forEach(other => {
+              if (other.value !== 'I') other.disabled = false;
             });
           }
         });
       });
+      
+      // CD2: AI表现最佳任务 - 无互斥逻辑
+      // 已移除互斥逻辑，所有选项可自由选择
       
       // D4: 信任AI的情境 - 互斥逻辑
       document.querySelectorAll('input[name="D4"]').forEach(input => {
@@ -2726,6 +2819,8 @@
           {name: 'C4_2024', type: 'radio', tags: ['深度用户']},
           {name: 'C4_2025', type: 'radio', tags: ['深度用户']},
           {name: 'C5', type: 'checkbox', tags: ['初级用户', '深度用户']},
+          {name: 'C5_1', type: 'radio', tags: ['初级用户', '深度用户'], condition: () => !document.getElementById('C5_1Question').classList.contains('hidden')},
+          {name: 'C5_2', type: 'radio', tags: ['初级用户', '深度用户'], condition: () => !document.getElementById('C5_2Question').classList.contains('hidden')},
           {name: 'C6', type: 'radio', tags: ['初级用户', '深度用户']},
           {name: 'C7', type: 'checkbox', tags: ['初级用户', '深度用户']},
           {name: 'CD1', type: 'checkbox', tags: ['深度用户']},
