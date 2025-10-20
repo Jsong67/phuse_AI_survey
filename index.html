@@ -2797,8 +2797,12 @@
       
 
       // 表单提交处理
+      let isSubmitting = false;
+      
       form.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        if (isSubmitting) return;
         
         // 清除所有验证提示
         document.querySelectorAll('.validation-error').forEach(el => el.remove());
@@ -3031,6 +3035,15 @@
         data._timestamp = new Date().toISOString();
         data._version = "2025.1";
         
+        // 标记为正在提交并禁用按钮
+        isSubmitting = true;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '📤 问卷提交中...';
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+        
         // 保存到Firebase
         data.timestamp = firebase.database.ServerValue.TIMESTAMP;
         
@@ -3044,6 +3057,11 @@
             submitSuccess.scrollIntoView({ behavior: 'smooth' });
           })
           .catch((error) => {
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
             alert('提交失败，请稍后重试。');
           });
       });
