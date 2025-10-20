@@ -2291,8 +2291,8 @@
           {name: 'C4_2025', type: 'radio', tags: ['深度用户']},
           // 初级用户和深度用户共同题目
           {name: 'C5', type: 'checkbox', tags: ['初级用户', '深度用户']},
-          {name: 'C5_1', type: 'radio', tags: ['初级用户', '深度用户'], condition: () => !document.getElementById('C5_1Question').classList.contains('hidden')},
-          {name: 'C5_2', type: 'radio', tags: ['初级用户', '深度用户'], condition: () => !document.getElementById('C5_2Question').classList.contains('hidden')},
+          {name: 'C5_1', type: 'radio', tags: ['初级用户', '深度用户']},
+          {name: 'C5_2', type: 'radio', tags: ['初级用户', '深度用户']},
           {name: 'C6', type: 'radio', tags: ['初级用户', '深度用户']},
           {name: 'C7', type: 'checkbox', tags: ['初级用户', '深度用户']},
           // 深度用户专用题目
@@ -2315,7 +2315,17 @@
         // 过滤出用户应该验证的题目
         const userRequiredQuestions = allPossibleQuestions.filter(q => {
           if (!q.tags) return true; // 没有标签要求的题目都需要验证
-          return q.tags.some(tag => userTags.includes(tag)); // 用户有对应标签的题目
+          if (!q.tags.some(tag => userTags.includes(tag))) return false; // 用户没有对应标签
+          
+          // 检查题目是否可见
+          if (q.name === 'C5_1') {
+            return !document.getElementById('C5_1Question').classList.contains('hidden');
+          }
+          if (q.name === 'C5_2') {
+            return !document.getElementById('C5_2Question').classList.contains('hidden');
+          }
+          
+          return true;
         });
         
         console.log('用户应验证题目数量:', userRequiredQuestions.length);
@@ -2884,8 +2894,17 @@
           }
           // 检查标签要求
           if (q.tags) {
-            return q.tags.some(tag => userTags.includes(tag));
+            if (!q.tags.some(tag => userTags.includes(tag))) return false;
           }
+          
+          // 检查C5_1和C5_2是否可见
+          if (q.name === 'C5_1') {
+            return !document.getElementById('C5_1Question').classList.contains('hidden');
+          }
+          if (q.name === 'C5_2') {
+            return !document.getElementById('C5_2Question').classList.contains('hidden');
+          }
+          
           // 没有标签要求的题目都需要验证
           return true;
         });
