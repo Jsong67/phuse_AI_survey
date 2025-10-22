@@ -2022,7 +2022,17 @@
         
         // 只验证当前可见的必填题目
         const visibleRequiredQuestions = requiredQuestions.filter(q => {
-          const firstInput = form.querySelector(`input[name="${q.name}"]`);
+          let firstInput;
+          
+          // 对checkbox-column类型特殊处理
+          if (q.type === 'checkbox-column') {
+            const year = q.name.split('_')[1];
+            const columnInputs = form.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`);
+            firstInput = columnInputs[0];
+          } else {
+            firstInput = form.querySelector(`input[name="${q.name}"]`);
+          }
+          
           if (!firstInput) {
             console.log(`找不到输入框: ${q.name}`);
             return false;
@@ -2047,12 +2057,13 @@
         visibleRequiredQuestions.forEach(q => {
           let hasValue = false;
           let errorTarget = null;
-          const firstInput = form.querySelector(`input[name="${q.name}"]`);
+          let firstInput = form.querySelector(`input[name="${q.name}"]`);
           
           if (q.type === 'checkbox-column') {
             const year = q.name.split('_')[1];
             const columnInputs = form.querySelectorAll(`input[name^="C2_"][name$="_${year}"]`);
             hasValue = Array.from(columnInputs).some(input => input.checked);
+            firstInput = columnInputs[0]; // 使用列中的第一个input
             
             if (firstInput) {
               const table = firstInput.closest('table');
